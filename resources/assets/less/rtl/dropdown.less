@@ -1,0 +1,96 @@
+/*
+ * Component: Dropdown menus
+ * -------------------------
+ */
+
+/*Dropdowns in general*/
+.dropdown-menu {
+  > li > a > .glyphicon,
+  > li > a > .fa,
+  > li > a > .ion{
+    margin-left: 10px;
+    margin-right: 0;
+  }
+}
+
+//Navbar custom dropdown menu
+.navbar-nav > .notifications-menu,
+.navbar-nav > .messages-menu,
+.navbar-nav > .tasks-menu {
+  //Define header class
+  > .dropdown-menu > li.header {
+    .border-radius(4px; 4px; 0; 0);
+  }
+
+
+  //Define footer class
+  > .dropdown-menu > li.footer > a {
+    .border-radius(0; 0; 4px; 4px);
+  }
+
+}
+
+
+//Messages menu
+.navbar-nav > .messages-menu {
+  //Inner menu
+  > .dropdown-menu > li .menu {
+    // Messages menu item
+    > li > a {
+
+      // User image
+      > div > img {
+        margin: auto auto auto 10px;
+      }
+      // Message heading
+      > h4 {
+        // Small for message time display
+        > small {
+          left: 0;
+          right: auto;
+        }
+      }
+    }
+
+  }
+}
+
+//User menu
+.navbar-nav > .user-menu {
+
+  .user-image {
+    float: right;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin-right: 0;
+    margin-left: 10px;
+    margin-top: -2px;
+    @media (max-width: @screen-xs-max) {
+      float: none;
+      margin-left: 0;
+    }
+  }
+}
+
+/* Fix dropdown menu in navbars */
+.navbar-custom-menu > .navbar-nav {
+  > li {
+    > .dropdown-menu {
+      right: auto;
+      left: 0;
+    }
+  }
+}
+@media (max-width: @screen-sm-max) {
+  .navbar-custom-menu > .navbar-nav {
+    float: left;
+    > li {
+      position: static;
+      > .dropdown-menu {
+        left: 5%;
+        right: auto;
+      }
+    }
+  }
+}

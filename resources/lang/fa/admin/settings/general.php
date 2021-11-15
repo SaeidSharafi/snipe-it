@@ -37,6 +37,7 @@ return array(
     'default_currency'  		=> 'ارز پیش فرض',
     'default_eula_text'			=> 'EULA پیش فرض',
     'default_language'			=> 'زبان پیش فرض',
+    'enable_rtl'			    => 'استفاده از قالب RTL',
     'default_eula_help_text'	=> 'همچنین می توانید  EULA های سفارشی به دسته های خاص دارایی مرتبط کنید.',
     'display_asset_name'        => 'نمایش نام حساب',
     'display_checkout_date'     => 'نمایش تاریخ پرداخت',

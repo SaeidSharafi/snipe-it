@@ -580,6 +580,7 @@ class SettingsController extends Controller
         $setting->date_display_format = $request->input('date_display_format');
         $setting->time_display_format = $request->input('time_display_format');
         $setting->digit_separator = $request->input('digit_separator');
+        $setting->is_rtl = $request->input('is_rtl');
 
         if ($setting->save()) {
             return redirect()->route('settings.index')

@@ -1,0 +1,24 @@
+@import "bootstrap-less-rtl/bootstrap-rtl.less";
+@import "rtl/font.less";
+@import "rtl/AdminLTE.less";
+@import "rtl/bootstrap-table.less";
+body.rtl{
+  direction: rtl;
+}
+.small-box .icon {
+  right: auto;
+  left: 10px;
+}
+.sidebar-toggle {
+  margin-right: -48px;
+  margin-left: 0;
+}
+i.fa.fa-arrow-circle-right,i.fa.fa-arrow-circle-left {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
+  -webkit-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+li{
+  text-align: right;
+}

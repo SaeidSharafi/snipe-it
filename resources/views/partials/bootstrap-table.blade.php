@@ -5,6 +5,7 @@
 
 @push('js')
 <script src="{{ url(mix('js/dist/bootstrap-table.js')) }}"></script>
+<script src="{{ url(mix('js/dist/bootstrap-table.js')) }}"></script>
 <script nonce="{{ csrf_token() }}">
 
     $(function () {
@@ -37,6 +38,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             },
+            locale: '{{ str_replace('_', '-', app()->getLocale()) }}',
             stickyHeader: true,
             stickyHeaderOffsetY: stickyHeaderOffsetY + 'px',
             undefinedText: '',

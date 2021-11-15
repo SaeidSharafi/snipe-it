@@ -1,0 +1,49 @@
+.main-header {
+  //Navbar
+  > .navbar {
+    .transition(margin-left @transition-speed @transition-fn);
+    margin-left: 0;
+    margin-right: @sidebar-width;
+
+    .layout-top-nav & {
+      margin-left: 0;
+      margin-right: inherit;
+    }
+  }
+
+  //Navbar Right Menu
+  .navbar-custom-menu,
+  .navbar-right {
+    float: left;
+  }
+
+  //Navbar toggle button
+  .sidebar-toggle {
+    float: right;
+  }
+
+  //Navbar User Menu
+  .navbar .nav > li.user > a {
+    > .fa,
+    > .glyphicon,
+    > .ion {
+      margin-left: 5px;
+      margin-right: 0;
+    }
+  }
+
+  //Labels in navbar
+  .navbar .nav > li > a > .label {
+    left: 7px;
+    right: auto;
+  }
+
+  //Logo bar
+  .logo {
+    .transition(width @transition-speed @transition-fn);
+    float: right;
+    font-family: "Helvetica Neue", 'IRANSans', Helvetica, Arial, sans-serif;
+  }
+
+  //Navbar Brand. Alternative logo with layout-top-nav
+}

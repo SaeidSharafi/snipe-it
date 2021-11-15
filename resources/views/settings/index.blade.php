@@ -17,7 +17,12 @@
     }
     #searchclear {
       position: absolute;
+
+      @if($snipeSettings->is_rtl)
+      left: 5px;
+      @else
       right: 5px;
+      @endif
       top: 0;
       bottom: 0;
       height: 14px;

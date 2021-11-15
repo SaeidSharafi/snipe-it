@@ -37,6 +37,7 @@ return array(
     'default_currency'  		=> 'Default Currency',
     'default_eula_text'			=> 'Default EULA',
     'default_language'			=> 'Default Language',
+    'enable_rtl'			    => 'Use RTL',
     'default_eula_help_text'	=> 'You can also associate custom EULAs to specific asset categories.',
     'display_asset_name'        => 'Display Asset Name',
     'display_checkout_date'     => 'Display Checkout Date',

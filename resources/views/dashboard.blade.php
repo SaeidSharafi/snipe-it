@@ -131,22 +131,22 @@
                     <div class="row">
                         <div class="col-md-3">
                             @can('create', \App\Models\Asset::class)
-                            <a class="btn bg-teal" style="width: 100%" href="{{ route('hardware.create') }}">New Asset</a>
+                            <a class="btn bg-teal" style="width: 100%" href="{{ route('hardware.create') }}">{{trans('general.new_asset')}}</a>
                             @endcan
                         </div>
                         <div class="col-md-3">
                             @can('create', \App\Models\License::class)
-                                <a class="btn bg-maroon" style="width: 100%" href="{{ route('licenses.create') }}">New License</a>
+                                <a class="btn bg-maroon" style="width: 100%" href="{{ route('licenses.create') }}">{{trans('general.new_license')}}</a>
                             @endcan
                         </div>
                         <div class="col-md-3">
                             @can('create', \App\Models\Accessory::class)
-                                <a class="btn bg-orange" style="width: 100%" href="{{ route('accessories.create') }}">New Accessory</a>
+                                <a class="btn bg-orange" style="width: 100%" href="{{ route('accessories.create') }}">{{trans('general.new_accessory')}}</a>
                             @endcan
                         </div>
                         <div class="col-md-3">
                             @can('create', \App\Models\Consumable::class)
-                                <a class="btn bg-purple" style="width: 100%" href="{{ route('consumables.create') }}">New Consumable</a>
+                                <a class="btn bg-purple" style="width: 100%" href="{{ route('consumables.create') }}">{{trans('general.new_consumable')}}</a>
                             @endcan
                         </div>
                     </div>

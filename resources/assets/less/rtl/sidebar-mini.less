@@ -1,0 +1,87 @@
+/*
+ * Component: Sidebar Mini
+ */
+
+//Add sidebar-mini class to the body tag to activate this feature
+.sidebar-mini {
+  //Sidebar mini should work only on devices larger than @screen-sm
+  @media (min-width: @screen-sm) {
+    //When the sidebar is collapsed...
+    &.sidebar-collapse {
+      //Apply the new margining to the main content and footer
+      .content-wrapper,
+      .right-side,
+      .main-footer {
+        margin-right: 50px !important;
+        margin-left: 0 !important;
+        z-index: 840;
+      }
+
+      .sidebar-menu {
+        > li {
+          position: relative;
+          > a {
+            margin-right: 0;
+          }
+          > a > span {
+            border-top-left-radius: 4px;
+            border-top-right-radius: 0;
+          }
+
+          &:not(.treeview) {
+            > a > span {
+              border-bottom-left-radius: 4px;
+              border-bottom-right-radius: 0;
+            }
+          }
+
+          > .treeview-menu {
+            //Add some padding to the treeview menu
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 0;
+          }
+
+          //Show menu items on hover
+          &:hover {
+            > a {
+              //overflow: visible;
+            }
+            > a > span:not(.pull-right),
+            > .treeview-menu {
+              right: 50px !important;
+              left: auto !important;
+            }
+
+            //position the header & treeview menus
+            > a > span {
+              margin-right: -3px;
+              margin-left: 0 !important;
+              padding: 12px 20px 12px 5px !important;
+            }
+            > .treeview-menu {
+              top: 44px;
+              margin-left: inherit;
+              margin-right: -3px !important;
+            }
+          }
+        }
+      }
+
+      .main-header {
+
+        //Since the logo got smaller, we need to fix the navbar's position
+        .navbar {
+          margin-right: 50px;
+          margin-left: inherit;
+        }
+      }
+    }
+  }
+}
+.sidebar-menu li > a {
+  position: relative;
+  > .pull-right {
+    left: 10px;
+    right: auto;
+  }
+}

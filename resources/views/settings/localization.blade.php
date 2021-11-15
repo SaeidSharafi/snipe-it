@@ -52,7 +52,18 @@
                             </div>
                         </div>
 
-                        <!-- Date format -->
+
+                        <!-- Use RTL -->
+                        <div class="form-group {{ $errors->has('site_name') ? 'error' : '' }}">
+                            <div class="col-md-3">
+                                {{ Form::label('site_name', trans('admin/settings/general.enable_rtl')) }}
+                            </div>
+                            <div class="col-md-9">
+                                {{ Form::checkbox('is_rtl', '1', Request::old('is_rtl', $setting->is_rtl),array('class' => 'minimal')) }}
+                            </div>
+                        </div>
+
+                    <!-- Date format -->
                         <div class="form-group {{ $errors->has('time_display_format') ? 'error' : '' }}">
                             <div class="col-md-3">
                                 {{ Form::label('time_display_format', trans('general.time_and_date_display')) }}

@@ -11,6 +11,7 @@ mix
     .less('./node_modules/admin-lte/build/less/AdminLTE.less', 'css/build')
     .less('./resources/assets/less/app.less', 'css/build')
     .less('./resources/assets/less/overrides.less', 'css/build')
+    .less('./resources/assets/less/rtl.less', './public/css/dist/rtl.css').version()
     .styles(
         [
             './node_modules/bootstrap/dist/css/bootstrap.css',
@@ -130,7 +131,9 @@ mix
             './node_modules/xlsx/dist/xlsx.core.min.js',
             './node_modules/tableexport.jquery.plugin/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js',
             './node_modules/bootstrap-table/dist/extensions/sticky-header/bootstrap-table-sticky-header.js',
-            './node_modules/bootstrap-table/dist/extensions/toolbar/bootstrap-table-toolbar.js'
+            './node_modules/bootstrap-table/dist/extensions/toolbar/bootstrap-table-toolbar.js',
+            './node_modules/bootstrap-table/dist/locale/bootstrap-table-en-US.js',
+            './node_modules/bootstrap-table/dist/locale/bootstrap-table-fa-IR.js',
         ],
         'public/js/dist/bootstrap-table.js'
  ).version();
