@@ -9,6 +9,7 @@ body {
   font-weight: 400;
 }
 
+
 /*
  * Content Wrapper - contains the main content
  * ```.right-side has been deprecated as of v2.0.0 in favor of .content-wrapper  ```
@@ -17,26 +18,31 @@ body {
 .right-side,
 .main-footer {
   //Using disposable variable to join statements with a comma
+  @transition-rule: @transition-speed @transition-fn,
+  margin @transition-speed @transition-fn;
+  .transition-transform(@transition-rule);
   margin-right: @sidebar-width;
   margin-left: 0;
   z-index: 820;
   //Top nav layout
   .layout-top-nav & {
     margin-right: 0;
-    margin-left: inherit;
   }
   @media (max-width: @screen-xs-max) {
     margin-right: 0;
-    margin-left: inherit;
   }
   //When opening the sidebar on large screens
   .sidebar-collapse & {
     @media (min-width: @screen-sm) {
       margin-right: 0;
-      margin-left: inherit;
     }
   }
-
+  //When opening the sidebar on small screens
+  .sidebar-open & {
+    @media (max-width: @screen-xs-max) {
+      .translate(-@sidebar-width, 0);
+    }
+  }
 }
 
 /* H1 - H6 font */
@@ -54,5 +60,4 @@ h6,
 .h6 {
   font-family: 'Source Sans Pro','IRANSans', sans-serif;
 }
-
 

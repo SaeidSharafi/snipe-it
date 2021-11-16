@@ -493,3 +493,6 @@ th.css-accessory > .th-inner::before {
 .select2-container--default .select2-selection--multiple {
   border-radius: 0px;
 }
+.sidebar-open .sidebar-toggle-mobile {
+  color: #fff;
+}

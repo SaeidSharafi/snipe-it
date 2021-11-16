@@ -51,7 +51,7 @@
 
 </head>
 
-<body class="hold-transition login-page {{$snipeSettings->is_rtl}}">
+<body class="hold-transition login-page {{ $snipeSettings->is_rtl ? 'rtl' : '' }} {{$snipeSettings->is_rtl}}">
 
     @if (($snipeSettings) && ($snipeSettings->logo!=''))
         <center>

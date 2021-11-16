@@ -86,6 +86,17 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/admin-lte/build/less/AdminLTE.less":
+/*!*********************************************************!*\
+  !*** ./node_modules/admin-lte/build/less/AdminLTE.less ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/alert.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/alert.vue?vue&type=script&lang=js& ***!
@@ -6718,17 +6729,17 @@ return $.widget;
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * jQuery JavaScript Library v3.5.1
+ * jQuery JavaScript Library v3.6.0
  * https://jquery.com/
  *
  * Includes Sizzle.js
  * https://sizzlejs.com/
  *
- * Copyright JS Foundation and other contributors
+ * Copyright OpenJS Foundation and other contributors
  * Released under the MIT license
  * https://jquery.org/license
  *
- * Date: 2020-05-04T22:49Z
+ * Date: 2021-03-02T17:08Z
  */
 ( function( global, factory ) {
 
@@ -6795,12 +6806,16 @@ var support = {};
 
 var isFunction = function isFunction( obj ) {
 
-      // Support: Chrome <=57, Firefox <=52
-      // In some browsers, typeof returns "function" for HTML <object> elements
-      // (i.e., `typeof document.createElement( "object" ) === "function"`).
-      // We don't want to classify *any* DOM node as a function.
-      return typeof obj === "function" && typeof obj.nodeType !== "number";
-  };
+		// Support: Chrome <=57, Firefox <=52
+		// In some browsers, typeof returns "function" for HTML <object> elements
+		// (i.e., `typeof document.createElement( "object" ) === "function"`).
+		// We don't want to classify *any* DOM node as a function.
+		// Support: QtWeb <=3.8.5, WebKit <=534.34, wkhtmltopdf tool <=0.12.5
+		// Plus for old WebKit, typeof returns "function" for HTML collections
+		// (e.g., `typeof document.getElementsByTagName("div") === "function"`). (gh-4756)
+		return typeof obj === "function" && typeof obj.nodeType !== "number" &&
+			typeof obj.item !== "function";
+	};
 
 
 var isWindow = function isWindow( obj ) {
@@ -6866,7 +6881,7 @@ function toType( obj ) {
 
 
 var
-	version = "3.5.1",
+	version = "3.6.0",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -7120,7 +7135,7 @@ jQuery.extend( {
 			if ( isArrayLike( Object( arr ) ) ) {
 				jQuery.merge( ret,
 					typeof arr === "string" ?
-					[ arr ] : arr
+						[ arr ] : arr
 				);
 			} else {
 				push.call( ret, arr );
@@ -7215,9 +7230,9 @@ if ( typeof Symbol === "function" ) {
 
 // Populate the class2type map
 jQuery.each( "Boolean Number String Function Array Date RegExp Object Error Symbol".split( " " ),
-function( _i, name ) {
-	class2type[ "[object " + name + "]" ] = name.toLowerCase();
-} );
+	function( _i, name ) {
+		class2type[ "[object " + name + "]" ] = name.toLowerCase();
+	} );
 
 function isArrayLike( obj ) {
 
@@ -7237,14 +7252,14 @@ function isArrayLike( obj ) {
 }
 var Sizzle =
 /*!
- * Sizzle CSS Selector Engine v2.3.5
+ * Sizzle CSS Selector Engine v2.3.6
  * https://sizzlejs.com/
  *
  * Copyright JS Foundation and other contributors
  * Released under the MIT license
  * https://js.foundation/
  *
- * Date: 2020-03-14
+ * Date: 2021-02-16
  */
 ( function( window ) {
 var i,
@@ -7827,8 +7842,8 @@ support = Sizzle.support = {};
  * @returns {Boolean} True iff elem is a non-HTML XML node
  */
 isXML = Sizzle.isXML = function( elem ) {
-	var namespace = elem.namespaceURI,
-		docElem = ( elem.ownerDocument || elem ).documentElement;
+	var namespace = elem && elem.namespaceURI,
+		docElem = elem && ( elem.ownerDocument || elem ).documentElement;
 
 	// Support: IE <=8
 	// Assume HTML when documentElement doesn't yet exist, such as inside loading iframes
@@ -9743,9 +9758,9 @@ var rneedsContext = jQuery.expr.match.needsContext;
 
 function nodeName( elem, name ) {
 
-  return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
+	return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
 
-};
+}
 var rsingleTag = ( /^<([a-z][^\/\0>:\x20\t\r\n\f]*)[\x20\t\r\n\f]*\/?>(?:<\/\1>|)$/i );
 
 
@@ -10716,8 +10731,8 @@ jQuery.extend( {
 			resolveContexts = Array( i ),
 			resolveValues = slice.call( arguments ),
 
-			// the master Deferred
-			master = jQuery.Deferred(),
+			// the primary Deferred
+			primary = jQuery.Deferred(),
 
 			// subordinate callback factory
 			updateFunc = function( i ) {
@@ -10725,30 +10740,30 @@ jQuery.extend( {
 					resolveContexts[ i ] = this;
 					resolveValues[ i ] = arguments.length > 1 ? slice.call( arguments ) : value;
 					if ( !( --remaining ) ) {
-						master.resolveWith( resolveContexts, resolveValues );
+						primary.resolveWith( resolveContexts, resolveValues );
 					}
 				};
 			};
 
 		// Single- and empty arguments are adopted like Promise.resolve
 		if ( remaining <= 1 ) {
-			adoptValue( singleValue, master.done( updateFunc( i ) ).resolve, master.reject,
+			adoptValue( singleValue, primary.done( updateFunc( i ) ).resolve, primary.reject,
 				!remaining );
 
 			// Use .then() to unwrap secondary thenables (cf. gh-3000)
-			if ( master.state() === "pending" ||
+			if ( primary.state() === "pending" ||
 				isFunction( resolveValues[ i ] && resolveValues[ i ].then ) ) {
 
-				return master.then();
+				return primary.then();
 			}
 		}
 
 		// Multiple arguments are aggregated like Promise.all array elements
 		while ( i-- ) {
-			adoptValue( resolveValues[ i ], updateFunc( i ), master.reject );
+			adoptValue( resolveValues[ i ], updateFunc( i ), primary.reject );
 		}
 
-		return master.promise();
+		return primary.promise();
 	}
 } );
 
@@ -10899,8 +10914,8 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 			for ( ; i < len; i++ ) {
 				fn(
 					elems[ i ], key, raw ?
-					value :
-					value.call( elems[ i ], i, fn( elems[ i ], key ) )
+						value :
+						value.call( elems[ i ], i, fn( elems[ i ], key ) )
 				);
 			}
 		}
@@ -11808,10 +11823,7 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 }
 
 
-var
-	rkeyEvent = /^key/,
-	rmouseEvent = /^(?:mouse|pointer|contextmenu|drag|drop)|click/,
-	rtypenamespace = /^([^.]*)(?:\.(.+)|)/;
+var rtypenamespace = /^([^.]*)(?:\.(.+)|)/;
 
 function returnTrue() {
 	return true;
@@ -12106,8 +12118,8 @@ jQuery.event = {
 			event = jQuery.event.fix( nativeEvent ),
 
 			handlers = (
-					dataPriv.get( this, "events" ) || Object.create( null )
-				)[ event.type ] || [],
+				dataPriv.get( this, "events" ) || Object.create( null )
+			)[ event.type ] || [],
 			special = jQuery.event.special[ event.type ] || {};
 
 		// Use the fix-ed jQuery.Event rather than the (read-only) native event
@@ -12231,12 +12243,12 @@ jQuery.event = {
 			get: isFunction( hook ) ?
 				function() {
 					if ( this.originalEvent ) {
-							return hook( this.originalEvent );
+						return hook( this.originalEvent );
 					}
 				} :
 				function() {
 					if ( this.originalEvent ) {
-							return this.originalEvent[ name ];
+						return this.originalEvent[ name ];
 					}
 				},
 
@@ -12375,7 +12387,13 @@ function leverageNative( el, type, expectSync ) {
 						// Cancel the outer synthetic event
 						event.stopImmediatePropagation();
 						event.preventDefault();
-						return result.value;
+
+						// Support: Chrome 86+
+						// In Chrome, if an element having a focusout handler is blurred by
+						// clicking outside of it, it invokes the handler synchronously. If
+						// that handler calls `.remove()` on the element, the data is cleared,
+						// leaving `result` undefined. We need to guard against this.
+						return result && result.value;
 					}
 
 				// If this is an inner synthetic event for an event with a bubbling surrogate
@@ -12540,34 +12558,7 @@ jQuery.each( {
 	targetTouches: true,
 	toElement: true,
 	touches: true,
-
-	which: function( event ) {
-		var button = event.button;
-
-		// Add which for key events
-		if ( event.which == null && rkeyEvent.test( event.type ) ) {
-			return event.charCode != null ? event.charCode : event.keyCode;
-		}
-
-		// Add which for click: 1 === left; 2 === middle; 3 === right
-		if ( !event.which && button !== undefined && rmouseEvent.test( event.type ) ) {
-			if ( button & 1 ) {
-				return 1;
-			}
-
-			if ( button & 2 ) {
-				return 3;
-			}
-
-			if ( button & 4 ) {
-				return 2;
-			}
-
-			return 0;
-		}
-
-		return event.which;
-	}
+	which: true
 }, jQuery.event.addProp );
 
 jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateType ) {
@@ -12590,6 +12581,12 @@ jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateTyp
 			leverageNative( this, type );
 
 			// Return non-false to allow normal event-path propagation
+			return true;
+		},
+
+		// Suppress native focus or blur as it's already being fired
+		// in leverageNative.
+		_default: function() {
 			return true;
 		},
 
@@ -13260,6 +13257,10 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 		// set in CSS while `offset*` properties report correct values.
 		// Behavior in IE 9 is more subtle than in newer versions & it passes
 		// some versions of this test; make sure not to make it pass there!
+		//
+		// Support: Firefox 70+
+		// Only Firefox includes border widths
+		// in computed dimensions. (gh-4529)
 		reliableTrDimensions: function() {
 			var table, tr, trChild, trStyle;
 			if ( reliableTrDimensionsVal == null ) {
@@ -13267,9 +13268,22 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 				tr = document.createElement( "tr" );
 				trChild = document.createElement( "div" );
 
-				table.style.cssText = "position:absolute;left:-11111px";
+				table.style.cssText = "position:absolute;left:-11111px;border-collapse:separate";
+				tr.style.cssText = "border:1px solid";
+
+				// Support: Chrome 86+
+				// Height set through cssText does not get applied.
+				// Computed height then comes back as 0.
 				tr.style.height = "1px";
 				trChild.style.height = "9px";
+
+				// Support: Android 8 Chrome 86+
+				// In our bodyBackground.html iframe,
+				// display for all div elements is set to "inline",
+				// which causes a problem only in Android 8 Chrome 86.
+				// Ensuring the div is display: block
+				// gets around this issue.
+				trChild.style.display = "block";
 
 				documentElement
 					.appendChild( table )
@@ -13277,7 +13291,9 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 					.appendChild( trChild );
 
 				trStyle = window.getComputedStyle( tr );
-				reliableTrDimensionsVal = parseInt( trStyle.height ) > 3;
+				reliableTrDimensionsVal = ( parseInt( trStyle.height, 10 ) +
+					parseInt( trStyle.borderTopWidth, 10 ) +
+					parseInt( trStyle.borderBottomWidth, 10 ) ) === tr.offsetHeight;
 
 				documentElement.removeChild( table );
 			}
@@ -13741,10 +13757,10 @@ jQuery.each( [ "height", "width" ], function( _i, dimension ) {
 					// Running getBoundingClientRect on a disconnected node
 					// in IE throws an error.
 					( !elem.getClientRects().length || !elem.getBoundingClientRect().width ) ?
-						swap( elem, cssShow, function() {
-							return getWidthOrHeight( elem, dimension, extra );
-						} ) :
-						getWidthOrHeight( elem, dimension, extra );
+					swap( elem, cssShow, function() {
+						return getWidthOrHeight( elem, dimension, extra );
+					} ) :
+					getWidthOrHeight( elem, dimension, extra );
 			}
 		},
 
@@ -13803,7 +13819,7 @@ jQuery.cssHooks.marginLeft = addGetHookIf( support.reliableMarginLeft,
 					swap( elem, { marginLeft: 0 }, function() {
 						return elem.getBoundingClientRect().left;
 					} )
-				) + "px";
+			) + "px";
 		}
 	}
 );
@@ -13942,7 +13958,7 @@ Tween.propHooks = {
 			if ( jQuery.fx.step[ tween.prop ] ) {
 				jQuery.fx.step[ tween.prop ]( tween );
 			} else if ( tween.elem.nodeType === 1 && (
-					jQuery.cssHooks[ tween.prop ] ||
+				jQuery.cssHooks[ tween.prop ] ||
 					tween.elem.style[ finalPropName( tween.prop ) ] != null ) ) {
 				jQuery.style( tween.elem, tween.prop, tween.now + tween.unit );
 			} else {
@@ -14187,7 +14203,7 @@ function defaultPrefilter( elem, props, opts ) {
 
 			anim.done( function() {
 
-			/* eslint-enable no-loop-func */
+				/* eslint-enable no-loop-func */
 
 				// The final step of a "hide" animation is actually hiding the element
 				if ( !hidden ) {
@@ -14307,7 +14323,7 @@ function Animation( elem, properties, options ) {
 			tweens: [],
 			createTween: function( prop, end ) {
 				var tween = jQuery.Tween( elem, animation.opts, prop, end,
-						animation.opts.specialEasing[ prop ] || animation.opts.easing );
+					animation.opts.specialEasing[ prop ] || animation.opts.easing );
 				animation.tweens.push( tween );
 				return tween;
 			},
@@ -14480,7 +14496,8 @@ jQuery.fn.extend( {
 					anim.stop( true );
 				}
 			};
-			doAnimation.finish = doAnimation;
+
+		doAnimation.finish = doAnimation;
 
 		return empty || optall.queue === false ?
 			this.each( doAnimation ) :
@@ -15120,8 +15137,8 @@ jQuery.fn.extend( {
 				if ( this.setAttribute ) {
 					this.setAttribute( "class",
 						className || value === false ?
-						"" :
-						dataPriv.get( this, "__className__" ) || ""
+							"" :
+							dataPriv.get( this, "__className__" ) || ""
 					);
 				}
 			}
@@ -15136,7 +15153,7 @@ jQuery.fn.extend( {
 		while ( ( elem = this[ i++ ] ) ) {
 			if ( elem.nodeType === 1 &&
 				( " " + stripAndCollapse( getClass( elem ) ) + " " ).indexOf( className ) > -1 ) {
-					return true;
+				return true;
 			}
 		}
 
@@ -15426,9 +15443,7 @@ jQuery.extend( jQuery.event, {
 				special.bindType || type;
 
 			// jQuery handler
-			handle = (
-					dataPriv.get( cur, "events" ) || Object.create( null )
-				)[ event.type ] &&
+			handle = ( dataPriv.get( cur, "events" ) || Object.create( null ) )[ event.type ] &&
 				dataPriv.get( cur, "handle" );
 			if ( handle ) {
 				handle.apply( cur, data );
@@ -15575,7 +15590,7 @@ var rquery = ( /\?/ );
 
 // Cross-browser xml parsing
 jQuery.parseXML = function( data ) {
-	var xml;
+	var xml, parserErrorElem;
 	if ( !data || typeof data !== "string" ) {
 		return null;
 	}
@@ -15584,12 +15599,17 @@ jQuery.parseXML = function( data ) {
 	// IE throws on parseFromString with invalid input.
 	try {
 		xml = ( new window.DOMParser() ).parseFromString( data, "text/xml" );
-	} catch ( e ) {
-		xml = undefined;
-	}
+	} catch ( e ) {}
 
-	if ( !xml || xml.getElementsByTagName( "parsererror" ).length ) {
-		jQuery.error( "Invalid XML: " + data );
+	parserErrorElem = xml && xml.getElementsByTagName( "parsererror" )[ 0 ];
+	if ( !xml || parserErrorElem ) {
+		jQuery.error( "Invalid XML: " + (
+			parserErrorElem ?
+				jQuery.map( parserErrorElem.childNodes, function( el ) {
+					return el.textContent;
+				} ).join( "\n" ) :
+				data
+		) );
 	}
 	return xml;
 };
@@ -15690,16 +15710,14 @@ jQuery.fn.extend( {
 			// Can add propHook for "elements" to filter or add form elements
 			var elements = jQuery.prop( this, "elements" );
 			return elements ? jQuery.makeArray( elements ) : this;
-		} )
-		.filter( function() {
+		} ).filter( function() {
 			var type = this.type;
 
 			// Use .is( ":disabled" ) so that fieldset[disabled] works
 			return this.name && !jQuery( this ).is( ":disabled" ) &&
 				rsubmittable.test( this.nodeName ) && !rsubmitterTypes.test( type ) &&
 				( this.checked || !rcheckableType.test( type ) );
-		} )
-		.map( function( _i, elem ) {
+		} ).map( function( _i, elem ) {
 			var val = jQuery( this ).val();
 
 			if ( val == null ) {
@@ -15752,7 +15770,8 @@ var
 
 	// Anchor tag for parsing the document origin
 	originAnchor = document.createElement( "a" );
-	originAnchor.href = location.href;
+
+originAnchor.href = location.href;
 
 // Base "constructor" for jQuery.ajaxPrefilter and jQuery.ajaxTransport
 function addToPrefiltersOrTransports( structure ) {
@@ -16133,8 +16152,8 @@ jQuery.extend( {
 			// Context for global events is callbackContext if it is a DOM node or jQuery collection
 			globalEventContext = s.context &&
 				( callbackContext.nodeType || callbackContext.jquery ) ?
-					jQuery( callbackContext ) :
-					jQuery.event,
+				jQuery( callbackContext ) :
+				jQuery.event,
 
 			// Deferreds
 			deferred = jQuery.Deferred(),
@@ -16446,8 +16465,10 @@ jQuery.extend( {
 				response = ajaxHandleResponses( s, jqXHR, responses );
 			}
 
-			// Use a noop converter for missing script
-			if ( !isSuccess && jQuery.inArray( "script", s.dataTypes ) > -1 ) {
+			// Use a noop converter for missing script but not if jsonp
+			if ( !isSuccess &&
+				jQuery.inArray( "script", s.dataTypes ) > -1 &&
+				jQuery.inArray( "json", s.dataTypes ) < 0 ) {
 				s.converters[ "text script" ] = function() {};
 			}
 
@@ -17185,12 +17206,6 @@ jQuery.offset = {
 			options.using.call( elem, props );
 
 		} else {
-			if ( typeof props.top === "number" ) {
-				props.top += "px";
-			}
-			if ( typeof props.left === "number" ) {
-				props.left += "px";
-			}
 			curElem.css( props );
 		}
 	}
@@ -17359,8 +17374,11 @@ jQuery.each( [ "top", "left" ], function( _i, prop ) {
 
 // Create innerHeight, innerWidth, height, width, outerHeight and outerWidth methods
 jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
-	jQuery.each( { padding: "inner" + name, content: type, "": "outer" + name },
-		function( defaultExtra, funcName ) {
+	jQuery.each( {
+		padding: "inner" + name,
+		content: type,
+		"": "outer" + name
+	}, function( defaultExtra, funcName ) {
 
 		// Margin is only for outerHeight, outerWidth
 		jQuery.fn[ funcName ] = function( margin, value ) {
@@ -17445,7 +17463,8 @@ jQuery.fn.extend( {
 	}
 } );
 
-jQuery.each( ( "blur focus focusin focusout resize scroll click dblclick " +
+jQuery.each(
+	( "blur focus focusin focusout resize scroll click dblclick " +
 	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
 	"change select submit keydown keypress keyup contextmenu" ).split( " " ),
 	function( _i, name ) {
@@ -17456,7 +17475,8 @@ jQuery.each( ( "blur focus focusin focusout resize scroll click dblclick " +
 				this.on( name, null, data, fn ) :
 				this.trigger( name );
 		};
-	} );
+	}
+);
 
 
 
@@ -41578,7 +41598,7 @@ module.exports = function (css) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
+var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
@@ -41592,7 +41612,7 @@ var render = function() {
           {
             staticClass: "close",
             attrs: { type: "button" },
-            on: { click: _vm.hideEvent }
+            on: { click: _vm.hideEvent },
           },
           [_vm._v("×")]
         ),
@@ -41603,19 +41623,19 @@ var render = function() {
               name: "show",
               rawName: "v-show",
               value: _vm.alertType == "success",
-              expression: "alertType == 'success'"
-            }
+              expression: "alertType == 'success'",
+            },
           ],
           staticClass: "fa fa-check faa-pulse animated",
-          attrs: { "aria-hidden": "true" }
+          attrs: { "aria-hidden": "true" },
         }),
         _vm._v(" "),
         _c("strong", [_vm._v(_vm._s(_vm.title) + " ")]),
         _vm._v(" "),
-        _vm._t("default")
+        _vm._t("default"),
       ],
       2
-    )
+    ),
   ])
 }
 var staticRenderFns = []
@@ -41636,7 +41656,7 @@ render._withStripped = true
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
+var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
@@ -41646,7 +41666,7 @@ var render = function() {
           _c("div", { staticClass: "form-group" }, [
             _c("fieldset", [
               _c("legend", { staticClass: "col-md-3 control-label" }, [
-                _vm._v("Default Values")
+                _vm._v("Default Values"),
               ]),
               _vm._v(" "),
               _c(
@@ -41657,21 +41677,21 @@ var render = function() {
                     ? _c("p", [
                         _vm._v(
                           "\n                        There was a problem retrieving the fields for this fieldset.\n                    "
-                        )
+                        ),
                       ])
                     : _vm._e(),
                   _vm._v(" "),
-                  _vm._l(_vm.fields, function(field) {
+                  _vm._l(_vm.fields, function (field) {
                     return _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-sm-12 col-lg-6" }, [
                         _c(
                           "label",
                           {
                             staticClass: "control-label",
-                            attrs: { for: "default-value" + field.id }
+                            attrs: { for: "default-value" + field.id },
                           },
                           [_vm._v(_vm._s(field.name))]
-                        )
+                        ),
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-sm-12 col-lg-6" }, [
@@ -41681,9 +41701,9 @@ var render = function() {
                               attrs: {
                                 type: "text",
                                 id: "default-value" + field.id,
-                                name: "default_values[" + field.id + "]"
+                                name: "default_values[" + field.id + "]",
                               },
-                              domProps: { value: _vm.getValue(field) }
+                              domProps: { value: _vm.getValue(field) },
                             })
                           : _vm._e(),
                         _vm._v(" "),
@@ -41692,9 +41712,9 @@ var render = function() {
                               staticClass: "form-control",
                               attrs: {
                                 id: "default-value" + field.id,
-                                name: "default_values[" + field.id + "]"
+                                name: "default_values[" + field.id + "]",
                               },
-                              domProps: { value: _vm.getValue(field) }
+                              domProps: { value: _vm.getValue(field) },
                             })
                           : _vm._e(),
                         _c("br"),
@@ -41705,41 +41725,42 @@ var render = function() {
                               {
                                 staticClass: "form-control m-b-xs",
                                 attrs: {
-                                  name: "default_values[" + field.id + "]"
-                                }
+                                  name: "default_values[" + field.id + "]",
+                                },
                               },
                               [
                                 _c("option", { attrs: { value: "" } }),
                                 _vm._v(" "),
-                                _vm._l(field.field_values_array, function(
-                                  field_value
-                                ) {
-                                  return _c(
-                                    "option",
-                                    {
-                                      domProps: {
-                                        value: field_value,
-                                        selected:
-                                          _vm.getValue(field) == field_value
-                                      }
-                                    },
-                                    [_vm._v(_vm._s(field_value))]
-                                  )
-                                })
+                                _vm._l(
+                                  field.field_values_array,
+                                  function (field_value) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        domProps: {
+                                          value: field_value,
+                                          selected:
+                                            _vm.getValue(field) == field_value,
+                                        },
+                                      },
+                                      [_vm._v(_vm._s(field_value))]
+                                    )
+                                  }
+                                ),
                               ],
                               2
                             )
-                          : _vm._e()
-                      ])
+                          : _vm._e(),
+                      ]),
                     ])
-                  })
+                  }),
                 ],
                 2
-              )
-            ])
-          ])
+              ),
+            ]),
+          ]),
         ])
-      : _vm._e()
+      : _vm._e(),
   ])
 }
 var staticRenderFns = []
@@ -41760,7 +41781,7 @@ render._withStripped = true
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
+var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
@@ -41774,68 +41795,68 @@ var render = function() {
               "table",
               {
                 staticClass: "table table-striped table-bordered",
-                attrs: { id: "errors-table" }
+                attrs: { id: "errors-table" },
               },
               [
                 _vm._m(1),
                 _vm._v(" "),
                 _c(
                   "tbody",
-                  _vm._l(_vm.errors, function(error, item) {
+                  _vm._l(_vm.errors, function (error, item) {
                     return _c(
                       "tr",
                       [
                         _c("td", [_vm._v(_vm._s(item))]),
                         _vm._v(" "),
-                        _vm._l(error, function(value, field) {
+                        _vm._l(error, function (value, field) {
                           return _c(
                             "td",
                             [
                               _c("b", [_vm._v(_vm._s(field) + ":")]),
                               _vm._v(" "),
-                              _vm._l(value, function(errorString) {
+                              _vm._l(value, function (errorString) {
                                 return _c("span", [
-                                  _vm._v(_vm._s(errorString[0]))
+                                  _vm._v(_vm._s(errorString[0])),
                                 ])
                               }),
                               _vm._v(" "),
-                              _c("br")
+                              _c("br"),
                             ],
                             2
                           )
-                        })
+                        }),
                       ],
                       2
                     )
                   })
-                )
+                ),
               ]
-            )
-          ])
-        ])
+            ),
+          ]),
+        ]),
       ])
     : _vm._e()
 }
 var staticRenderFns = [
-  function() {
+  function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "alert alert-warning" }, [
       _c("strong", [_vm._v("Warning")]),
-      _vm._v(" Some Errors occured while importing\n    ")
+      _vm._v(" Some Errors occured while importing\n    "),
     ])
   },
-  function() {
+  function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("th", [_vm._v("Item")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Errors")])
+      _c("th", [_vm._v("Errors")]),
     ])
-  }
+  },
 ]
 render._withStripped = true
 
@@ -41854,7 +41875,7 @@ render._withStripped = true
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
+var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
@@ -41866,9 +41887,9 @@ var render = function() {
           name: "show",
           rawName: "v-show",
           value: _vm.processDetail,
-          expression: "processDetail"
-        }
-      ]
+          expression: "processDetail",
+        },
+      ],
     },
     [
       _c("td", { attrs: { colspan: "5" } }, [
@@ -41889,21 +41910,21 @@ var render = function() {
                       {
                         attrs: {
                           options: _vm.options.importTypes,
-                          required: ""
+                          required: "",
                         },
                         model: {
                           value: _vm.options.importType,
-                          callback: function($$v) {
+                          callback: function ($$v) {
                             _vm.options.importType = $$v
                           },
-                          expression: "options.importType"
-                        }
+                          expression: "options.importType",
+                        },
                       },
                       [_c("option", { attrs: { disabled: "", value: "0" } })]
-                    )
+                    ),
                   ],
                   1
-                )
+                ),
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "dynamic-form-row" }, [
@@ -41916,18 +41937,18 @@ var render = function() {
                         name: "model",
                         rawName: "v-model",
                         value: _vm.options.update,
-                        expression: "options.update"
-                      }
+                        expression: "options.update",
+                      },
                     ],
                     staticClass: "iCheck minimal",
                     attrs: { type: "checkbox", name: "import-update" },
                     domProps: {
                       checked: Array.isArray(_vm.options.update)
                         ? _vm._i(_vm.options.update, null) > -1
-                        : _vm.options.update
+                        : _vm.options.update,
                     },
                     on: {
-                      __c: function($event) {
+                      __c: function ($event) {
                         var $$a = _vm.options.update,
                           $$el = $event.target,
                           $$c = $$el.checked ? true : false
@@ -41945,10 +41966,10 @@ var render = function() {
                         } else {
                           _vm.options.update = $$c
                         }
-                      }
-                    }
-                  })
-                ])
+                      },
+                    },
+                  }),
+                ]),
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "dynamic-form-row" }, [
@@ -41961,18 +41982,18 @@ var render = function() {
                         name: "model",
                         rawName: "v-model",
                         value: _vm.options.send_welcome,
-                        expression: "options.send_welcome"
-                      }
+                        expression: "options.send_welcome",
+                      },
                     ],
                     staticClass: "minimal",
                     attrs: { type: "checkbox", name: "send-welcome" },
                     domProps: {
                       checked: Array.isArray(_vm.options.send_welcome)
                         ? _vm._i(_vm.options.send_welcome, null) > -1
-                        : _vm.options.send_welcome
+                        : _vm.options.send_welcome,
                     },
                     on: {
-                      __c: function($event) {
+                      __c: function ($event) {
                         var $$a = _vm.options.send_welcome,
                           $$el = $event.target,
                           $$c = $$el.checked ? true : false
@@ -41991,10 +42012,10 @@ var render = function() {
                         } else {
                           _vm.options.send_welcome = $$c
                         }
-                      }
-                    }
-                  })
-                ])
+                      },
+                    },
+                  }),
+                ]),
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "dynamic-form-row" }, [
@@ -42007,18 +42028,18 @@ var render = function() {
                         name: "model",
                         rawName: "v-model",
                         value: _vm.options.run_backup,
-                        expression: "options.run_backup"
-                      }
+                        expression: "options.run_backup",
+                      },
                     ],
                     staticClass: "minimal",
                     attrs: { type: "checkbox", name: "run-backup" },
                     domProps: {
                       checked: Array.isArray(_vm.options.run_backup)
                         ? _vm._i(_vm.options.run_backup, null) > -1
-                        : _vm.options.run_backup
+                        : _vm.options.run_backup,
                     },
                     on: {
-                      __c: function($event) {
+                      __c: function ($event) {
                         var $$a = _vm.options.run_backup,
                           $$el = $event.target,
                           $$c = $$el.checked ? true : false
@@ -42037,10 +42058,10 @@ var render = function() {
                         } else {
                           _vm.options.run_backup = $$c
                         }
-                      }
-                    }
-                  })
-                ])
+                      },
+                    },
+                  }),
+                ]),
               ]),
               _vm._v(" "),
               _vm.statusText
@@ -42049,22 +42070,22 @@ var render = function() {
                     {
                       staticClass: "alert col-md-8 col-md-offset-2",
                       class: _vm.alertClass,
-                      staticStyle: { "text-align": "left" }
+                      staticStyle: { "text-align": "left" },
                     },
                     [
                       _vm._v(
                         "\n                  " +
                           _vm._s(this.statusText) +
                           "\n              "
-                      )
+                      ),
                     ]
                   )
-                : _vm._e()
+                : _vm._e(),
             ]),
             _vm._v(" "),
             _vm._m(4),
             _vm._v(" "),
-            _vm._l(_vm.file.header_row, function(header, index) {
+            _vm._l(_vm.file.header_row, function (header, index) {
               return [
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-md-12" }, [
@@ -42073,10 +42094,10 @@ var render = function() {
                         "label",
                         {
                           staticClass: "control-label",
-                          attrs: { for: header }
+                          attrs: { for: header },
                         },
                         [_vm._v(_vm._s(header))]
-                      )
+                      ),
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-4 form-group" }, [
@@ -42090,30 +42111,30 @@ var render = function() {
                               attrs: { options: _vm.columns },
                               model: {
                                 value: _vm.columnMappings[header],
-                                callback: function($$v) {
+                                callback: function ($$v) {
                                   _vm.$set(_vm.columnMappings, header, $$v)
                                 },
-                                expression: "columnMappings[header]"
-                              }
+                                expression: "columnMappings[header]",
+                              },
                             },
                             [
                               _c("option", { attrs: { value: "0" } }, [
-                                _vm._v("Do Not Import")
-                              ])
+                                _vm._v("Do Not Import"),
+                              ]),
                             ]
-                          )
+                          ),
                         ],
                         1
-                      )
+                      ),
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-4" }, [
                       _c("p", { staticClass: "form-control-static" }, [
-                        _vm._v(_vm._s(_vm.activeFile.first_row[index]))
-                      ])
-                    ])
-                  ])
-                ])
+                        _vm._v(_vm._s(_vm.activeFile.first_row[index])),
+                      ]),
+                    ]),
+                  ]),
+                ]),
               ]
             }),
             _vm._v(" "),
@@ -42122,7 +42143,7 @@ var render = function() {
                 "div",
                 {
                   staticClass: "col-md-6 col-md-offset-2 text-right",
-                  staticStyle: { "padding-top": "20px" }
+                  staticStyle: { "padding-top": "20px" },
                 },
                 [
                   _c(
@@ -42131,10 +42152,10 @@ var render = function() {
                       staticClass: "btn btn-sm btn-default",
                       attrs: { type: "button" },
                       on: {
-                        click: function($event) {
+                        click: function ($event) {
                           _vm.processDetail = false
-                        }
-                      }
+                        },
+                      },
                     },
                     [_vm._v("Cancel")]
                   ),
@@ -42144,15 +42165,15 @@ var render = function() {
                     {
                       staticClass: "btn btn-sm btn-primary",
                       attrs: { type: "submit" },
-                      on: { click: _vm.postSave }
+                      on: { click: _vm.postSave },
                     },
                     [_vm._v("Import")]
                   ),
                   _vm._v(" "),
                   _c("br"),
-                  _c("br")
+                  _c("br"),
                 ]
-              )
+              ),
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
@@ -42162,65 +42183,65 @@ var render = function() {
                     {
                       staticClass: "alert col-md-8 col-md-offset-2",
                       class: _vm.alertClass,
-                      staticStyle: { "padding-top": "20px" }
+                      staticStyle: { "padding-top": "20px" },
                     },
                     [
                       _vm._v(
                         "\n              " +
                           _vm._s(this.statusText) +
                           "\n          "
-                      )
+                      ),
                     ]
                   )
-                : _vm._e()
-            ])
+                : _vm._e(),
+            ]),
           ],
           2
-        )
-      ])
+        ),
+      ]),
     ]
   )
 }
 var staticRenderFns = [
-  function() {
+  function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-5 col-xs-12" }, [
-      _c("label", { attrs: { for: "import-type" } }, [_vm._v("Import Type:")])
+      _c("label", { attrs: { for: "import-type" } }, [_vm._v("Import Type:")]),
     ])
   },
-  function() {
+  function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-5 col-xs-12" }, [
       _c("label", { attrs: { for: "import-update" } }, [
-        _vm._v("Update Existing Values?:")
-      ])
+        _vm._v("Update Existing Values?:"),
+      ]),
     ])
   },
-  function() {
+  function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-5 col-xs-12" }, [
       _c("label", { attrs: { for: "send-welcome" } }, [
-        _vm._v("Send Welcome Email for new Users?")
-      ])
+        _vm._v("Send Welcome Email for new Users?"),
+      ]),
     ])
   },
-  function() {
+  function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-5 col-xs-12" }, [
       _c("label", { attrs: { for: "run-backup" } }, [
-        _vm._v("Backup before importing?")
-      ])
+        _vm._v("Backup before importing?"),
+      ]),
     ])
   },
-  function() {
+  function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
@@ -42230,20 +42251,20 @@ var staticRenderFns = [
         { staticClass: "col-md-12", staticStyle: { "padding-top": "30px" } },
         [
           _c("div", { staticClass: "col-md-4 text-right" }, [
-            _c("h4", [_vm._v("Header Field")])
+            _c("h4", [_vm._v("Header Field")]),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-4" }, [
-            _c("h4", [_vm._v("Import Field")])
+            _c("h4", [_vm._v("Import Field")]),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-4" }, [
-            _c("h4", [_vm._v("Sample Value")])
-          ])
+            _c("h4", [_vm._v("Sample Value")]),
+          ]),
         ]
-      )
+      ),
     ])
-  }
+  },
 ]
 render._withStripped = true
 
@@ -42262,7 +42283,7 @@ render._withStripped = true
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
+var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
@@ -42271,7 +42292,7 @@ var render = function() {
       ? _c("div", [
           _c("div", { staticClass: "panel panel-default" }, [
             _c("h2", { staticClass: "panel-heading" }, [
-              _vm._v("Authorized Applications")
+              _vm._v("Authorized Applications"),
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "panel-body" }, [
@@ -42280,7 +42301,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "tbody",
-                  _vm._l(_vm.tokens, function(token) {
+                  _vm._l(_vm.tokens, function (token) {
                     return _c("tr", [
                       _c(
                         "td",
@@ -42290,7 +42311,7 @@ var render = function() {
                             "\n                                " +
                               _vm._s(token.client.name) +
                               "\n                            "
-                          )
+                          ),
                         ]
                       ),
                       _vm._v(" "),
@@ -42304,9 +42325,9 @@ var render = function() {
                                   "\n                                    " +
                                     _vm._s(token.scopes.join(", ")) +
                                     "\n                                "
-                                )
+                                ),
                               ])
-                            : _vm._e()
+                            : _vm._e(),
                         ]
                       ),
                       _vm._v(" "),
@@ -42319,31 +42340,31 @@ var render = function() {
                             {
                               staticClass: "action-link text-danger",
                               on: {
-                                click: function($event) {
+                                click: function ($event) {
                                   _vm.revoke(token)
-                                }
-                              }
+                                },
+                              },
                             },
                             [
                               _vm._v(
                                 "\n                                    Revoke\n                                "
-                              )
+                              ),
                             ]
-                          )
+                          ),
                         ]
-                      )
+                      ),
                     ])
                   })
-                )
-              ])
-            ])
-          ])
+                ),
+              ]),
+            ]),
+          ]),
         ])
-      : _vm._e()
+      : _vm._e(),
   ])
 }
 var staticRenderFns = [
-  function() {
+  function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
@@ -42353,10 +42374,10 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Scopes")]),
         _vm._v(" "),
-        _c("th", [_c("span", { staticClass: "sr-only" }, [_vm._v("Delete")])])
-      ])
+        _c("th", [_c("span", { staticClass: "sr-only" }, [_vm._v("Delete")])]),
+      ]),
     ])
-  }
+  },
 ]
 render._withStripped = true
 
@@ -42375,7 +42396,7 @@ render._withStripped = true
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
+var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
@@ -42388,28 +42409,28 @@ var render = function() {
             staticStyle: {
               display: "flex",
               "justify-content": "space-between",
-              "align-items": "center"
-            }
+              "align-items": "center",
+            },
           },
           [
             _c("h2", [
-              _vm._v("\n                    OAuth Clients\n                ")
+              _vm._v("\n                    OAuth Clients\n                "),
             ]),
             _vm._v(" "),
             _c(
               "a",
               {
                 staticClass: "action-link",
-                on: { click: _vm.showCreateClientForm }
+                on: { click: _vm.showCreateClientForm },
               },
               [
                 _vm._v(
                   "\n                    Create New Client\n                "
-                )
+                ),
               ]
-            )
+            ),
           ]
-        )
+        ),
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "panel-body" }, [
@@ -42417,7 +42438,7 @@ var render = function() {
           ? _c("p", { staticClass: "m-b-none" }, [
               _vm._v(
                 "\n                You have not created any OAuth clients.\n            "
-              )
+              ),
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -42427,14 +42448,14 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.clients, function(client) {
+                _vm._l(_vm.clients, function (client) {
                   return _c("tr", [
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
                       _vm._v(
                         "\n                            " +
                           _vm._s(client.id) +
                           "\n                        "
-                      )
+                      ),
                     ]),
                     _vm._v(" "),
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
@@ -42442,11 +42463,11 @@ var render = function() {
                         "\n                            " +
                           _vm._s(client.name) +
                           "\n                        "
-                      )
+                      ),
                     ]),
                     _vm._v(" "),
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
-                      _c("code", [_vm._v(_vm._s(client.secret))])
+                      _c("code", [_vm._v(_vm._s(client.secret))]),
                     ]),
                     _vm._v(" "),
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
@@ -42455,17 +42476,17 @@ var render = function() {
                         {
                           staticClass: "action-link",
                           on: {
-                            click: function($event) {
+                            click: function ($event) {
                               _vm.edit(client)
-                            }
-                          }
+                            },
+                          },
                         },
                         [
                           _vm._v(
                             "\n                                Edit\n                            "
-                          )
+                          ),
                         ]
-                      )
+                      ),
                     ]),
                     _vm._v(" "),
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
@@ -42474,31 +42495,31 @@ var render = function() {
                         {
                           staticClass: "action-link text-danger",
                           on: {
-                            click: function($event) {
+                            click: function ($event) {
                               _vm.destroy(client)
-                            }
-                          }
+                            },
+                          },
                         },
                         [
                           _vm._v(
                             "\n                                Delete\n                            "
-                          )
+                          ),
                         ]
-                      )
-                    ])
+                      ),
+                    ]),
                   ])
                 })
-              )
+              ),
             ])
-          : _vm._e()
-      ])
+          : _vm._e(),
+      ]),
     ]),
     _vm._v(" "),
     _c(
       "div",
       {
         staticClass: "modal fade",
-        attrs: { id: "modal-create-client", tabindex: "-1", role: "dialog" }
+        attrs: { id: "modal-create-client", tabindex: "-1", role: "dialog" },
       },
       [
         _c("div", { staticClass: "modal-dialog" }, [
@@ -42514,16 +42535,16 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "ul",
-                      _vm._l(_vm.createForm.errors, function(error) {
+                      _vm._l(_vm.createForm.errors, function (error) {
                         return _c("li", [
                           _vm._v(
                             "\n                                " +
                               _vm._s(error) +
                               "\n                            "
-                          )
+                          ),
                         ])
                       })
-                    )
+                    ),
                   ])
                 : _vm._e(),
               _vm._v(" "),
@@ -42536,7 +42557,7 @@ var render = function() {
                       "label",
                       {
                         staticClass: "col-md-3 control-label",
-                        attrs: { for: "create-client-name" }
+                        attrs: { for: "create-client-name" },
                       },
                       [_vm._v("Name")]
                     ),
@@ -42548,18 +42569,18 @@ var render = function() {
                             name: "model",
                             rawName: "v-model",
                             value: _vm.createForm.name,
-                            expression: "createForm.name"
-                          }
+                            expression: "createForm.name",
+                          },
                         ],
                         staticClass: "form-control",
                         attrs: {
                           id: "create-client-name",
                           type: "text",
-                          "aria-label": "create-client-name"
+                          "aria-label": "create-client-name",
                         },
                         domProps: { value: _vm.createForm.name },
                         on: {
-                          keyup: function($event) {
+                          keyup: function ($event) {
                             if (
                               !("button" in $event) &&
                               _vm._k($event.keyCode, "enter", 13)
@@ -42568,21 +42589,21 @@ var render = function() {
                             }
                             _vm.store($event)
                           },
-                          input: function($event) {
+                          input: function ($event) {
                             if ($event.target.composing) {
                               return
                             }
                             _vm.createForm.name = $event.target.value
-                          }
-                        }
+                          },
+                        },
                       }),
                       _vm._v(" "),
                       _c("span", { staticClass: "help-block" }, [
                         _vm._v(
                           "\n                                    Something your users will recognize and trust.\n                                "
-                        )
-                      ])
-                    ])
+                        ),
+                      ]),
+                    ]),
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
@@ -42590,7 +42611,7 @@ var render = function() {
                       "label",
                       {
                         staticClass: "col-md-3 control-label",
-                        attrs: { for: "redirect" }
+                        attrs: { for: "redirect" },
                       },
                       [_vm._v("Redirect URL")]
                     ),
@@ -42602,18 +42623,18 @@ var render = function() {
                             name: "model",
                             rawName: "v-model",
                             value: _vm.createForm.redirect,
-                            expression: "createForm.redirect"
-                          }
+                            expression: "createForm.redirect",
+                          },
                         ],
                         staticClass: "form-control",
                         attrs: {
                           type: "text",
                           "aria-label": "redirect",
-                          name: "redirect"
+                          name: "redirect",
                         },
                         domProps: { value: _vm.createForm.redirect },
                         on: {
-                          keyup: function($event) {
+                          keyup: function ($event) {
                             if (
                               !("button" in $event) &&
                               _vm._k($event.keyCode, "enter", 13)
@@ -42622,24 +42643,24 @@ var render = function() {
                             }
                             _vm.store($event)
                           },
-                          input: function($event) {
+                          input: function ($event) {
                             if ($event.target.composing) {
                               return
                             }
                             _vm.createForm.redirect = $event.target.value
-                          }
-                        }
+                          },
+                        },
                       }),
                       _vm._v(" "),
                       _c("span", { staticClass: "help-block" }, [
                         _vm._v(
                           "\n                                    Your application's authorization callback URL.\n                                "
-                        )
-                      ])
-                    ])
-                  ])
+                        ),
+                      ]),
+                    ]),
+                  ]),
                 ]
-              )
+              ),
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "modal-footer" }, [
@@ -42647,7 +42668,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-default",
-                  attrs: { type: "button", "data-dismiss": "modal" }
+                  attrs: { type: "button", "data-dismiss": "modal" },
                 },
                 [_vm._v("Close")]
               ),
@@ -42657,17 +42678,17 @@ var render = function() {
                 {
                   staticClass: "btn btn-primary",
                   attrs: { type: "button" },
-                  on: { click: _vm.store }
+                  on: { click: _vm.store },
                 },
                 [
                   _vm._v(
                     "\n                        Create\n                    "
-                  )
+                  ),
                 ]
-              )
-            ])
-          ])
-        ])
+              ),
+            ]),
+          ]),
+        ]),
       ]
     ),
     _vm._v(" "),
@@ -42675,7 +42696,7 @@ var render = function() {
       "div",
       {
         staticClass: "modal fade",
-        attrs: { id: "modal-edit-client", tabindex: "-1", role: "dialog" }
+        attrs: { id: "modal-edit-client", tabindex: "-1", role: "dialog" },
       },
       [
         _c("div", { staticClass: "modal-dialog" }, [
@@ -42691,16 +42712,16 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "ul",
-                      _vm._l(_vm.editForm.errors, function(error) {
+                      _vm._l(_vm.editForm.errors, function (error) {
                         return _c("li", [
                           _vm._v(
                             "\n                                " +
                               _vm._s(error) +
                               "\n                            "
-                          )
+                          ),
                         ])
                       })
-                    )
+                    ),
                   ])
                 : _vm._e(),
               _vm._v(" "),
@@ -42713,7 +42734,7 @@ var render = function() {
                       "label",
                       {
                         staticClass: "col-md-3 control-label",
-                        attrs: { for: "edit-client-name" }
+                        attrs: { for: "edit-client-name" },
                       },
                       [_vm._v("Name")]
                     ),
@@ -42725,18 +42746,18 @@ var render = function() {
                             name: "model",
                             rawName: "v-model",
                             value: _vm.editForm.name,
-                            expression: "editForm.name"
-                          }
+                            expression: "editForm.name",
+                          },
                         ],
                         staticClass: "form-control",
                         attrs: {
                           id: "edit-client-name",
                           type: "text",
-                          "aria-label": "edit-client-name"
+                          "aria-label": "edit-client-name",
                         },
                         domProps: { value: _vm.editForm.name },
                         on: {
-                          keyup: function($event) {
+                          keyup: function ($event) {
                             if (
                               !("button" in $event) &&
                               _vm._k($event.keyCode, "enter", 13)
@@ -42745,21 +42766,21 @@ var render = function() {
                             }
                             _vm.update($event)
                           },
-                          input: function($event) {
+                          input: function ($event) {
                             if ($event.target.composing) {
                               return
                             }
                             _vm.editForm.name = $event.target.value
-                          }
-                        }
+                          },
+                        },
                       }),
                       _vm._v(" "),
                       _c("span", { staticClass: "help-block" }, [
                         _vm._v(
                           "\n                                    Something your users will recognize and trust.\n                                "
-                        )
-                      ])
-                    ])
+                        ),
+                      ]),
+                    ]),
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
@@ -42767,7 +42788,7 @@ var render = function() {
                       "label",
                       {
                         staticClass: "col-md-3 control-label",
-                        attrs: { for: "redirect" }
+                        attrs: { for: "redirect" },
                       },
                       [_vm._v("Redirect URL")]
                     ),
@@ -42779,18 +42800,18 @@ var render = function() {
                             name: "model",
                             rawName: "v-model",
                             value: _vm.editForm.redirect,
-                            expression: "editForm.redirect"
-                          }
+                            expression: "editForm.redirect",
+                          },
                         ],
                         staticClass: "form-control",
                         attrs: {
                           type: "text",
                           name: "redirect",
-                          "aria-label": "redirect"
+                          "aria-label": "redirect",
                         },
                         domProps: { value: _vm.editForm.redirect },
                         on: {
-                          keyup: function($event) {
+                          keyup: function ($event) {
                             if (
                               !("button" in $event) &&
                               _vm._k($event.keyCode, "enter", 13)
@@ -42799,24 +42820,24 @@ var render = function() {
                             }
                             _vm.update($event)
                           },
-                          input: function($event) {
+                          input: function ($event) {
                             if ($event.target.composing) {
                               return
                             }
                             _vm.editForm.redirect = $event.target.value
-                          }
-                        }
+                          },
+                        },
                       }),
                       _vm._v(" "),
                       _c("span", { staticClass: "help-block" }, [
                         _vm._v(
                           "\n                                    Your application's authorization callback URL.\n                                "
-                        )
-                      ])
-                    ])
-                  ])
+                        ),
+                      ]),
+                    ]),
+                  ]),
                 ]
-              )
+              ),
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "modal-footer" }, [
@@ -42824,7 +42845,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-default",
-                  attrs: { type: "button", "data-dismiss": "modal" }
+                  attrs: { type: "button", "data-dismiss": "modal" },
                 },
                 [_vm._v("Close")]
               ),
@@ -42834,23 +42855,23 @@ var render = function() {
                 {
                   staticClass: "btn btn-primary",
                   attrs: { type: "button" },
-                  on: { click: _vm.update }
+                  on: { click: _vm.update },
                 },
                 [
                   _vm._v(
                     "\n                        Save Changes\n                    "
-                  )
+                  ),
                 ]
-              )
-            ])
-          ])
-        ])
+              ),
+            ]),
+          ]),
+        ]),
       ]
-    )
+    ),
   ])
 }
 var staticRenderFns = [
-  function() {
+  function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
@@ -42864,11 +42885,11 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_c("span", { staticClass: "sr-only" }, [_vm._v("Edit")])]),
         _vm._v(" "),
-        _c("th", [_c("span", { staticClass: "sr-only" }, [_vm._v("Delete")])])
-      ])
+        _c("th", [_c("span", { staticClass: "sr-only" }, [_vm._v("Delete")])]),
+      ]),
     ])
   },
-  function() {
+  function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
@@ -42880,27 +42901,27 @@ var staticRenderFns = [
           attrs: {
             type: "button ",
             "data-dismiss": "modal",
-            "aria-hidden": "true"
-          }
+            "aria-hidden": "true",
+          },
         },
         [_vm._v("×")]
       ),
       _vm._v(" "),
       _c("h2", { staticClass: "modal-title" }, [
-        _vm._v("\n                        Create Client\n                    ")
-      ])
+        _vm._v("\n                        Create Client\n                    "),
+      ]),
     ])
   },
-  function() {
+  function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("p", [
       _c("strong", [_vm._v("Whoops!")]),
-      _vm._v(" Something went wrong!")
+      _vm._v(" Something went wrong!"),
     ])
   },
-  function() {
+  function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
@@ -42912,26 +42933,26 @@ var staticRenderFns = [
           attrs: {
             type: "button ",
             "data-dismiss": "modal",
-            "aria-hidden": "true"
-          }
+            "aria-hidden": "true",
+          },
         },
         [_vm._v("×")]
       ),
       _vm._v(" "),
       _c("h4", { staticClass: "modal-title" }, [
-        _vm._v("\n                        Edit Client\n                    ")
-      ])
+        _vm._v("\n                        Edit Client\n                    "),
+      ]),
     ])
   },
-  function() {
+  function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("p", [
       _c("strong", [_vm._v("Whoops!")]),
-      _vm._v(" Something went wrong!")
+      _vm._v(" Something went wrong!"),
     ])
-  }
+  },
 ]
 render._withStripped = true
 
@@ -42950,7 +42971,7 @@ render._withStripped = true
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
+var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
@@ -42965,24 +42986,24 @@ var render = function() {
               staticStyle: {
                 display: "flex",
                 "justify-content": "space-between",
-                "align-items": "center"
-              }
+                "align-items": "center",
+              },
             },
             [
               _c(
                 "a",
                 {
                   staticClass: "btn btn-info btn-sm action-link pull-right",
-                  on: { click: _vm.showCreateTokenForm }
+                  on: { click: _vm.showCreateTokenForm },
                 },
                 [
                   _vm._v(
                     "\n                        Create New Token\n                    "
-                  )
+                  ),
                 ]
-              )
+              ),
             ]
-          )
+          ),
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "panel-body" }, [
@@ -42990,7 +43011,7 @@ var render = function() {
             ? _c("p", { staticClass: "m-b-none" }, [
                 _vm._v(
                   "\n                    You have not created any personal access tokens.\n                "
-                )
+                ),
               ])
             : _vm._e(),
           _vm._v(" "),
@@ -43000,7 +43021,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "tbody",
-                  _vm._l(_vm.tokens, function(token) {
+                  _vm._l(_vm.tokens, function (token) {
                     return _c("tr", [
                       _c(
                         "td",
@@ -43010,7 +43031,7 @@ var render = function() {
                             "\n                                " +
                               _vm._s(token.name) +
                               "\n                            "
-                          )
+                          ),
                         ]
                       ),
                       _vm._v(" "),
@@ -43022,7 +43043,7 @@ var render = function() {
                             "\n                            " +
                               _vm._s(token.created_at) +
                               "\n                          "
-                          )
+                          ),
                         ]
                       ),
                       _vm._v(" "),
@@ -43034,7 +43055,7 @@ var render = function() {
                             "\n                            " +
                               _vm._s(token.expires_at) +
                               "\n                          "
-                          )
+                          ),
                         ]
                       ),
                       _vm._v(" "),
@@ -43042,7 +43063,7 @@ var render = function() {
                         "td",
                         {
                           staticClass: "text-right",
-                          staticStyle: { "vertical-align": "middle" }
+                          staticStyle: { "vertical-align": "middle" },
                         },
                         [
                           _c(
@@ -43050,29 +43071,29 @@ var render = function() {
                             {
                               staticClass: "action-link btn btn-danger btn-sm",
                               on: {
-                                click: function($event) {
+                                click: function ($event) {
                                   _vm.revoke(token)
-                                }
-                              }
+                                },
+                              },
                             },
                             [_c("i", { staticClass: "fa fa-trash" })]
-                          )
+                          ),
                         ]
-                      )
+                      ),
                     ])
                   })
-                )
+                ),
               ])
-            : _vm._e()
-        ])
-      ])
+            : _vm._e(),
+        ]),
+      ]),
     ]),
     _vm._v(" "),
     _c(
       "div",
       {
         staticClass: "modal fade",
-        attrs: { id: "modal-create-token", tabindex: "-1", role: "dialog" }
+        attrs: { id: "modal-create-token", tabindex: "-1", role: "dialog" },
       },
       [
         _c("div", { staticClass: "modal-dialog" }, [
@@ -43088,16 +43109,16 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "ul",
-                      _vm._l(_vm.form.errors, function(error) {
+                      _vm._l(_vm.form.errors, function (error) {
                         return _c("li", [
                           _vm._v(
                             "\n                                " +
                               _vm._s(error) +
                               "\n                            "
-                          )
+                          ),
                         ])
                       })
-                    )
+                    ),
                   ])
                 : _vm._e(),
               _vm._v(" "),
@@ -43107,11 +43128,11 @@ var render = function() {
                   staticClass: "form-horizontal",
                   attrs: { role: "form" },
                   on: {
-                    submit: function($event) {
+                    submit: function ($event) {
                       $event.preventDefault()
                       _vm.store($event)
-                    }
-                  }
+                    },
+                  },
                 },
                 [
                   _c("div", { staticClass: "form-group" }, [
@@ -43119,7 +43140,7 @@ var render = function() {
                       "label",
                       {
                         staticClass: "col-md-4 control-label",
-                        attrs: { for: "name" }
+                        attrs: { for: "name" },
                       },
                       [_vm._v("Name")]
                     ),
@@ -43131,67 +43152,67 @@ var render = function() {
                             name: "model",
                             rawName: "v-model",
                             value: _vm.form.name,
-                            expression: "form.name"
-                          }
+                            expression: "form.name",
+                          },
                         ],
                         staticClass: "form-control",
                         attrs: {
                           id: "create-token-name",
                           type: "text",
                           "aria-label": "name",
-                          name: "name"
+                          name: "name",
                         },
                         domProps: { value: _vm.form.name },
                         on: {
-                          input: function($event) {
+                          input: function ($event) {
                             if ($event.target.composing) {
                               return
                             }
                             _vm.form.name = $event.target.value
-                          }
-                        }
-                      })
-                    ])
+                          },
+                        },
+                      }),
+                    ]),
                   ]),
                   _vm._v(" "),
                   _vm.scopes.length > 0
                     ? _c("div", { staticClass: "form-group" }, [
                         _c("label", { staticClass: "col-md-4 control-label" }, [
-                          _vm._v("Scopes")
+                          _vm._v("Scopes"),
                         ]),
                         _vm._v(" "),
                         _c(
                           "div",
                           { staticClass: "col-md-6" },
-                          _vm._l(_vm.scopes, function(scope) {
+                          _vm._l(_vm.scopes, function (scope) {
                             return _c("div", [
                               _c("div", { staticClass: "checkbox" }, [
                                 _c("label", [
                                   _c("input", {
                                     attrs: { type: "checkbox" },
                                     domProps: {
-                                      checked: _vm.scopeIsAssigned(scope.id)
+                                      checked: _vm.scopeIsAssigned(scope.id),
                                     },
                                     on: {
-                                      click: function($event) {
+                                      click: function ($event) {
                                         _vm.toggleScope(scope.id)
-                                      }
-                                    }
+                                      },
+                                    },
                                   }),
                                   _vm._v(
                                     "\n\n                                                " +
                                       _vm._s(scope.id) +
                                       "\n                                        "
-                                  )
-                                ])
-                              ])
+                                  ),
+                                ]),
+                              ]),
                             ])
                           })
-                        )
+                        ),
                       ])
-                    : _vm._e()
+                    : _vm._e(),
                 ]
-              )
+              ),
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "modal-footer" }, [
@@ -43199,7 +43220,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn primary",
-                  attrs: { type: "button", "data-dismiss": "modal" }
+                  attrs: { type: "button", "data-dismiss": "modal" },
                 },
                 [_vm._v("Close")]
               ),
@@ -43209,17 +43230,17 @@ var render = function() {
                 {
                   staticClass: "btn btn-primary",
                   attrs: { type: "button" },
-                  on: { click: _vm.store }
+                  on: { click: _vm.store },
                 },
                 [
                   _vm._v(
                     "\n                        Create\n                    "
-                  )
+                  ),
                 ]
-              )
-            ])
-          ])
-        ])
+              ),
+            ]),
+          ]),
+        ]),
       ]
     ),
     _vm._v(" "),
@@ -43227,7 +43248,7 @@ var render = function() {
       "div",
       {
         staticClass: "modal fade",
-        attrs: { id: "modal-access-token", tabindex: "-1", role: "dialog" }
+        attrs: { id: "modal-access-token", tabindex: "-1", role: "dialog" },
       },
       [
         _c("div", { staticClass: "modal-dialog" }, [
@@ -43238,21 +43259,21 @@ var render = function() {
               _c("p", [
                 _vm._v(
                   "\n                        Here is your new personal access token. This is the only time it will be shown so don't lose it!\n                        You may now use this token to make API requests.\n                    "
-                )
+                ),
               ]),
               _vm._v(" "),
-              _c("pre", [_c("code", [_vm._v(_vm._s(_vm.accessToken))])])
+              _c("pre", [_c("code", [_vm._v(_vm._s(_vm.accessToken))])]),
             ]),
             _vm._v(" "),
-            _vm._m(4)
-          ])
-        ])
+            _vm._m(4),
+          ]),
+        ]),
       ]
-    )
+    ),
   ])
 }
 var staticRenderFns = [
-  function() {
+  function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
@@ -43265,12 +43286,12 @@ var staticRenderFns = [
         _c("th", { staticClass: "col-md-2" }, [_vm._v("Expires")]),
         _vm._v(" "),
         _c("th", { staticClass: "col-md-2" }, [
-          _c("span", { staticClass: "sr-only" }, [_vm._v("Delete")])
-        ])
-      ])
+          _c("span", { staticClass: "sr-only" }, [_vm._v("Delete")]),
+        ]),
+      ]),
     ])
   },
-  function() {
+  function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
@@ -43282,27 +43303,27 @@ var staticRenderFns = [
           attrs: {
             type: "button ",
             "data-dismiss": "modal",
-            "aria-hidden": "true"
-          }
+            "aria-hidden": "true",
+          },
         },
         [_vm._v("×")]
       ),
       _vm._v(" "),
       _c("h4", { staticClass: "modal-title" }, [
-        _vm._v("\n                        Create Token\n                    ")
-      ])
+        _vm._v("\n                        Create Token\n                    "),
+      ]),
     ])
   },
-  function() {
+  function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("p", [
       _c("strong", [_vm._v("Whoops!")]),
-      _vm._v(" Something went wrong!")
+      _vm._v(" Something went wrong!"),
     ])
   },
-  function() {
+  function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
@@ -43314,8 +43335,8 @@ var staticRenderFns = [
           attrs: {
             type: "button ",
             "data-dismiss": "modal",
-            "aria-hidden": "true"
-          }
+            "aria-hidden": "true",
+          },
         },
         [_vm._v("×")]
       ),
@@ -43323,11 +43344,11 @@ var staticRenderFns = [
       _c("h4", { staticClass: "modal-title" }, [
         _vm._v(
           "\n                        Personal Access Token\n                    "
-        )
-      ])
+        ),
+      ]),
     ])
   },
-  function() {
+  function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
@@ -43336,12 +43357,12 @@ var staticRenderFns = [
         "button",
         {
           staticClass: "btn btn-default",
-          attrs: { type: "button", "data-dismiss": "modal" }
+          attrs: { type: "button", "data-dismiss": "modal" },
         },
         [_vm._v("Close")]
-      )
+      ),
     ])
-  }
+  },
 ]
 render._withStripped = true
 
@@ -43360,7 +43381,7 @@ render._withStripped = true
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
+var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
@@ -43503,7 +43524,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Http", function() { return Http; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Resource", function() { return Resource; });
 /*!
- * vue-resource v1.5.1
+ * vue-resource v1.5.3
  * https://github.com/pagekit/vue-resource
  * Released under the MIT License.
  */
@@ -43511,177 +43532,174 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Promises/A+ polyfill v1.1.4 (https://github.com/bramstein/promis)
  */
-
 var RESOLVED = 0;
 var REJECTED = 1;
 var PENDING = 2;
-
 function Promise$1(executor) {
+  this.state = PENDING;
+  this.value = undefined;
+  this.deferred = [];
+  var promise = this;
 
-    this.state = PENDING;
-    this.value = undefined;
-    this.deferred = [];
-
-    var promise = this;
-
-    try {
-        executor(function (x) {
-            promise.resolve(x);
-        }, function (r) {
-            promise.reject(r);
-        });
-    } catch (e) {
-        promise.reject(e);
-    }
+  try {
+    executor(function (x) {
+      promise.resolve(x);
+    }, function (r) {
+      promise.reject(r);
+    });
+  } catch (e) {
+    promise.reject(e);
+  }
 }
 
 Promise$1.reject = function (r) {
-    return new Promise$1(function (resolve, reject) {
-        reject(r);
-    });
+  return new Promise$1(function (resolve, reject) {
+    reject(r);
+  });
 };
 
 Promise$1.resolve = function (x) {
-    return new Promise$1(function (resolve, reject) {
-        resolve(x);
-    });
+  return new Promise$1(function (resolve, reject) {
+    resolve(x);
+  });
 };
 
 Promise$1.all = function all(iterable) {
-    return new Promise$1(function (resolve, reject) {
-        var count = 0, result = [];
+  return new Promise$1(function (resolve, reject) {
+    var count = 0,
+        result = [];
 
-        if (iterable.length === 0) {
-            resolve(result);
+    if (iterable.length === 0) {
+      resolve(result);
+    }
+
+    function resolver(i) {
+      return function (x) {
+        result[i] = x;
+        count += 1;
+
+        if (count === iterable.length) {
+          resolve(result);
         }
+      };
+    }
 
-        function resolver(i) {
-            return function (x) {
-                result[i] = x;
-                count += 1;
-
-                if (count === iterable.length) {
-                    resolve(result);
-                }
-            };
-        }
-
-        for (var i = 0; i < iterable.length; i += 1) {
-            Promise$1.resolve(iterable[i]).then(resolver(i), reject);
-        }
-    });
+    for (var i = 0; i < iterable.length; i += 1) {
+      Promise$1.resolve(iterable[i]).then(resolver(i), reject);
+    }
+  });
 };
 
 Promise$1.race = function race(iterable) {
-    return new Promise$1(function (resolve, reject) {
-        for (var i = 0; i < iterable.length; i += 1) {
-            Promise$1.resolve(iterable[i]).then(resolve, reject);
-        }
-    });
+  return new Promise$1(function (resolve, reject) {
+    for (var i = 0; i < iterable.length; i += 1) {
+      Promise$1.resolve(iterable[i]).then(resolve, reject);
+    }
+  });
 };
 
 var p = Promise$1.prototype;
 
 p.resolve = function resolve(x) {
-    var promise = this;
+  var promise = this;
 
-    if (promise.state === PENDING) {
-        if (x === promise) {
-            throw new TypeError('Promise settled with itself.');
-        }
-
-        var called = false;
-
-        try {
-            var then = x && x['then'];
-
-            if (x !== null && typeof x === 'object' && typeof then === 'function') {
-                then.call(x, function (x) {
-                    if (!called) {
-                        promise.resolve(x);
-                    }
-                    called = true;
-
-                }, function (r) {
-                    if (!called) {
-                        promise.reject(r);
-                    }
-                    called = true;
-                });
-                return;
-            }
-        } catch (e) {
-            if (!called) {
-                promise.reject(e);
-            }
-            return;
-        }
-
-        promise.state = RESOLVED;
-        promise.value = x;
-        promise.notify();
+  if (promise.state === PENDING) {
+    if (x === promise) {
+      throw new TypeError('Promise settled with itself.');
     }
+
+    var called = false;
+
+    try {
+      var then = x && x['then'];
+
+      if (x !== null && typeof x === 'object' && typeof then === 'function') {
+        then.call(x, function (x) {
+          if (!called) {
+            promise.resolve(x);
+          }
+
+          called = true;
+        }, function (r) {
+          if (!called) {
+            promise.reject(r);
+          }
+
+          called = true;
+        });
+        return;
+      }
+    } catch (e) {
+      if (!called) {
+        promise.reject(e);
+      }
+
+      return;
+    }
+
+    promise.state = RESOLVED;
+    promise.value = x;
+    promise.notify();
+  }
 };
 
 p.reject = function reject(reason) {
-    var promise = this;
+  var promise = this;
 
-    if (promise.state === PENDING) {
-        if (reason === promise) {
-            throw new TypeError('Promise settled with itself.');
-        }
-
-        promise.state = REJECTED;
-        promise.value = reason;
-        promise.notify();
+  if (promise.state === PENDING) {
+    if (reason === promise) {
+      throw new TypeError('Promise settled with itself.');
     }
+
+    promise.state = REJECTED;
+    promise.value = reason;
+    promise.notify();
+  }
 };
 
 p.notify = function notify() {
-    var promise = this;
+  var promise = this;
+  nextTick(function () {
+    if (promise.state !== PENDING) {
+      while (promise.deferred.length) {
+        var deferred = promise.deferred.shift(),
+            onResolved = deferred[0],
+            onRejected = deferred[1],
+            resolve = deferred[2],
+            reject = deferred[3];
 
-    nextTick(function () {
-        if (promise.state !== PENDING) {
-            while (promise.deferred.length) {
-                var deferred = promise.deferred.shift(),
-                    onResolved = deferred[0],
-                    onRejected = deferred[1],
-                    resolve = deferred[2],
-                    reject = deferred[3];
-
-                try {
-                    if (promise.state === RESOLVED) {
-                        if (typeof onResolved === 'function') {
-                            resolve(onResolved.call(undefined, promise.value));
-                        } else {
-                            resolve(promise.value);
-                        }
-                    } else if (promise.state === REJECTED) {
-                        if (typeof onRejected === 'function') {
-                            resolve(onRejected.call(undefined, promise.value));
-                        } else {
-                            reject(promise.value);
-                        }
-                    }
-                } catch (e) {
-                    reject(e);
-                }
+        try {
+          if (promise.state === RESOLVED) {
+            if (typeof onResolved === 'function') {
+              resolve(onResolved.call(undefined, promise.value));
+            } else {
+              resolve(promise.value);
             }
+          } else if (promise.state === REJECTED) {
+            if (typeof onRejected === 'function') {
+              resolve(onRejected.call(undefined, promise.value));
+            } else {
+              reject(promise.value);
+            }
+          }
+        } catch (e) {
+          reject(e);
         }
-    });
+      }
+    }
+  });
 };
 
 p.then = function then(onResolved, onRejected) {
-    var promise = this;
-
-    return new Promise$1(function (resolve, reject) {
-        promise.deferred.push([onResolved, onRejected, resolve, reject]);
-        promise.notify();
-    });
+  var promise = this;
+  return new Promise$1(function (resolve, reject) {
+    promise.deferred.push([onResolved, onRejected, resolve, reject]);
+    promise.notify();
+  });
 };
 
-p.catch = function (onRejected) {
-    return this.then(undefined, onRejected);
+p["catch"] = function (onRejected) {
+  return this.then(undefined, onRejected);
 };
 
 /**
@@ -43689,512 +43707,463 @@ p.catch = function (onRejected) {
  */
 
 if (typeof Promise === 'undefined') {
-    window.Promise = Promise$1;
+  window.Promise = Promise$1;
 }
 
 function PromiseObj(executor, context) {
+  if (executor instanceof Promise) {
+    this.promise = executor;
+  } else {
+    this.promise = new Promise(executor.bind(context));
+  }
 
-    if (executor instanceof Promise) {
-        this.promise = executor;
-    } else {
-        this.promise = new Promise(executor.bind(context));
-    }
-
-    this.context = context;
+  this.context = context;
 }
 
 PromiseObj.all = function (iterable, context) {
-    return new PromiseObj(Promise.all(iterable), context);
+  return new PromiseObj(Promise.all(iterable), context);
 };
 
 PromiseObj.resolve = function (value, context) {
-    return new PromiseObj(Promise.resolve(value), context);
+  return new PromiseObj(Promise.resolve(value), context);
 };
 
 PromiseObj.reject = function (reason, context) {
-    return new PromiseObj(Promise.reject(reason), context);
+  return new PromiseObj(Promise.reject(reason), context);
 };
 
 PromiseObj.race = function (iterable, context) {
-    return new PromiseObj(Promise.race(iterable), context);
+  return new PromiseObj(Promise.race(iterable), context);
 };
 
 var p$1 = PromiseObj.prototype;
 
 p$1.bind = function (context) {
-    this.context = context;
-    return this;
+  this.context = context;
+  return this;
 };
 
 p$1.then = function (fulfilled, rejected) {
+  if (fulfilled && fulfilled.bind && this.context) {
+    fulfilled = fulfilled.bind(this.context);
+  }
 
-    if (fulfilled && fulfilled.bind && this.context) {
-        fulfilled = fulfilled.bind(this.context);
-    }
+  if (rejected && rejected.bind && this.context) {
+    rejected = rejected.bind(this.context);
+  }
 
-    if (rejected && rejected.bind && this.context) {
-        rejected = rejected.bind(this.context);
-    }
-
-    return new PromiseObj(this.promise.then(fulfilled, rejected), this.context);
+  return new PromiseObj(this.promise.then(fulfilled, rejected), this.context);
 };
 
-p$1.catch = function (rejected) {
+p$1["catch"] = function (rejected) {
+  if (rejected && rejected.bind && this.context) {
+    rejected = rejected.bind(this.context);
+  }
 
-    if (rejected && rejected.bind && this.context) {
-        rejected = rejected.bind(this.context);
-    }
-
-    return new PromiseObj(this.promise.catch(rejected), this.context);
+  return new PromiseObj(this.promise["catch"](rejected), this.context);
 };
 
-p$1.finally = function (callback) {
-
-    return this.then(function (value) {
-        callback.call(this);
-        return value;
-    }, function (reason) {
-        callback.call(this);
-        return Promise.reject(reason);
-    }
-    );
+p$1["finally"] = function (callback) {
+  return this.then(function (value) {
+    callback.call(this);
+    return value;
+  }, function (reason) {
+    callback.call(this);
+    return Promise.reject(reason);
+  });
 };
 
 /**
  * Utility functions.
  */
-
-var ref = {};
-var hasOwnProperty = ref.hasOwnProperty;
-var ref$1 = [];
-var slice = ref$1.slice;
-var debug = false, ntick;
-
+var _ref = {},
+    hasOwnProperty = _ref.hasOwnProperty,
+    slice = [].slice,
+    debug = false,
+    ntick;
 var inBrowser = typeof window !== 'undefined';
-
-function Util (ref) {
-    var config = ref.config;
-    var nextTick = ref.nextTick;
-
-    ntick = nextTick;
-    debug = config.debug || !config.silent;
+function Util (_ref2) {
+  var config = _ref2.config,
+      nextTick = _ref2.nextTick;
+  ntick = nextTick;
+  debug = config.debug || !config.silent;
 }
-
 function warn(msg) {
-    if (typeof console !== 'undefined' && debug) {
-        console.warn('[VueResource warn]: ' + msg);
-    }
+  if (typeof console !== 'undefined' && debug) {
+    console.warn('[VueResource warn]: ' + msg);
+  }
 }
-
 function error(msg) {
-    if (typeof console !== 'undefined') {
-        console.error(msg);
-    }
+  if (typeof console !== 'undefined') {
+    console.error(msg);
+  }
 }
-
 function nextTick(cb, ctx) {
-    return ntick(cb, ctx);
+  return ntick(cb, ctx);
 }
-
 function trim(str) {
-    return str ? str.replace(/^\s*|\s*$/g, '') : '';
+  return str ? str.replace(/^\s*|\s*$/g, '') : '';
 }
-
 function trimEnd(str, chars) {
+  if (str && chars === undefined) {
+    return str.replace(/\s+$/, '');
+  }
 
-    if (str && chars === undefined) {
-        return str.replace(/\s+$/, '');
-    }
+  if (!str || !chars) {
+    return str;
+  }
 
-    if (!str || !chars) {
-        return str;
-    }
-
-    return str.replace(new RegExp(("[" + chars + "]+$")), '');
+  return str.replace(new RegExp("[" + chars + "]+$"), '');
 }
-
 function toLower(str) {
-    return str ? str.toLowerCase() : '';
+  return str ? str.toLowerCase() : '';
 }
-
 function toUpper(str) {
-    return str ? str.toUpperCase() : '';
+  return str ? str.toUpperCase() : '';
 }
-
 var isArray = Array.isArray;
-
 function isString(val) {
-    return typeof val === 'string';
+  return typeof val === 'string';
 }
-
 function isFunction(val) {
-    return typeof val === 'function';
+  return typeof val === 'function';
 }
-
 function isObject(obj) {
-    return obj !== null && typeof obj === 'object';
+  return obj !== null && typeof obj === 'object';
 }
-
 function isPlainObject(obj) {
-    return isObject(obj) && Object.getPrototypeOf(obj) == Object.prototype;
+  return isObject(obj) && Object.getPrototypeOf(obj) == Object.prototype;
 }
-
 function isBlob(obj) {
-    return typeof Blob !== 'undefined' && obj instanceof Blob;
+  return typeof Blob !== 'undefined' && obj instanceof Blob;
 }
-
 function isFormData(obj) {
-    return typeof FormData !== 'undefined' && obj instanceof FormData;
+  return typeof FormData !== 'undefined' && obj instanceof FormData;
 }
-
 function when(value, fulfilled, rejected) {
+  var promise = PromiseObj.resolve(value);
 
-    var promise = PromiseObj.resolve(value);
+  if (arguments.length < 2) {
+    return promise;
+  }
 
-    if (arguments.length < 2) {
-        return promise;
-    }
-
-    return promise.then(fulfilled, rejected);
+  return promise.then(fulfilled, rejected);
 }
-
 function options(fn, obj, opts) {
+  opts = opts || {};
 
-    opts = opts || {};
+  if (isFunction(opts)) {
+    opts = opts.call(obj);
+  }
 
-    if (isFunction(opts)) {
-        opts = opts.call(obj);
-    }
-
-    return merge(fn.bind({$vm: obj, $options: opts}), fn, {$options: opts});
+  return merge(fn.bind({
+    $vm: obj,
+    $options: opts
+  }), fn, {
+    $options: opts
+  });
 }
-
 function each(obj, iterator) {
+  var i, key;
 
-    var i, key;
-
-    if (isArray(obj)) {
-        for (i = 0; i < obj.length; i++) {
-            iterator.call(obj[i], obj[i], i);
-        }
-    } else if (isObject(obj)) {
-        for (key in obj) {
-            if (hasOwnProperty.call(obj, key)) {
-                iterator.call(obj[key], obj[key], key);
-            }
-        }
+  if (isArray(obj)) {
+    for (i = 0; i < obj.length; i++) {
+      iterator.call(obj[i], obj[i], i);
     }
+  } else if (isObject(obj)) {
+    for (key in obj) {
+      if (hasOwnProperty.call(obj, key)) {
+        iterator.call(obj[key], obj[key], key);
+      }
+    }
+  }
 
-    return obj;
+  return obj;
 }
-
 var assign = Object.assign || _assign;
-
 function merge(target) {
-
-    var args = slice.call(arguments, 1);
-
-    args.forEach(function (source) {
-        _merge(target, source, true);
-    });
-
-    return target;
+  var args = slice.call(arguments, 1);
+  args.forEach(function (source) {
+    _merge(target, source, true);
+  });
+  return target;
 }
-
 function defaults(target) {
-
-    var args = slice.call(arguments, 1);
-
-    args.forEach(function (source) {
-
-        for (var key in source) {
-            if (target[key] === undefined) {
-                target[key] = source[key];
-            }
-        }
-
-    });
-
-    return target;
+  var args = slice.call(arguments, 1);
+  args.forEach(function (source) {
+    for (var key in source) {
+      if (target[key] === undefined) {
+        target[key] = source[key];
+      }
+    }
+  });
+  return target;
 }
 
 function _assign(target) {
-
-    var args = slice.call(arguments, 1);
-
-    args.forEach(function (source) {
-        _merge(target, source);
-    });
-
-    return target;
+  var args = slice.call(arguments, 1);
+  args.forEach(function (source) {
+    _merge(target, source);
+  });
+  return target;
 }
 
 function _merge(target, source, deep) {
-    for (var key in source) {
-        if (deep && (isPlainObject(source[key]) || isArray(source[key]))) {
-            if (isPlainObject(source[key]) && !isPlainObject(target[key])) {
-                target[key] = {};
-            }
-            if (isArray(source[key]) && !isArray(target[key])) {
-                target[key] = [];
-            }
-            _merge(target[key], source[key], deep);
-        } else if (source[key] !== undefined) {
-            target[key] = source[key];
-        }
+  for (var key in source) {
+    if (deep && (isPlainObject(source[key]) || isArray(source[key]))) {
+      if (isPlainObject(source[key]) && !isPlainObject(target[key])) {
+        target[key] = {};
+      }
+
+      if (isArray(source[key]) && !isArray(target[key])) {
+        target[key] = [];
+      }
+
+      _merge(target[key], source[key], deep);
+    } else if (source[key] !== undefined) {
+      target[key] = source[key];
     }
+  }
 }
 
 /**
  * Root Prefix Transform.
  */
-
 function root (options$$1, next) {
+  var url = next(options$$1);
 
-    var url = next(options$$1);
+  if (isString(options$$1.root) && !/^(https?:)?\//.test(url)) {
+    url = trimEnd(options$$1.root, '/') + '/' + url;
+  }
 
-    if (isString(options$$1.root) && !/^(https?:)?\//.test(url)) {
-        url = trimEnd(options$$1.root, '/') + '/' + url;
-    }
-
-    return url;
+  return url;
 }
 
 /**
  * Query Parameter Transform.
  */
-
 function query (options$$1, next) {
-
-    var urlParams = Object.keys(Url.options.params), query = {}, url = next(options$$1);
-
-    each(options$$1.params, function (value, key) {
-        if (urlParams.indexOf(key) === -1) {
-            query[key] = value;
-        }
-    });
-
-    query = Url.params(query);
-
-    if (query) {
-        url += (url.indexOf('?') == -1 ? '?' : '&') + query;
+  var urlParams = Object.keys(Url.options.params),
+      query = {},
+      url = next(options$$1);
+  each(options$$1.params, function (value, key) {
+    if (urlParams.indexOf(key) === -1) {
+      query[key] = value;
     }
+  });
+  query = Url.params(query);
 
-    return url;
+  if (query) {
+    url += (url.indexOf('?') == -1 ? '?' : '&') + query;
+  }
+
+  return url;
 }
 
 /**
  * URL Template v2.0.6 (https://github.com/bramstein/url-template)
  */
-
 function expand(url, params, variables) {
+  var tmpl = parse(url),
+      expanded = tmpl.expand(params);
 
-    var tmpl = parse(url), expanded = tmpl.expand(params);
+  if (variables) {
+    variables.push.apply(variables, tmpl.vars);
+  }
 
-    if (variables) {
-        variables.push.apply(variables, tmpl.vars);
-    }
-
-    return expanded;
+  return expanded;
 }
-
 function parse(template) {
+  var operators = ['+', '#', '.', '/', ';', '?', '&'],
+      variables = [];
+  return {
+    vars: variables,
+    expand: function expand(context) {
+      return template.replace(/\{([^{}]+)\}|([^{}]+)/g, function (_, expression, literal) {
+        if (expression) {
+          var operator = null,
+              values = [];
 
-    var operators = ['+', '#', '.', '/', ';', '?', '&'], variables = [];
+          if (operators.indexOf(expression.charAt(0)) !== -1) {
+            operator = expression.charAt(0);
+            expression = expression.substr(1);
+          }
 
-    return {
-        vars: variables,
-        expand: function expand(context) {
-            return template.replace(/\{([^{}]+)\}|([^{}]+)/g, function (_, expression, literal) {
-                if (expression) {
+          expression.split(/,/g).forEach(function (variable) {
+            var tmp = /([^:*]*)(?::(\d+)|(\*))?/.exec(variable);
+            values.push.apply(values, getValues(context, operator, tmp[1], tmp[2] || tmp[3]));
+            variables.push(tmp[1]);
+          });
 
-                    var operator = null, values = [];
+          if (operator && operator !== '+') {
+            var separator = ',';
 
-                    if (operators.indexOf(expression.charAt(0)) !== -1) {
-                        operator = expression.charAt(0);
-                        expression = expression.substr(1);
-                    }
+            if (operator === '?') {
+              separator = '&';
+            } else if (operator !== '#') {
+              separator = operator;
+            }
 
-                    expression.split(/,/g).forEach(function (variable) {
-                        var tmp = /([^:*]*)(?::(\d+)|(\*))?/.exec(variable);
-                        values.push.apply(values, getValues(context, operator, tmp[1], tmp[2] || tmp[3]));
-                        variables.push(tmp[1]);
-                    });
-
-                    if (operator && operator !== '+') {
-
-                        var separator = ',';
-
-                        if (operator === '?') {
-                            separator = '&';
-                        } else if (operator !== '#') {
-                            separator = operator;
-                        }
-
-                        return (values.length !== 0 ? operator : '') + values.join(separator);
-                    } else {
-                        return values.join(',');
-                    }
-
-                } else {
-                    return encodeReserved(literal);
-                }
-            });
+            return (values.length !== 0 ? operator : '') + values.join(separator);
+          } else {
+            return values.join(',');
+          }
+        } else {
+          return encodeReserved(literal);
         }
-    };
+      });
+    }
+  };
 }
 
 function getValues(context, operator, key, modifier) {
+  var value = context[key],
+      result = [];
 
-    var value = context[key], result = [];
+  if (isDefined(value) && value !== '') {
+    if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+      value = value.toString();
 
-    if (isDefined(value) && value !== '') {
-        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
-            value = value.toString();
+      if (modifier && modifier !== '*') {
+        value = value.substring(0, parseInt(modifier, 10));
+      }
 
-            if (modifier && modifier !== '*') {
-                value = value.substring(0, parseInt(modifier, 10));
-            }
-
-            result.push(encodeValue(operator, value, isKeyOperator(operator) ? key : null));
-        } else {
-            if (modifier === '*') {
-                if (Array.isArray(value)) {
-                    value.filter(isDefined).forEach(function (value) {
-                        result.push(encodeValue(operator, value, isKeyOperator(operator) ? key : null));
-                    });
-                } else {
-                    Object.keys(value).forEach(function (k) {
-                        if (isDefined(value[k])) {
-                            result.push(encodeValue(operator, value[k], k));
-                        }
-                    });
-                }
-            } else {
-                var tmp = [];
-
-                if (Array.isArray(value)) {
-                    value.filter(isDefined).forEach(function (value) {
-                        tmp.push(encodeValue(operator, value));
-                    });
-                } else {
-                    Object.keys(value).forEach(function (k) {
-                        if (isDefined(value[k])) {
-                            tmp.push(encodeURIComponent(k));
-                            tmp.push(encodeValue(operator, value[k].toString()));
-                        }
-                    });
-                }
-
-                if (isKeyOperator(operator)) {
-                    result.push(encodeURIComponent(key) + '=' + tmp.join(','));
-                } else if (tmp.length !== 0) {
-                    result.push(tmp.join(','));
-                }
-            }
-        }
+      result.push(encodeValue(operator, value, isKeyOperator(operator) ? key : null));
     } else {
-        if (operator === ';') {
-            result.push(encodeURIComponent(key));
-        } else if (value === '' && (operator === '&' || operator === '?')) {
-            result.push(encodeURIComponent(key) + '=');
-        } else if (value === '') {
-            result.push('');
+      if (modifier === '*') {
+        if (Array.isArray(value)) {
+          value.filter(isDefined).forEach(function (value) {
+            result.push(encodeValue(operator, value, isKeyOperator(operator) ? key : null));
+          });
+        } else {
+          Object.keys(value).forEach(function (k) {
+            if (isDefined(value[k])) {
+              result.push(encodeValue(operator, value[k], k));
+            }
+          });
         }
-    }
+      } else {
+        var tmp = [];
 
-    return result;
+        if (Array.isArray(value)) {
+          value.filter(isDefined).forEach(function (value) {
+            tmp.push(encodeValue(operator, value));
+          });
+        } else {
+          Object.keys(value).forEach(function (k) {
+            if (isDefined(value[k])) {
+              tmp.push(encodeURIComponent(k));
+              tmp.push(encodeValue(operator, value[k].toString()));
+            }
+          });
+        }
+
+        if (isKeyOperator(operator)) {
+          result.push(encodeURIComponent(key) + '=' + tmp.join(','));
+        } else if (tmp.length !== 0) {
+          result.push(tmp.join(','));
+        }
+      }
+    }
+  } else {
+    if (operator === ';') {
+      result.push(encodeURIComponent(key));
+    } else if (value === '' && (operator === '&' || operator === '?')) {
+      result.push(encodeURIComponent(key) + '=');
+    } else if (value === '') {
+      result.push('');
+    }
+  }
+
+  return result;
 }
 
 function isDefined(value) {
-    return value !== undefined && value !== null;
+  return value !== undefined && value !== null;
 }
 
 function isKeyOperator(operator) {
-    return operator === ';' || operator === '&' || operator === '?';
+  return operator === ';' || operator === '&' || operator === '?';
 }
 
 function encodeValue(operator, value, key) {
+  value = operator === '+' || operator === '#' ? encodeReserved(value) : encodeURIComponent(value);
 
-    value = (operator === '+' || operator === '#') ? encodeReserved(value) : encodeURIComponent(value);
-
-    if (key) {
-        return encodeURIComponent(key) + '=' + value;
-    } else {
-        return value;
-    }
+  if (key) {
+    return encodeURIComponent(key) + '=' + value;
+  } else {
+    return value;
+  }
 }
 
 function encodeReserved(str) {
-    return str.split(/(%[0-9A-Fa-f]{2})/g).map(function (part) {
-        if (!/%[0-9A-Fa-f]/.test(part)) {
-            part = encodeURI(part);
-        }
-        return part;
-    }).join('');
+  return str.split(/(%[0-9A-Fa-f]{2})/g).map(function (part) {
+    if (!/%[0-9A-Fa-f]/.test(part)) {
+      part = encodeURI(part);
+    }
+
+    return part;
+  }).join('');
 }
 
 /**
  * URL Template (RFC 6570) Transform.
  */
-
 function template (options) {
-
-    var variables = [], url = expand(options.url, options.params, variables);
-
-    variables.forEach(function (key) {
-        delete options.params[key];
-    });
-
-    return url;
+  var variables = [],
+      url = expand(options.url, options.params, variables);
+  variables.forEach(function (key) {
+    delete options.params[key];
+  });
+  return url;
 }
 
 /**
  * Service for URL templating.
  */
-
 function Url(url, params) {
+  var self = this || {},
+      options$$1 = url,
+      transform;
 
-    var self = this || {}, options$$1 = url, transform;
+  if (isString(url)) {
+    options$$1 = {
+      url: url,
+      params: params
+    };
+  }
 
-    if (isString(url)) {
-        options$$1 = {url: url, params: params};
+  options$$1 = merge({}, Url.options, self.$options, options$$1);
+  Url.transforms.forEach(function (handler) {
+    if (isString(handler)) {
+      handler = Url.transform[handler];
     }
 
-    options$$1 = merge({}, Url.options, self.$options, options$$1);
-
-    Url.transforms.forEach(function (handler) {
-
-        if (isString(handler)) {
-            handler = Url.transform[handler];
-        }
-
-        if (isFunction(handler)) {
-            transform = factory(handler, transform, self.$vm);
-        }
-
-    });
-
-    return transform(options$$1);
+    if (isFunction(handler)) {
+      transform = factory(handler, transform, self.$vm);
+    }
+  });
+  return transform(options$$1);
 }
-
 /**
  * Url options.
  */
 
 Url.options = {
-    url: '',
-    root: null,
-    params: {}
+  url: '',
+  root: null,
+  params: {}
 };
-
 /**
  * Url transforms.
  */
 
-Url.transform = {template: template, query: query, root: root};
+Url.transform = {
+  template: template,
+  query: query,
+  root: root
+};
 Url.transforms = ['template', 'query', 'root'];
-
 /**
  * Encodes a Url parameter string.
  *
@@ -44202,573 +44171,539 @@ Url.transforms = ['template', 'query', 'root'];
  */
 
 Url.params = function (obj) {
+  var params = [],
+      escape = encodeURIComponent;
 
-    var params = [], escape = encodeURIComponent;
+  params.add = function (key, value) {
+    if (isFunction(value)) {
+      value = value();
+    }
 
-    params.add = function (key, value) {
+    if (value === null) {
+      value = '';
+    }
 
-        if (isFunction(value)) {
-            value = value();
-        }
+    this.push(escape(key) + '=' + escape(value));
+  };
 
-        if (value === null) {
-            value = '';
-        }
-
-        this.push(escape(key) + '=' + escape(value));
-    };
-
-    serialize(params, obj);
-
-    return params.join('&').replace(/%20/g, '+');
+  serialize(params, obj);
+  return params.join('&').replace(/%20/g, '+');
 };
-
 /**
  * Parse a URL and return its components.
  *
  * @param {String} url
  */
 
+
 Url.parse = function (url) {
+  var el = document.createElement('a');
 
-    var el = document.createElement('a');
-
-    if (document.documentMode) {
-        el.href = url;
-        url = el.href;
-    }
-
+  if (document.documentMode) {
     el.href = url;
+    url = el.href;
+  }
 
-    return {
-        href: el.href,
-        protocol: el.protocol ? el.protocol.replace(/:$/, '') : '',
-        port: el.port,
-        host: el.host,
-        hostname: el.hostname,
-        pathname: el.pathname.charAt(0) === '/' ? el.pathname : '/' + el.pathname,
-        search: el.search ? el.search.replace(/^\?/, '') : '',
-        hash: el.hash ? el.hash.replace(/^#/, '') : ''
-    };
+  el.href = url;
+  return {
+    href: el.href,
+    protocol: el.protocol ? el.protocol.replace(/:$/, '') : '',
+    port: el.port,
+    host: el.host,
+    hostname: el.hostname,
+    pathname: el.pathname.charAt(0) === '/' ? el.pathname : '/' + el.pathname,
+    search: el.search ? el.search.replace(/^\?/, '') : '',
+    hash: el.hash ? el.hash.replace(/^#/, '') : ''
+  };
 };
 
 function factory(handler, next, vm) {
-    return function (options$$1) {
-        return handler.call(vm, options$$1, next);
-    };
+  return function (options$$1) {
+    return handler.call(vm, options$$1, next);
+  };
 }
 
 function serialize(params, obj, scope) {
+  var array = isArray(obj),
+      plain = isPlainObject(obj),
+      hash;
+  each(obj, function (value, key) {
+    hash = isObject(value) || isArray(value);
 
-    var array = isArray(obj), plain = isPlainObject(obj), hash;
+    if (scope) {
+      key = scope + '[' + (plain || hash ? key : '') + ']';
+    }
 
-    each(obj, function (value, key) {
-
-        hash = isObject(value) || isArray(value);
-
-        if (scope) {
-            key = scope + '[' + (plain || hash ? key : '') + ']';
-        }
-
-        if (!scope && array) {
-            params.add(value.name, value.value);
-        } else if (hash) {
-            serialize(params, value, key);
-        } else {
-            params.add(key, value);
-        }
-    });
+    if (!scope && array) {
+      params.add(value.name, value.value);
+    } else if (hash) {
+      serialize(params, value, key);
+    } else {
+      params.add(key, value);
+    }
+  });
 }
 
 /**
  * XDomain client (Internet Explorer).
  */
-
 function xdrClient (request) {
-    return new PromiseObj(function (resolve) {
+  return new PromiseObj(function (resolve) {
+    var xdr = new XDomainRequest(),
+        handler = function handler(_ref) {
+      var type = _ref.type;
+      var status = 0;
 
-        var xdr = new XDomainRequest(), handler = function (ref) {
-                var type = ref.type;
+      if (type === 'load') {
+        status = 200;
+      } else if (type === 'error') {
+        status = 500;
+      }
 
+      resolve(request.respondWith(xdr.responseText, {
+        status: status
+      }));
+    };
 
-                var status = 0;
+    request.abort = function () {
+      return xdr.abort();
+    };
 
-                if (type === 'load') {
-                    status = 200;
-                } else if (type === 'error') {
-                    status = 500;
-                }
+    xdr.open(request.method, request.getUrl());
 
-                resolve(request.respondWith(xdr.responseText, {status: status}));
-            };
+    if (request.timeout) {
+      xdr.timeout = request.timeout;
+    }
 
-        request.abort = function () { return xdr.abort(); };
+    xdr.onload = handler;
+    xdr.onabort = handler;
+    xdr.onerror = handler;
+    xdr.ontimeout = handler;
 
-        xdr.open(request.method, request.getUrl());
+    xdr.onprogress = function () {};
 
-        if (request.timeout) {
-            xdr.timeout = request.timeout;
-        }
-
-        xdr.onload = handler;
-        xdr.onabort = handler;
-        xdr.onerror = handler;
-        xdr.ontimeout = handler;
-        xdr.onprogress = function () {};
-        xdr.send(request.getBody());
-    });
+    xdr.send(request.getBody());
+  });
 }
 
 /**
  * CORS Interceptor.
  */
-
 var SUPPORTS_CORS = inBrowser && 'withCredentials' in new XMLHttpRequest();
-
 function cors (request) {
+  if (inBrowser) {
+    var orgUrl = Url.parse(location.href);
+    var reqUrl = Url.parse(request.getUrl());
 
-    if (inBrowser) {
+    if (reqUrl.protocol !== orgUrl.protocol || reqUrl.host !== orgUrl.host) {
+      request.crossOrigin = true;
+      request.emulateHTTP = false;
 
-        var orgUrl = Url.parse(location.href);
-        var reqUrl = Url.parse(request.getUrl());
-
-        if (reqUrl.protocol !== orgUrl.protocol || reqUrl.host !== orgUrl.host) {
-
-            request.crossOrigin = true;
-            request.emulateHTTP = false;
-
-            if (!SUPPORTS_CORS) {
-                request.client = xdrClient;
-            }
-        }
+      if (!SUPPORTS_CORS) {
+        request.client = xdrClient;
+      }
     }
-
+  }
 }
 
 /**
  * Form data Interceptor.
  */
-
 function form (request) {
-
-    if (isFormData(request.body)) {
-        request.headers.delete('Content-Type');
-    } else if (isObject(request.body) && request.emulateJSON) {
-        request.body = Url.params(request.body);
-        request.headers.set('Content-Type', 'application/x-www-form-urlencoded');
-    }
-
+  if (isFormData(request.body)) {
+    request.headers["delete"]('Content-Type');
+  } else if (isObject(request.body) && request.emulateJSON) {
+    request.body = Url.params(request.body);
+    request.headers.set('Content-Type', 'application/x-www-form-urlencoded');
+  }
 }
 
 /**
  * JSON Interceptor.
  */
-
 function json (request) {
+  var type = request.headers.get('Content-Type') || '';
 
-    var type = request.headers.get('Content-Type') || '';
+  if (isObject(request.body) && type.indexOf('application/json') === 0) {
+    request.body = JSON.stringify(request.body);
+  }
 
-    if (isObject(request.body) && type.indexOf('application/json') === 0) {
-        request.body = JSON.stringify(request.body);
-    }
+  return function (response) {
+    return response.bodyText ? when(response.text(), function (text) {
+      var type = response.headers.get('Content-Type') || '';
 
-    return function (response) {
+      if (type.indexOf('application/json') === 0 || isJson(text)) {
+        try {
+          response.body = JSON.parse(text);
+        } catch (e) {
+          response.body = null;
+        }
+      } else {
+        response.body = text;
+      }
 
-        return response.bodyText ? when(response.text(), function (text) {
-
-            var type = response.headers.get('Content-Type') || '';
-
-            if (type.indexOf('application/json') === 0 || isJson(text)) {
-
-                try {
-                    response.body = JSON.parse(text);
-                } catch (e) {
-                    response.body = null;
-                }
-
-            } else {
-                response.body = text;
-            }
-
-            return response;
-
-        }) : response;
-
-    };
+      return response;
+    }) : response;
+  };
 }
 
 function isJson(str) {
-
-    var start = str.match(/^\s*(\[|\{)/);
-    var end = {'[': /]\s*$/, '{': /}\s*$/};
-
-    return start && end[start[1]].test(str);
+  var start = str.match(/^\s*(\[|\{)/);
+  var end = {
+    '[': /]\s*$/,
+    '{': /}\s*$/
+  };
+  return start && end[start[1]].test(str);
 }
 
 /**
  * JSONP client (Browser).
  */
-
 function jsonpClient (request) {
-    return new PromiseObj(function (resolve) {
+  return new PromiseObj(function (resolve) {
+    var name = request.jsonp || 'callback',
+        callback = request.jsonpCallback || '_jsonp' + Math.random().toString(36).substr(2),
+        body = null,
+        handler,
+        script;
 
-        var name = request.jsonp || 'callback', callback = request.jsonpCallback || '_jsonp' + Math.random().toString(36).substr(2), body = null, handler, script;
+    handler = function handler(_ref) {
+      var type = _ref.type;
+      var status = 0;
 
-        handler = function (ref) {
-            var type = ref.type;
+      if (type === 'load' && body !== null) {
+        status = 200;
+      } else if (type === 'error') {
+        status = 500;
+      }
 
+      if (status && window[callback]) {
+        delete window[callback];
+        document.body.removeChild(script);
+      }
 
-            var status = 0;
+      resolve(request.respondWith(body, {
+        status: status
+      }));
+    };
 
-            if (type === 'load' && body !== null) {
-                status = 200;
-            } else if (type === 'error') {
-                status = 500;
-            }
+    window[callback] = function (result) {
+      body = JSON.stringify(result);
+    };
 
-            if (status && window[callback]) {
-                delete window[callback];
-                document.body.removeChild(script);
-            }
+    request.abort = function () {
+      handler({
+        type: 'abort'
+      });
+    };
 
-            resolve(request.respondWith(body, {status: status}));
-        };
+    request.params[name] = callback;
 
-        window[callback] = function (result) {
-            body = JSON.stringify(result);
-        };
+    if (request.timeout) {
+      setTimeout(request.abort, request.timeout);
+    }
 
-        request.abort = function () {
-            handler({type: 'abort'});
-        };
-
-        request.params[name] = callback;
-
-        if (request.timeout) {
-            setTimeout(request.abort, request.timeout);
-        }
-
-        script = document.createElement('script');
-        script.src = request.getUrl();
-        script.type = 'text/javascript';
-        script.async = true;
-        script.onload = handler;
-        script.onerror = handler;
-
-        document.body.appendChild(script);
-    });
+    script = document.createElement('script');
+    script.src = request.getUrl();
+    script.type = 'text/javascript';
+    script.async = true;
+    script.onload = handler;
+    script.onerror = handler;
+    document.body.appendChild(script);
+  });
 }
 
 /**
  * JSONP Interceptor.
  */
-
 function jsonp (request) {
-
-    if (request.method == 'JSONP') {
-        request.client = jsonpClient;
-    }
-
+  if (request.method == 'JSONP') {
+    request.client = jsonpClient;
+  }
 }
 
 /**
  * Before Interceptor.
  */
-
 function before (request) {
-
-    if (isFunction(request.before)) {
-        request.before.call(this, request);
-    }
-
+  if (isFunction(request.before)) {
+    request.before.call(this, request);
+  }
 }
 
 /**
  * HTTP method override Interceptor.
  */
-
 function method (request) {
-
-    if (request.emulateHTTP && /^(PUT|PATCH|DELETE)$/i.test(request.method)) {
-        request.headers.set('X-HTTP-Method-Override', request.method);
-        request.method = 'POST';
-    }
-
+  if (request.emulateHTTP && /^(PUT|PATCH|DELETE)$/i.test(request.method)) {
+    request.headers.set('X-HTTP-Method-Override', request.method);
+    request.method = 'POST';
+  }
 }
 
 /**
  * Header Interceptor.
  */
-
 function header (request) {
-
-    var headers = assign({}, Http.headers.common,
-        !request.crossOrigin ? Http.headers.custom : {},
-        Http.headers[toLower(request.method)]
-    );
-
-    each(headers, function (value, name) {
-        if (!request.headers.has(name)) {
-            request.headers.set(name, value);
-        }
-    });
-
+  var headers = assign({}, Http.headers.common, !request.crossOrigin ? Http.headers.custom : {}, Http.headers[toLower(request.method)]);
+  each(headers, function (value, name) {
+    if (!request.headers.has(name)) {
+      request.headers.set(name, value);
+    }
+  });
 }
 
 /**
  * XMLHttp client (Browser).
  */
-
 function xhrClient (request) {
-    return new PromiseObj(function (resolve) {
+  return new PromiseObj(function (resolve) {
+    var xhr = new XMLHttpRequest(),
+        handler = function handler(event) {
+      var response = request.respondWith('response' in xhr ? xhr.response : xhr.responseText, {
+        status: xhr.status === 1223 ? 204 : xhr.status,
+        // IE9 status bug
+        statusText: xhr.status === 1223 ? 'No Content' : trim(xhr.statusText)
+      });
+      each(trim(xhr.getAllResponseHeaders()).split('\n'), function (row) {
+        response.headers.append(row.slice(0, row.indexOf(':')), row.slice(row.indexOf(':') + 1));
+      });
+      resolve(response);
+    };
 
-        var xhr = new XMLHttpRequest(), handler = function (event) {
+    request.abort = function () {
+      return xhr.abort();
+    };
 
-                var response = request.respondWith(
-                'response' in xhr ? xhr.response : xhr.responseText, {
-                    status: xhr.status === 1223 ? 204 : xhr.status, // IE9 status bug
-                    statusText: xhr.status === 1223 ? 'No Content' : trim(xhr.statusText)
-                });
+    xhr.open(request.method, request.getUrl(), true);
 
-                each(trim(xhr.getAllResponseHeaders()).split('\n'), function (row) {
-                    response.headers.append(row.slice(0, row.indexOf(':')), row.slice(row.indexOf(':') + 1));
-                });
+    if (request.timeout) {
+      xhr.timeout = request.timeout;
+    }
 
-                resolve(response);
-            };
+    if (request.responseType && 'responseType' in xhr) {
+      xhr.responseType = request.responseType;
+    }
 
-        request.abort = function () { return xhr.abort(); };
+    if (request.withCredentials || request.credentials) {
+      xhr.withCredentials = true;
+    }
 
-        xhr.open(request.method, request.getUrl(), true);
+    if (!request.crossOrigin) {
+      request.headers.set('X-Requested-With', 'XMLHttpRequest');
+    } // deprecated use downloadProgress
 
-        if (request.timeout) {
-            xhr.timeout = request.timeout;
-        }
 
-        if (request.responseType && 'responseType' in xhr) {
-            xhr.responseType = request.responseType;
-        }
+    if (isFunction(request.progress) && request.method === 'GET') {
+      xhr.addEventListener('progress', request.progress);
+    }
 
-        if (request.withCredentials || request.credentials) {
-            xhr.withCredentials = true;
-        }
+    if (isFunction(request.downloadProgress)) {
+      xhr.addEventListener('progress', request.downloadProgress);
+    } // deprecated use uploadProgress
 
-        if (!request.crossOrigin) {
-            request.headers.set('X-Requested-With', 'XMLHttpRequest');
-        }
 
-        // deprecated use downloadProgress
-        if (isFunction(request.progress) && request.method === 'GET') {
-            xhr.addEventListener('progress', request.progress);
-        }
+    if (isFunction(request.progress) && /^(POST|PUT)$/i.test(request.method)) {
+      xhr.upload.addEventListener('progress', request.progress);
+    }
 
-        if (isFunction(request.downloadProgress)) {
-            xhr.addEventListener('progress', request.downloadProgress);
-        }
+    if (isFunction(request.uploadProgress) && xhr.upload) {
+      xhr.upload.addEventListener('progress', request.uploadProgress);
+    }
 
-        // deprecated use uploadProgress
-        if (isFunction(request.progress) && /^(POST|PUT)$/i.test(request.method)) {
-            xhr.upload.addEventListener('progress', request.progress);
-        }
-
-        if (isFunction(request.uploadProgress) && xhr.upload) {
-            xhr.upload.addEventListener('progress', request.uploadProgress);
-        }
-
-        request.headers.forEach(function (value, name) {
-            xhr.setRequestHeader(name, value);
-        });
-
-        xhr.onload = handler;
-        xhr.onabort = handler;
-        xhr.onerror = handler;
-        xhr.ontimeout = handler;
-        xhr.send(request.getBody());
+    request.headers.forEach(function (value, name) {
+      xhr.setRequestHeader(name, value);
     });
+    xhr.onload = handler;
+    xhr.onabort = handler;
+    xhr.onerror = handler;
+    xhr.ontimeout = handler;
+    xhr.send(request.getBody());
+  });
 }
 
 /**
  * Http client (Node).
  */
-
 function nodeClient (request) {
+  var client = __webpack_require__(/*! got */ 1);
 
-    var client = __webpack_require__(/*! got */ 1);
-
-    return new PromiseObj(function (resolve) {
-
-        var url = request.getUrl();
-        var body = request.getBody();
-        var method = request.method;
-        var headers = {}, handler;
-
-        request.headers.forEach(function (value, name) {
-            headers[name] = value;
-        });
-
-        client(url, {body: body, method: method, headers: headers}).then(handler = function (resp) {
-
-            var response = request.respondWith(resp.body, {
-                status: resp.statusCode,
-                statusText: trim(resp.statusMessage)
-            });
-
-            each(resp.headers, function (value, name) {
-                response.headers.set(name, value);
-            });
-
-            resolve(response);
-
-        }, function (error$$1) { return handler(error$$1.response); });
+  return new PromiseObj(function (resolve) {
+    var url = request.getUrl();
+    var body = request.getBody();
+    var method = request.method;
+    var headers = {},
+        handler;
+    request.headers.forEach(function (value, name) {
+      headers[name] = value;
     });
+    client(url, {
+      body: body,
+      method: method,
+      headers: headers
+    }).then(handler = function handler(resp) {
+      var response = request.respondWith(resp.body, {
+        status: resp.statusCode,
+        statusText: trim(resp.statusMessage)
+      });
+      each(resp.headers, function (value, name) {
+        response.headers.set(name, value);
+      });
+      resolve(response);
+    }, function (error$$1) {
+      return handler(error$$1.response);
+    });
+  });
 }
 
 /**
  * Base client.
  */
-
 function Client (context) {
+  var reqHandlers = [sendRequest],
+      resHandlers = [];
 
-    var reqHandlers = [sendRequest], resHandlers = [];
+  if (!isObject(context)) {
+    context = null;
+  }
 
-    if (!isObject(context)) {
-        context = null;
+  function Client(request) {
+    while (reqHandlers.length) {
+      var handler = reqHandlers.pop();
+
+      if (isFunction(handler)) {
+        var _ret = function () {
+          var response = void 0,
+              next = void 0;
+          response = handler.call(context, request, function (val) {
+            return next = val;
+          }) || next;
+
+          if (isObject(response)) {
+            return {
+              v: new PromiseObj(function (resolve, reject) {
+                resHandlers.forEach(function (handler) {
+                  response = when(response, function (response) {
+                    return handler.call(context, response) || response;
+                  }, reject);
+                });
+                when(response, resolve, reject);
+              }, context)
+            };
+          }
+
+          if (isFunction(response)) {
+            resHandlers.unshift(response);
+          }
+        }();
+
+        if (typeof _ret === "object") return _ret.v;
+      } else {
+        warn("Invalid interceptor of type " + typeof handler + ", must be a function");
+      }
     }
+  }
 
-    function Client(request) {
-        while (reqHandlers.length) {
+  Client.use = function (handler) {
+    reqHandlers.push(handler);
+  };
 
-            var handler = reqHandlers.pop();
-
-            if (isFunction(handler)) {
-
-                var response = (void 0), next = (void 0);
-
-                response = handler.call(context, request, function (val) { return next = val; }) || next;
-
-                if (isObject(response)) {
-                    return new PromiseObj(function (resolve, reject) {
-
-                        resHandlers.forEach(function (handler) {
-                            response = when(response, function (response) {
-                                return handler.call(context, response) || response;
-                            }, reject);
-                        });
-
-                        when(response, resolve, reject);
-
-                    }, context);
-                }
-
-                if (isFunction(response)) {
-                    resHandlers.unshift(response);
-                }
-
-            } else {
-                warn(("Invalid interceptor of type " + (typeof handler) + ", must be a function"));
-            }
-        }
-    }
-
-    Client.use = function (handler) {
-        reqHandlers.push(handler);
-    };
-
-    return Client;
+  return Client;
 }
 
 function sendRequest(request) {
-
-    var client = request.client || (inBrowser ? xhrClient : nodeClient);
-
-    return client(request);
+  var client = request.client || (inBrowser ? xhrClient : nodeClient);
+  return client(request);
 }
 
 /**
  * HTTP Headers.
  */
 
-var Headers = function Headers(headers) {
-    var this$1 = this;
-
+var Headers = /*#__PURE__*/function () {
+  function Headers(headers) {
+    var _this = this;
 
     this.map = {};
+    each(headers, function (value, name) {
+      return _this.append(name, value);
+    });
+  }
 
-    each(headers, function (value, name) { return this$1.append(name, value); });
-};
+  var _proto = Headers.prototype;
 
-Headers.prototype.has = function has (name) {
+  _proto.has = function has(name) {
     return getName(this.map, name) !== null;
-};
+  };
 
-Headers.prototype.get = function get (name) {
-
+  _proto.get = function get(name) {
     var list = this.map[getName(this.map, name)];
-
     return list ? list.join() : null;
-};
+  };
 
-Headers.prototype.getAll = function getAll (name) {
+  _proto.getAll = function getAll(name) {
     return this.map[getName(this.map, name)] || [];
-};
+  };
 
-Headers.prototype.set = function set (name, value) {
+  _proto.set = function set(name, value) {
     this.map[normalizeName(getName(this.map, name) || name)] = [trim(value)];
-};
+  };
 
-Headers.prototype.append = function append (name, value) {
-
+  _proto.append = function append(name, value) {
     var list = this.map[getName(this.map, name)];
 
     if (list) {
-        list.push(trim(value));
+      list.push(trim(value));
     } else {
-        this.set(name, value);
+      this.set(name, value);
     }
-};
+  };
 
-Headers.prototype.delete = function delete$1 (name) {
+  _proto["delete"] = function _delete(name) {
     delete this.map[getName(this.map, name)];
-};
+  };
 
-Headers.prototype.deleteAll = function deleteAll () {
+  _proto.deleteAll = function deleteAll() {
     this.map = {};
-};
+  };
 
-Headers.prototype.forEach = function forEach (callback, thisArg) {
-        var this$1 = this;
+  _proto.forEach = function forEach(callback, thisArg) {
+    var _this2 = this;
 
     each(this.map, function (list, name) {
-        each(list, function (value) { return callback.call(thisArg, value, name, this$1); });
+      each(list, function (value) {
+        return callback.call(thisArg, value, name, _this2);
+      });
     });
-};
+  };
+
+  return Headers;
+}();
 
 function getName(map, name) {
-    return Object.keys(map).reduce(function (prev, curr) {
-        return toLower(name) === toLower(curr) ? curr : prev;
-    }, null);
+  return Object.keys(map).reduce(function (prev, curr) {
+    return toLower(name) === toLower(curr) ? curr : prev;
+  }, null);
 }
 
 function normalizeName(name) {
+  if (/[^a-z0-9\-#$%&'*+.^_`|~]/i.test(name)) {
+    throw new TypeError('Invalid character in header field name');
+  }
 
-    if (/[^a-z0-9\-#$%&'*+.^_`|~]/i.test(name)) {
-        throw new TypeError('Invalid character in header field name');
-    }
-
-    return trim(name);
+  return trim(name);
 }
 
 /**
  * HTTP Response.
  */
 
-var Response = function Response(body, ref) {
-    var url = ref.url;
-    var headers = ref.headers;
-    var status = ref.status;
-    var statusText = ref.statusText;
-
-
+var Response = /*#__PURE__*/function () {
+  function Response(body, _ref) {
+    var url = _ref.url,
+        headers = _ref.headers,
+        status = _ref.status,
+        statusText = _ref.statusText;
     this.url = url;
     this.ok = status >= 200 && status < 300;
     this.status = status || 0;
@@ -44777,231 +44712,234 @@ var Response = function Response(body, ref) {
     this.body = body;
 
     if (isString(body)) {
-
-        this.bodyText = body;
-
+      this.bodyText = body;
     } else if (isBlob(body)) {
+      this.bodyBlob = body;
 
-        this.bodyBlob = body;
-
-        if (isBlobText(body)) {
-            this.bodyText = blobText(body);
-        }
+      if (isBlobText(body)) {
+        this.bodyText = blobText(body);
+      }
     }
-};
+  }
 
-Response.prototype.blob = function blob () {
+  var _proto = Response.prototype;
+
+  _proto.blob = function blob() {
     return when(this.bodyBlob);
-};
+  };
 
-Response.prototype.text = function text () {
+  _proto.text = function text() {
     return when(this.bodyText);
-};
+  };
 
-Response.prototype.json = function json () {
-    return when(this.text(), function (text) { return JSON.parse(text); });
-};
+  _proto.json = function json() {
+    return when(this.text(), function (text) {
+      return JSON.parse(text);
+    });
+  };
 
+  return Response;
+}();
 Object.defineProperty(Response.prototype, 'data', {
-
-    get: function get() {
-        return this.body;
-    },
-
-    set: function set(body) {
-        this.body = body;
-    }
-
+  get: function get() {
+    return this.body;
+  },
+  set: function set(body) {
+    this.body = body;
+  }
 });
 
 function blobText(body) {
-    return new PromiseObj(function (resolve) {
+  return new PromiseObj(function (resolve) {
+    var reader = new FileReader();
+    reader.readAsText(body);
 
-        var reader = new FileReader();
-
-        reader.readAsText(body);
-        reader.onload = function () {
-            resolve(reader.result);
-        };
-
-    });
+    reader.onload = function () {
+      resolve(reader.result);
+    };
+  });
 }
 
 function isBlobText(body) {
-    return body.type.indexOf('text') === 0 || body.type.indexOf('json') !== -1;
+  return body.type.indexOf('text') === 0 || body.type.indexOf('json') !== -1;
 }
 
 /**
  * HTTP Request.
  */
 
-var Request = function Request(options$$1) {
-
+var Request = /*#__PURE__*/function () {
+  function Request(options$$1) {
     this.body = null;
     this.params = {};
-
     assign(this, options$$1, {
-        method: toUpper(options$$1.method || 'GET')
+      method: toUpper(options$$1.method || 'GET')
     });
 
     if (!(this.headers instanceof Headers)) {
-        this.headers = new Headers(this.headers);
+      this.headers = new Headers(this.headers);
     }
-};
+  }
 
-Request.prototype.getUrl = function getUrl () {
+  var _proto = Request.prototype;
+
+  _proto.getUrl = function getUrl() {
     return Url(this);
-};
+  };
 
-Request.prototype.getBody = function getBody () {
+  _proto.getBody = function getBody() {
     return this.body;
-};
+  };
 
-Request.prototype.respondWith = function respondWith (body, options$$1) {
-    return new Response(body, assign(options$$1 || {}, {url: this.getUrl()}));
-};
+  _proto.respondWith = function respondWith(body, options$$1) {
+    return new Response(body, assign(options$$1 || {}, {
+      url: this.getUrl()
+    }));
+  };
+
+  return Request;
+}();
 
 /**
  * Service for sending network requests.
  */
-
-var COMMON_HEADERS = {'Accept': 'application/json, text/plain, */*'};
-var JSON_CONTENT_TYPE = {'Content-Type': 'application/json;charset=utf-8'};
-
-function Http(options$$1) {
-
-    var self = this || {}, client = Client(self.$vm);
-
-    defaults(options$$1 || {}, self.$options, Http.options);
-
-    Http.interceptors.forEach(function (handler) {
-
-        if (isString(handler)) {
-            handler = Http.interceptor[handler];
-        }
-
-        if (isFunction(handler)) {
-            client.use(handler);
-        }
-
-    });
-
-    return client(new Request(options$$1)).then(function (response) {
-
-        return response.ok ? response : PromiseObj.reject(response);
-
-    }, function (response) {
-
-        if (response instanceof Error) {
-            error(response);
-        }
-
-        return PromiseObj.reject(response);
-    });
-}
-
-Http.options = {};
-
-Http.headers = {
-    put: JSON_CONTENT_TYPE,
-    post: JSON_CONTENT_TYPE,
-    patch: JSON_CONTENT_TYPE,
-    delete: JSON_CONTENT_TYPE,
-    common: COMMON_HEADERS,
-    custom: {}
+var COMMON_HEADERS = {
+  'Accept': 'application/json, text/plain, */*'
 };
+var JSON_CONTENT_TYPE = {
+  'Content-Type': 'application/json;charset=utf-8'
+};
+function Http(options$$1) {
+  var self = this || {},
+      client = Client(self.$vm);
+  defaults(options$$1 || {}, self.$options, Http.options);
+  Http.interceptors.forEach(function (handler) {
+    if (isString(handler)) {
+      handler = Http.interceptor[handler];
+    }
 
-Http.interceptor = {before: before, method: method, jsonp: jsonp, json: json, form: form, header: header, cors: cors};
+    if (isFunction(handler)) {
+      client.use(handler);
+    }
+  });
+  return client(new Request(options$$1)).then(function (response) {
+    return response.ok ? response : PromiseObj.reject(response);
+  }, function (response) {
+    if (response instanceof Error) {
+      error(response);
+    }
+
+    return PromiseObj.reject(response);
+  });
+}
+Http.options = {};
+Http.headers = {
+  put: JSON_CONTENT_TYPE,
+  post: JSON_CONTENT_TYPE,
+  patch: JSON_CONTENT_TYPE,
+  "delete": JSON_CONTENT_TYPE,
+  common: COMMON_HEADERS,
+  custom: {}
+};
+Http.interceptor = {
+  before: before,
+  method: method,
+  jsonp: jsonp,
+  json: json,
+  form: form,
+  header: header,
+  cors: cors
+};
 Http.interceptors = ['before', 'method', 'jsonp', 'json', 'form', 'header', 'cors'];
-
 ['get', 'delete', 'head', 'jsonp'].forEach(function (method$$1) {
-
-    Http[method$$1] = function (url, options$$1) {
-        return this(assign(options$$1 || {}, {url: url, method: method$$1}));
-    };
-
+  Http[method$$1] = function (url, options$$1) {
+    return this(assign(options$$1 || {}, {
+      url: url,
+      method: method$$1
+    }));
+  };
 });
-
 ['post', 'put', 'patch'].forEach(function (method$$1) {
-
-    Http[method$$1] = function (url, body, options$$1) {
-        return this(assign(options$$1 || {}, {url: url, method: method$$1, body: body}));
-    };
-
+  Http[method$$1] = function (url, body, options$$1) {
+    return this(assign(options$$1 || {}, {
+      url: url,
+      method: method$$1,
+      body: body
+    }));
+  };
 });
 
 /**
  * Service for interacting with RESTful services.
  */
-
 function Resource(url, params, actions, options$$1) {
+  var self = this || {},
+      resource = {};
+  actions = assign({}, Resource.actions, actions);
+  each(actions, function (action, name) {
+    action = merge({
+      url: url,
+      params: assign({}, params)
+    }, options$$1, action);
 
-    var self = this || {}, resource = {};
-
-    actions = assign({},
-        Resource.actions,
-        actions
-    );
-
-    each(actions, function (action, name) {
-
-        action = merge({url: url, params: assign({}, params)}, options$$1, action);
-
-        resource[name] = function () {
-            return (self.$http || Http)(opts(action, arguments));
-        };
-    });
-
-    return resource;
+    resource[name] = function () {
+      return (self.$http || Http)(opts(action, arguments));
+    };
+  });
+  return resource;
 }
 
 function opts(action, args) {
+  var options$$1 = assign({}, action),
+      params = {},
+      body;
 
-    var options$$1 = assign({}, action), params = {}, body;
+  switch (args.length) {
+    case 2:
+      params = args[0];
+      body = args[1];
+      break;
 
-    switch (args.length) {
+    case 1:
+      if (/^(POST|PUT|PATCH)$/i.test(options$$1.method)) {
+        body = args[0];
+      } else {
+        params = args[0];
+      }
 
-        case 2:
+      break;
 
-            params = args[0];
-            body = args[1];
+    case 0:
+      break;
 
-            break;
+    default:
+      throw 'Expected up to 2 arguments [params, body], got ' + args.length + ' arguments';
+  }
 
-        case 1:
-
-            if (/^(POST|PUT|PATCH)$/i.test(options$$1.method)) {
-                body = args[0];
-            } else {
-                params = args[0];
-            }
-
-            break;
-
-        case 0:
-
-            break;
-
-        default:
-
-            throw 'Expected up to 2 arguments [params, body], got ' + args.length + ' arguments';
-    }
-
-    options$$1.body = body;
-    options$$1.params = assign({}, options$$1.params, params);
-
-    return options$$1;
+  options$$1.body = body;
+  options$$1.params = assign({}, options$$1.params, params);
+  return options$$1;
 }
 
 Resource.actions = {
-
-    get: {method: 'GET'},
-    save: {method: 'POST'},
-    query: {method: 'GET'},
-    update: {method: 'PUT'},
-    remove: {method: 'DELETE'},
-    delete: {method: 'DELETE'}
-
+  get: {
+    method: 'GET'
+  },
+  save: {
+    method: 'POST'
+  },
+  query: {
+    method: 'GET'
+  },
+  update: {
+    method: 'PUT'
+  },
+  remove: {
+    method: 'DELETE'
+  },
+  "delete": {
+    method: 'DELETE'
+  }
 };
 
 /**
@@ -45009,51 +44947,45 @@ Resource.actions = {
  */
 
 function plugin(Vue) {
+  if (plugin.installed) {
+    return;
+  }
 
-    if (plugin.installed) {
-        return;
+  Util(Vue);
+  Vue.url = Url;
+  Vue.http = Http;
+  Vue.resource = Resource;
+  Vue.Promise = PromiseObj;
+  Object.defineProperties(Vue.prototype, {
+    $url: {
+      get: function get() {
+        return options(Vue.url, this, this.$options.url);
+      }
+    },
+    $http: {
+      get: function get() {
+        return options(Vue.http, this, this.$options.http);
+      }
+    },
+    $resource: {
+      get: function get() {
+        return Vue.resource.bind(this);
+      }
+    },
+    $promise: {
+      get: function get() {
+        var _this = this;
+
+        return function (executor) {
+          return new Vue.Promise(executor, _this);
+        };
+      }
     }
-
-    Util(Vue);
-
-    Vue.url = Url;
-    Vue.http = Http;
-    Vue.resource = Resource;
-    Vue.Promise = PromiseObj;
-
-    Object.defineProperties(Vue.prototype, {
-
-        $url: {
-            get: function get() {
-                return options(Vue.url, this, this.$options.url);
-            }
-        },
-
-        $http: {
-            get: function get() {
-                return options(Vue.http, this, this.$options.http);
-            }
-        },
-
-        $resource: {
-            get: function get() {
-                return Vue.resource.bind(this);
-            }
-        },
-
-        $promise: {
-            get: function get() {
-                var this$1 = this;
-
-                return function (executor) { return new Vue.Promise(executor, this$1); };
-            }
-        }
-
-    });
+  });
 }
 
-if (typeof window !== 'undefined' && window.Vue) {
-    window.Vue.use(plugin);
+if (typeof window !== 'undefined' && window.Vue && !window.Vue.resource) {
+  window.Vue.use(plugin);
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (plugin);
@@ -56275,14 +56207,14 @@ $(document).ready(function () {
         },
 
         /* processResults: function (data, params) {
-              params.page = params.page || 1;
-              var answer =  {
+             params.page = params.page || 1;
+             var answer =  {
                 results: data.items,
                 pagination: {
                     more: data.pagination.more
                 }
             };
-              return answer;
+             return answer;
         }, */
         cache: true
       },
@@ -56617,14 +56549,10 @@ function htmlEntities(str) {
 
 /* 
 HOW TO USE
-
-Create a Button looking like this:
-
-<a href='{{ route('modal.show', 'user') }}' data-toggle="modal"  data-target="#createModal" data-select='assigned_to' class="btn btn-sm btn-primary">New</a>
-
-If you don't have access to Blade commands (like {{ and }}, etc), you can hard-code a URL as the 'href'
-
-data-toggle="modal" - required for Bootstrap Modals
+ Create a Button looking like this:
+ <a href='{{ route('modal.show', 'user') }}' data-toggle="modal"  data-target="#createModal" data-select='assigned_to' class="btn btn-sm btn-primary">New</a>
+ If you don't have access to Blade commands (like {{ and }}, etc), you can hard-code a URL as the 'href'
+ data-toggle="modal" - required for Bootstrap Modals
 data-target="#createModal" - fixed ID for the modal, do not change
 data-select="assigned_to" - What is the *ID* of the select-dropdown that you're going to be adding to, if the modal-create was a success? Be on the lookout for duplicate ID's, it will confuse this library!
 class="btn btn-sm btn-primary" - makes it look button-ey, feel free to change :)
@@ -56674,14 +56602,14 @@ $(function () {
             },
 
             /*processResults: function (data, params) {
-                  params.page = params.page || 1;
-                  var answer =  {
+                 params.page = params.page || 1;
+                 var answer =  {
                     results: data.items,
                     pagination: {
                         more: data.pagination.more
                     }
                 };
-                  return answer;
+                 return answer;
             },*/
             cache: true
           },
@@ -57076,7 +57004,7 @@ Vue.component('fieldset-default-values', __webpack_require__(/*! ./components/fo
 __webpack_require__(/*! /vagrant/www/snipe-it/resources/assets/js/vue.js */"./resources/assets/js/vue.js");
 __webpack_require__(/*! /vagrant/www/snipe-it/resources/assets/js/snipeit.js */"./resources/assets/js/snipeit.js");
 __webpack_require__(/*! /vagrant/www/snipe-it/resources/assets/js/snipeit_modals.js */"./resources/assets/js/snipeit_modals.js");
-!(function webpackMissingModule() { var e = new Error("Cannot find module '/vagrant/www/snipe-it/node_modules/admin-lte/build/less/AdminLTE.less'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+__webpack_require__(/*! /vagrant/www/snipe-it/node_modules/admin-lte/build/less/AdminLTE.less */"./node_modules/admin-lte/build/less/AdminLTE.less");
 __webpack_require__(/*! /vagrant/www/snipe-it/resources/assets/less/app.less */"./resources/assets/less/app.less");
 __webpack_require__(/*! /vagrant/www/snipe-it/resources/assets/less/overrides.less */"./resources/assets/less/overrides.less");
 __webpack_require__(/*! /vagrant/www/snipe-it/resources/assets/less/rtl.less */"./resources/assets/less/rtl.less");

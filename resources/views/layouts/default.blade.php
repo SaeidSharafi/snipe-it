@@ -189,7 +189,7 @@
 
                             @can('index', \App\Models\Asset::class)
                                 <li>
-                                    <form class="navbar-form navbar-left form-horizontal" role="search"
+                                    <form class="row navbar-form navbar-left form-horizontal" role="search"
                                           action="{{ route('findbytag/hardware') }}" method="get">
                                         <div class="col-xs-12 col-md-12">
                                             <div class="col-xs-12 form-group">
@@ -347,12 +347,12 @@
                                         <li {!! (Request::is('account/requested') ? ' class="active"' : '') !!}>
                                             <a href="{{ route('account.requested') }}">
                                                 <i class="fa fa-check fa-disk fa-fw" aria-hidden="true"></i>
-                                                Requested Assets
+                                                {{ trans('general.requestedassets') }}
                                             </a></li>
                                         <li {!! (Request::is('account/accept') ? ' class="active"' : '') !!}>
                                             <a href="{{ route('account.accept') }}">
                                                 <i class="fa fa-check fa-disk fa-fw"></i>
-                                                Accept Assets
+                                                {{ trans('general.acceptassets') }}
                                             </a></li>
 
 
@@ -401,7 +401,7 @@
                         </ul>
                     </div>
                 </nav>
-                <a href="#" style="float:left" class="sidebar-toggle-mobile visible-xs btn" data-toggle="push-menu"
+                <a href="#" style="float:right" class="sidebar-toggle-mobile visible-xs btn" data-toggle="push-menu"
                    role="button">
                     <span class="sr-only">Toggle navigation</span>
                     <i class="fa fa-bars"></i>
