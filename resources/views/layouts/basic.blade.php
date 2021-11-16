@@ -11,6 +11,9 @@
     <link rel="shortcut icon" type="image/ico" href="{{ ($snipeSettings) && ($snipeSettings->favicon!='') ?  Storage::disk('public')->url('').e($snipeSettings->favicon) : 'favicon.ico' }} ">
     {{-- stylesheets --}}
     <link rel="stylesheet" href="{{ url(mix('css/dist/all.css')) }}">
+    @if($snipeSettings->is_rtl)
+        <link rel="stylesheet" href="{{ url(mix('css/dist/rtl.css')) }}">
+    @endif
     <link rel="shortcut icon" type="image/ico" href="{{ url(asset('favicon.ico')) }}">
 
     <script nonce="{{ csrf_token() }}">
