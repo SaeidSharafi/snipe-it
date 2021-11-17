@@ -234,6 +234,8 @@
     'users'                 => 'Users',
     'viewall'				=> 'View All',
     'viewassets'  			=> 'View Assigned Assets',
+    'requestedassets'  		=> 'Requested Assets',
+    'acceptassets'  		=> 'Accept Assets',
     'website'               => 'Website',
     'welcome'				=> 'Welcome, :name',
     'years'					=> 'years',
