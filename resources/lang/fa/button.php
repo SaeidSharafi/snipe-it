@@ -2,9 +2,9 @@
 
 return array(
     'actions' 	                => 'اقدامات',
-    'add'    	                => 'افزودن جدید',
+    'add'    	                => 'افزودن',
     'cancel'                    => 'انصراف',
-    'checkin_and_delete'  	    => 'بررسی و حذف کاربر',
+    'checkin_and_delete'  	    => 'بررسی و حذف',
     'delete'  	                => 'حذف',
     'edit'    	                => 'ويرايش',
     'restore' 	                => 'بازیابی',
