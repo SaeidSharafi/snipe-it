@@ -237,6 +237,8 @@
     'users'                 => 'کاربران',
     'viewall'				=> 'مشاهده همه',
     'viewassets'  			=> 'اموال تخصیص داده شده',
+    'requestedassets'  		=> 'اموال درخواستی',
+    'acceptassets'  		=> 'اموال در اتظار پذیرش',
     'website'               => 'تارنما',
     'welcome'				=> 'خوش آمدید، ',
     'years'					=> 'سال ها',
