@@ -26,7 +26,7 @@ class PredefinedKitPresenter extends Presenter
                 "field" => "name",
                 "searchable" => true,
                 "sortable" => true,
-                "title" => 'Name',                      // TODO: trans
+                "title" => trans('general.name'),
                 "formatter" => "kitsLinkFormatter"
             ]
         ];

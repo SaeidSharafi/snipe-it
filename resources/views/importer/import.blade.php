@@ -42,7 +42,7 @@
                                     <!-- The fileinput-button span is used to style the file input field as button -->
                                     @if (!config('app.lock_passwords'))
                                         <span class="btn btn-primary fileinput-button">
-                                        <span>Select Import File...</span>
+                                        <span>{{ trans('button.go') }}</span>
                                          <!-- The file input field used as target for the file upload widget -->
                                         <label for="files[]"><span class="sr-only">Select file</span></label>
                                         <input id="fileupload" type="file" name="files[]" data-url="{{ route('api.imports.index') }}" accept="text/csv" aria-label="files[]">

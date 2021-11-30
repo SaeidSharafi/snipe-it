@@ -54,7 +54,7 @@
                     <option value="edit">Bulk Edit</option>
                     <option value="bulkpasswordreset">{{ trans('button.send_password_link') }}</option>
                   </select>
-                  <button class="btn btn-default" id="bulkEdit" disabled>Go</button>
+                  <button class="btn btn-default" id="bulkEdit" disabled>{{ trans('button.go') }}</button>
                 </div>
               @endcan
             @endif

@@ -80,7 +80,7 @@
                         <option value="labels">{{ trans_choice('button.generate_labels', 2) }}</option>
                       </select>
                       
-                      <button class="btn btn-primary" id="bulkEdit" disabled>Go</button>
+                      <button class="btn btn-primary" id="bulkEdit" disabled>{{ trans('button.go') }}</button>
                       {{ Form::close() }}   
                     </div>
                    

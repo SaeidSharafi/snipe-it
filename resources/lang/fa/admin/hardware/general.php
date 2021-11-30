@@ -13,7 +13,7 @@ return array(
     'deleted'  					=> 'This asset has been deleted.',
     'edit'  					=> 'ویرایش دارایی',
     'model_deleted'  			=> 'This Assets model has been deleted. You must restore the model before you can restore the Asset.',
-    'requestable'               => 'در خواست شد',
+    'requestable'               => 'قابل درخواست',
     'requested'				    => 'درخواست شده',
     'restore'  					=> 'بازیابی دارایی',
     'pending'  					=> 'در انتظار',
