@@ -2,7 +2,7 @@
 
 return array(
 
-    'asset_tag'   	=> 'برچسب دارایی',
+    'asset_tag'   	=> 'برچسب اموال',
     'asset_model'       => 'مدل',
     'book_value'  	=> 'عنوان آیتم',
     'change' 		=> '/ خارج',
@@ -17,7 +17,7 @@ return array(
     'purchase_date'	=> 'خریداری شده',
     'serial'   		=> 'سریال',
     'status'   		=> 'وضعیت',
-    'title'      	=> 'دارایی ',
+    'title'      	=> 'اموال ',
     'image'		=> 'دستگاه تصویر
 ',
     'days_without_acceptance' => 'روز بدون پذیرش',

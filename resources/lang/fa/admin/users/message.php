@@ -2,16 +2,16 @@
 
 return array(
 
-    'accepted'                  => 'دارایی با موفقیت پذیرفته شد.',
-    'declined'                  => 'شما با موفقیت این دارایی را به کاهش دادید.',
+    'accepted'                  => 'پذیرش اموال با موفقیت انجام شد',
+    'declined'                  => 'عدم پذیرش اموال با موفقیت انجام شد',
     'bulk_manager_warn'	        => 'کاربران شما با موفقیت به روز شده اند، با این حال مدیر ورود شما ذخیره نشد زیرا مدیر شما انتخاب شده بود نیز در لیست کاربر برای ویرایش، و کاربران ممکن است مدیر خود نیست. لطفا کاربران خود را دوباره انتخاب کنید، به غیر از مدیر.',
     'user_exists'               => 'کاربر "{0}" در حال حاضر وجود دارد.',
     'user_not_found'            => 'کاربر [:id] موجود نیست.',
     'user_login_required'       => 'فیلد ورود الزامی است.',
     'user_password_required'    => 'کلمه عبور ضروری است.',
     'insufficient_permissions'  => 'دسترسی محدود',
-    'user_deleted_warning'      => 'این کاربر حذف شده است.شما باید این کاربر را بازگردانی و آنها را ویرایش و دارایی به آنها اختصاص دهید.',
-    'ldap_not_configured'        => 'LDAPبرای این نصب و راه اندازی پیکربندی نشده است.',
+    'user_deleted_warning'      => 'این کاربر حذف شده است. جهت ویرایش و یا تخصیص اموال ابتدا این کاربر را بازگردانی کنید',
+    'ldap_not_configured'        => 'LDAP راه اندازی پیکربندی نشده است.',
     'password_resets_sent'      => 'The selected users who are activated and have a valid email addresses have been sent a password reset link.',
 
 
@@ -35,9 +35,9 @@ return array(
         'delete_has_assets' => 'این کاربر دارای مواردی تعیین شده است و نمی تواند حذف شود.',
         'unsuspend' => 'اشکال در به رفع تعلیق کاربر.لطفا دوباره تلاش کنید.',
         'import'    => 'اشکال در به وارد کردن کاربران.لطفا دوباره تلاش کنید.',
-        'asset_already_accepted' => 'دارایی پذیرفته شده است.',
-        'accept_or_decline' => 'شما باید این دارایی را قبول یا رد کنید.',
-        'incorrect_user_accepted' => 'دارایی که میخواهید قبول یا رد کنید به شما محول نشده.',
+        'asset_already_accepted' => 'اموال پذیرفته شده است.',
+        'accept_or_decline' => 'شما باید این اموال را قبول یا رد کنید.',
+        'incorrect_user_accepted' => 'اموالی که میخواهید قبول یا رد کنید به شما محول نشده است.',
         'ldap_could_not_connect' => 'ارتباط با سرور LDAP برقرار نشد.لطفا پیکربندی LDPA سرور را در فایل LDPA config بررسی کنید.<br>اشکال از سرور LDPA:',
         'ldap_could_not_bind' => 'ارتباط با سرور LDAP برقرار نشد.لطفا پیکربندی LDPA سرور را در فایل LDPA config بررسی کنید.<br>اشکال از سرور LDPA:',
         'ldap_could_not_search' => 'جستجو در سرور LDPA انجام نشد.لطفا پیکربندی LDPA سرور را در فایل LDPA config بررسی کنید.<br>اشکال از سرور LDPA:',

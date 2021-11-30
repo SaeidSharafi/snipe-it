@@ -3,7 +3,7 @@
 return array(
     'activated'  			=> 'فعال کردن',
     'allow'  				=> 'مجاز کردن',
-    'checkedout'  			=> 'دارایی ها',
+    'checkedout'  			=> 'اموال',
     'created_at' 			=> 'ایجاد شده',
     'createuser' 			=> 'ایجاد کاربر جدید',
     'deny'  				=> 'رد کردن',
