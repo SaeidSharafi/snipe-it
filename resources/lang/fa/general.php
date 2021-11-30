@@ -256,4 +256,7 @@
     'clear_signature'       => 'Clear Signature',
     'show_help'             => 'نمایش راهنما',
     'hide_help'             => 'پنهان کردن راهنما',
+    'your_dashboard'             => '',
+    'dashboard_empty'             => '',
+    'view_assets_for'             => 'مشاهده اموال :name',
     ];

@@ -253,4 +253,7 @@
     'clear_signature'       => 'Clear Signature',
     'show_help'             => 'Show help',
     'hide_help'             => 'Hide help',
+    'your_dashboard'        => 'This is your dashboard. There are many like it, but this one is yours.',
+    'dashboard_empty'       => 'It looks like you haven\'t added anything yet, so we don\'t have anything awesome to display. Get started by adding some assets, accessories, consumables, or licenses now!',
+    'view_assets_for'             => 'View Assets for :name',
     ];

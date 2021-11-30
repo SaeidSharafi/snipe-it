@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-View Assets for  {{ $user->present()->fullName() }}
+{{ trans('admin/users/general.assets_user', array('name' => $user->present()->fullName())) }}
 @parent
 @stop
 

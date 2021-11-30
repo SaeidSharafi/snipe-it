@@ -110,7 +110,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h2 class="box-title">This is your dashboard. There are many like it, but this one is yours.</h2>
+                    <h2 class="box-title">{{trans('general.your_dashboard')}}</h2>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -124,7 +124,10 @@
                             </div>
 
 
-                            <p><strong>It looks like you haven't added anything yet, so we don't have anything awesome to display. Get started by adding some assets, accessories, consumables, or licenses now!</strong></p>
+                            <p><strong>
+                                    {{trans('general.dashboard_empty')}}
+
+                                </strong></p>
 
                         </div>
                     </div>

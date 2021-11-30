@@ -29,7 +29,7 @@
 @else
 {{ trans('general.all') }}
 @endif
-{{ trans('general.assets') }}
+-{{ trans('general.assets') }}
 
   @if (Request::has('order_number'))
     : Order #{{ Request::get('order_number') }}
