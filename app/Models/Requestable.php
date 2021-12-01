@@ -39,8 +39,13 @@ trait Requestable
         $this->requests()->where('user_id', Auth::id())->delete();
     }
 
-    public function cancelRequest()
+    public function cancelRequest($userid = null)
     {
-        $this->requests()->where('user_id', Auth::id())->update(['canceled_at' => \Carbon\Carbon::now()]);
+        if ($userid){
+            $this->requests()->where('user_id', $userid)->update(['canceled_at' => \Carbon\Carbon::now()]);
+        }else{
+            $this->requests()->where('user_id', Auth::id())->update(['canceled_at' => \Carbon\Carbon::now()]);
+        }
+
     }
 }

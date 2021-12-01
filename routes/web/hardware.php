@@ -116,6 +116,11 @@ Route::group(
             'as' => 'checkout/hardware',
             'uses' => 'Assets\AssetCheckoutController@store'
         ]);
+        Route::get('{assetId}/reject/{userId}', [
+                'as' => 'reject/hardware',
+                'uses' => 'Assets\AssetRejectController@store'
+        ]);
+
         Route::get('{assetId}/checkin/{backto?}', [
             'as' => 'checkin/hardware',
             'uses' => 'Assets\AssetCheckinController@create'

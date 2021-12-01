@@ -46,9 +46,15 @@
 
                 @if ($field->format=='DATE')
 
-                        <div class="input-group col-md-4" style="padding-left: 0px;">
-                            <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd"  data-autoclose="true">
-                                <input type="text" class="form-control" placeholder="{{ trans('general.select_date') }}" name="{{ $field->db_column_name() }}" id="{{ $field->db_column_name() }}" value="{{ old($field->db_column_name(),(isset($item) ? \App\Helpers\Helper::gracefulDecrypt($field, $item->{$field->db_column_name()}) : "")) }}">
+                        <div class="input-group col-md-4" style="padding-left: 0px;" id="datepicker-app">
+                            <x-date-picker name="{{ $field->db_column_name() }}"
+                                           id="{{ $field->db_column_name() }}"
+                                           initial-value="{{ old($field->db_column_name(),(isset($item) ? \App\Helpers\Helper::gracefulDecrypt($field, $item->{$field->db_column_name()}) : "")) }}"
+                                           placeholder="{{ trans('general.select_date') }}"></x-date-picker>
+{{--                            <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd"  data-autoclose="true">--}}
+{{--                                <input type="text" class="form-control" placeholder="{{ trans('general.select_date') }}"--}}
+{{--                                       name="{{ $field->db_column_name() }}" id="{{ $field->db_column_name() }}" --}}
+{{--                                       value="{{ old($field->db_column_name(),(isset($item) ? \App\Helpers\Helper::gracefulDecrypt($field, $item->{$field->db_column_name()}) : "")) }}">--}}
                                 <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
                             </div>
                         </div>

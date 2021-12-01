@@ -10,26 +10,25 @@
 
 @if (Request::get('status'))
   @if (Request::get('status')=='Pending')
-    {{ trans('general.pending') }}
+    {{ trans('general.assets_list', array('status' => trans('general.pending'))) }}
   @elseif (Request::get('status')=='RTD')
-    {{ trans('general.ready_to_deploy') }}
+     {{ trans('general.assets_list', array('status' => trans('general.ready_to_deploy'))) }}
   @elseif (Request::get('status')=='Deployed')
-    {{ trans('general.deployed') }}
+     {{ trans('general.assets_list', array('status' => trans('general.deployed'))) }}
   @elseif (Request::get('status')=='Undeployable')
-    {{ trans('general.undeployable') }}
+     {{ trans('general.assets_list', array('status' => trans('general.undeployable'))) }}
   @elseif (Request::get('status')=='Deployable')
-    {{ trans('general.deployed') }}
+     {{ trans('general.assets_list', array('status' => trans('general.deployed'))) }}
   @elseif (Request::get('status')=='Requestable')
-    {{ trans('admin/hardware/general.requestable') }}
+     {{ trans('general.assets_list', array('status' => trans('general.requestable'))) }}
   @elseif (Request::get('status')=='Archived')
-    {{ trans('general.archived') }}
+     {{ trans('general.assets_list', array('status' => trans('general.archived'))) }}
   @elseif (Request::get('status')=='Deleted')
-    {{ trans('general.deleted') }}
+     {{ trans('general.assets_list', array('status' => trans('general.deleted'))) }}
   @endif
 @else
 {{ trans('general.all') }}
 @endif
--{{ trans('general.assets') }}
 
   @if (Request::has('order_number'))
     : Order #{{ Request::get('order_number') }}

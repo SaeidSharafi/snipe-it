@@ -156,7 +156,7 @@
     function genericColumnObjLinkFormatter(destination) {
         return function (value,row) {
             if ((value) && (value.status_meta)) {
-
+                console.log(value);
                 var text_color;
                 var icon_style;
                 var text_help;
@@ -187,8 +187,13 @@
                         icon_style = 'fa-times';
                         text_help = '';
                 }
+                if (value.no_link){
+                    return '<nobr><span> <i class="fa ' + icon_style + ' text-' + text_color + '"></i> ' + value.name + ' ' + text_help + ' </span> </nobr>';
 
-                return '<nobr><a href="{{ url('/') }}/' + destination + '/' + value.id + '" data-toggle="tooltip" title="'+ status_meta[value.status_meta] + '"> <i class="fa ' + icon_style + ' text-' + text_color + '"></i> ' + value.name + ' ' + text_help + ' </a> </nobr>';
+                }else {
+                    return '<nobr><a href="{{ url('/') }}/' + destination + '/' + value.id + '" data-toggle="tooltip" title="'+ status_meta[value.status_meta] + '"> <i class="fa ' + icon_style + ' text-' + text_color + '"></i> ' + value.name + ' ' + text_help + ' </a> </nobr>';
+
+                }
             } else if ((value) && (value.name)) {
 
                 // Add some overrides for any funny urls we have

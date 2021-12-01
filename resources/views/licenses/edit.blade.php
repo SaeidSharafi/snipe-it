@@ -70,14 +70,18 @@
 @include ('partials.forms.edit.purchase_date')
 
 <!-- Expiration Date -->
-<div class="form-group {{ $errors->has('expiration_date') ? ' has-error' : '' }}">
+<div class="form-group {{ $errors->has('expiration_date') ? ' has-error' : '' }}" id="datepicker-app">
     <label for="expiration_date" class="col-md-3 control-label">{{ trans('admin/licenses/form.expiration') }}</label>
 
     <div class="input-group col-md-3">
-        <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd"  data-autoclose="true">
-            <input type="text" class="form-control" placeholder="{{ trans('general.select_date') }}" name="expiration_date" id="expiration_date" value="{{ old('expiration_date', $item->expiration_date) }}">
-            <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-        </div>
+        <x-date-picker name="expiration_date"
+                       id="expiration_date"
+                       initial-value="{{ old('expiration_date', $item->expiration_date)}}"
+                       placeholder="{{ trans('general.select_date') }}"></x-date-picker>
+{{--        <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd"  data-autoclose="true">--}}
+{{--            <input type="text" class="form-control" placeholder="{{ trans('general.select_date') }}" name="expiration_date" id="expiration_date" value="{{ old('expiration_date', $item->expiration_date) }}">--}}
+{{--            <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>--}}
+{{--        </div>--}}
         {!! $errors->first('expiration_date', '<span class="alert-msg" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i> :message</span>') !!}
     </div>
 
@@ -88,10 +92,14 @@
     <label for="termination_date" class="col-md-3 control-label">{{ trans('admin/licenses/form.termination_date') }}</label>
 
     <div class="input-group col-md-3">
-        <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd"  data-autoclose="true">
-            <input type="text" class="form-control" placeholder="{{ trans('general.select_date') }}" name="termination_date" id="termination_date" value="{{ old('termination_date', $item->termination_date) }}">
-            <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-        </div>
+        <x-date-picker name="termination_date"
+                       id="termination_date"
+                       initial-value="{{ old('termination_date', $item->termination_date)}}"
+                       placeholder="{{ trans('general.select_date') }}"></x-date-picker>
+{{--        <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd"  data-autoclose="true">--}}
+{{--            <input type="text" class="form-control" placeholder="{{ trans('general.select_date') }}" name="termination_date" id="termination_date" value="{{ old('termination_date', $item->termination_date) }}">--}}
+{{--            <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>--}}
+{{--        </div>--}}
         {!! $errors->first('termination_date', '<span class="alert-msg" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i> :message</span>') !!}
     </div>
 </div>

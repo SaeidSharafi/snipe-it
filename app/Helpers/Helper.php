@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helpers;
 
 use App\Models\Accessory;
@@ -12,20 +13,18 @@ use App\Models\Statuslabel;
 use Crypt;
 use Image;
 use Illuminate\Contracts\Encryption\DecryptException;
+use IntlDateFormatter;
 
-class Helper
-{
-
+class Helper {
 
     /**
      * Simple helper to invoke the markdown parser
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.0]
      * @return String
+     * @since [v2.0]
+     * @author [A. Gianotto] [<snipe@snipe.net>]
      */
-    public static function parseEscapedMarkedown($str)
-    {
+    public static function parseEscapedMarkedown($str) {
         $Parsedown = new \Parsedown();
 
         if ($str) {
@@ -33,20 +32,18 @@ class Helper
         }
     }
 
-
     /**
      * The importer has formatted number strings since v3,
      * so the value might be a string, or an integer.
      * If it's a number, format it as a string.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.0]
      * @return String
+     * @since [v2.0]
+     * @author [A. Gianotto] [<snipe@snipe.net>]
      */
-    public static function formatCurrencyOutput($cost)
-    {
+    public static function formatCurrencyOutput($cost) {
         if (is_numeric($cost)) {
-            if (Setting::getSettings()->digit_separator=='1.234,56') {
+            if (Setting::getSettings()->digit_separator == '1.234,56') {
                 return number_format($cost, 2, ',', '.');
             }
             return number_format($cost, 2, '.', ',');
@@ -55,286 +52,282 @@ class Helper
         return $cost;
     }
 
-
     /**
      * Static colors for pie charts.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v3.3]
      * @return Array
+     * @since [v3.3]
+     * @author [A. Gianotto] [<snipe@snipe.net>]
      */
-    public static function defaultChartColors($index = 0)
-    {
+    public static function defaultChartColors($index = 0) {
         $colors = [
-            "#008941",
-            "#FF851B",
-            "#006FA6",
-            "#A30059",
-            "#1CE6FF",
-            "#FFDBE5",
-            "#7A4900",
-            "#0000A6",
-            "#63FFAC",
-            "#B79762",
-            "#004D43",
-            "#8FB0FF",
-            "#997D87",
-            "#5A0007",
-            "#809693",
-            "#FEFFE6",
-            "#1B4400",
-            "#4FC601",
-            "#3B5DFF",
-            "#4A3B53",
-            "#FF2F80",
-            "#61615A",
-            "#BA0900",
-            "#6B7900",
-            "#00C2A0",
-            "#FFAA92",
-            "#FF90C9",
-            "#B903AA",
-            "#D16100",
-            "#DDEFFF",
-            "#000035",
-            "#7B4F4B",
-            "#A1C299",
-            "#300018",
-            "#0AA6D8",
-            "#013349",
-            "#00846F",
-            "#372101",
-            "#FFB500",
-            "#C2FFED",
-            "#A079BF",
-            "#CC0744",
-            "#C0B9B2",
-            "#C2FF99",
-            "#001E09",
-            "#00489C",
-            "#6F0062",
-            "#0CBD66",
-            "#EEC3FF",
-            "#456D75",
-            "#B77B68",
-            "#7A87A1",
-            "#788D66",
-            "#885578",
-            "#FAD09F",
-            "#FF8A9A",
-            "#D157A0",
-            "#BEC459",
-            "#456648",
-            "#0086ED",
-            "#886F4C",
-            "#34362D",
-            "#B4A8BD",
-            "#00A6AA",
-            "#452C2C",
-            "#636375",
-            "#A3C8C9",
-            "#FF913F",
-            "#938A81",
-            "#575329",
-            "#00FECF",
-            "#B05B6F",
-            "#8CD0FF",
-            "#3B9700",
-            "#04F757",
-            "#C8A1A1",
-            "#1E6E00",
-            "#7900D7",
-            "#A77500",
-            "#6367A9",
-            "#A05837",
-            "#6B002C",
-            "#772600",
-            "#D790FF",
-            "#9B9700",
-            "#549E79",
-            "#FFF69F",
-            "#201625",
-            "#72418F",
-            "#BC23FF",
-            "#99ADC0",
-            "#3A2465",
-            "#922329",
-            "#5B4534",
-            "#FDE8DC",
-            "#404E55",
-            "#0089A3",
-            "#CB7E98",
-            "#A4E804",
-            "#324E72",
-            "#6A3A4C",
-            "#83AB58",
-            "#001C1E",
-            "#D1F7CE",
-            "#004B28",
-            "#C8D0F6",
-            "#A3A489",
-            "#806C66",
-            "#222800",
-            "#BF5650",
-            "#E83000",
-            "#66796D",
-            "#DA007C",
-            "#FF1A59",
-            "#8ADBB4",
-            "#1E0200",
-            "#5B4E51",
-            "#C895C5",
-            "#320033",
-            "#FF6832",
-            "#66E1D3",
-            "#CFCDAC",
-            "#D0AC94",
-            "#7ED379",
-            "#012C58",
-            "#7A7BFF",
-            "#D68E01",
-            "#353339",
-            "#78AFA1",
-            "#FEB2C6",
-            "#75797C",
-            "#837393",
-            "#943A4D",
-            "#B5F4FF",
-            "#D2DCD5",
-            "#9556BD",
-            "#6A714A",
-            "#001325",
-            "#02525F",
-            "#0AA3F7",
-            "#E98176",
-            "#DBD5DD",
-            "#5EBCD1",
-            "#3D4F44",
-            "#7E6405",
-            "#02684E",
-            "#962B75",
-            "#8D8546",
-            "#9695C5",
-            "#E773CE",
-            "#D86A78",
-            "#3E89BE",
-            "#CA834E",
-            "#518A87",
-            "#5B113C",
-            "#55813B",
-            "#E704C4",
-            "#00005F",
-            "#A97399",
-            "#4B8160",
-            "#59738A",
-            "#FF5DA7",
-            "#F7C9BF",
-            "#643127",
-            "#513A01",
-            "#6B94AA",
-            "#51A058",
-            "#A45B02",
-            "#1D1702",
-            "#E20027",
-            "#E7AB63",
-            "#4C6001",
-            "#9C6966",
-            "#64547B",
-            "#97979E",
-            "#006A66",
-            "#391406",
-            "#F4D749",
-            "#0045D2",
-            "#006C31",
-            "#DDB6D0",
-            "#7C6571",
-            "#9FB2A4",
-            "#00D891",
-            "#15A08A",
-            "#BC65E9",
-            "#FFFFFE",
-            "#C6DC99",
-            "#203B3C",
-            "#671190",
-            "#6B3A64",
-            "#F5E1FF",
-            "#FFA0F2",
-            "#CCAA35",
-            "#374527",
-            "#8BB400",
-            "#797868",
-            "#C6005A",
-            "#3B000A",
-            "#C86240",
-            "#29607C",
-            "#402334",
-            "#7D5A44",
-            "#CCB87C",
-            "#B88183",
-            "#AA5199",
-            "#B5D6C3",
-            "#A38469",
-            "#9F94F0",
-            "#A74571",
-            "#B894A6",
-            "#71BB8C",
-            "#00B433",
-            "#789EC9",
-            "#6D80BA",
-            "#953F00",
-            "#5EFF03",
-            "#E4FFFC",
-            "#1BE177",
-            "#BCB1E5",
-            "#76912F",
-            "#003109",
-            "#0060CD",
-            "#D20096",
-            "#895563",
-            "#29201D",
-            "#5B3213",
-            "#A76F42",
-            "#89412E",
-            "#1A3A2A",
-            "#494B5A",
-            "#A88C85",
-            "#F4ABAA",
-            "#A3F3AB",
-            "#00C6C8",
-            "#EA8B66",
-            "#958A9F",
-            "#BDC9D2",
-            "#9FA064",
-            "#BE4700",
-            "#658188",
-            "#83A485",
-            "#453C23",
-            "#47675D",
-            "#3A3F00",
-            "#061203",
-            "#DFFB71",
-            "#868E7E",
-            "#98D058",
-            "#6C8F7D",
-            "#D7BFC2",
-            "#3C3E6E",
-            "#D83D66",
-            "#2F5D9B",
-            "#6C5E46",
-            "#D25B88",
-            "#5B656C",
-            "#00B57F",
-            "#545C46",
-            "#866097",
-            "#365D25",
-            "#252F99",
-            "#00CCFF",
-            "#674E60",
-            "#FC009C",
-            "#92896B",
+                "#008941",
+                "#FF851B",
+                "#006FA6",
+                "#A30059",
+                "#1CE6FF",
+                "#FFDBE5",
+                "#7A4900",
+                "#0000A6",
+                "#63FFAC",
+                "#B79762",
+                "#004D43",
+                "#8FB0FF",
+                "#997D87",
+                "#5A0007",
+                "#809693",
+                "#FEFFE6",
+                "#1B4400",
+                "#4FC601",
+                "#3B5DFF",
+                "#4A3B53",
+                "#FF2F80",
+                "#61615A",
+                "#BA0900",
+                "#6B7900",
+                "#00C2A0",
+                "#FFAA92",
+                "#FF90C9",
+                "#B903AA",
+                "#D16100",
+                "#DDEFFF",
+                "#000035",
+                "#7B4F4B",
+                "#A1C299",
+                "#300018",
+                "#0AA6D8",
+                "#013349",
+                "#00846F",
+                "#372101",
+                "#FFB500",
+                "#C2FFED",
+                "#A079BF",
+                "#CC0744",
+                "#C0B9B2",
+                "#C2FF99",
+                "#001E09",
+                "#00489C",
+                "#6F0062",
+                "#0CBD66",
+                "#EEC3FF",
+                "#456D75",
+                "#B77B68",
+                "#7A87A1",
+                "#788D66",
+                "#885578",
+                "#FAD09F",
+                "#FF8A9A",
+                "#D157A0",
+                "#BEC459",
+                "#456648",
+                "#0086ED",
+                "#886F4C",
+                "#34362D",
+                "#B4A8BD",
+                "#00A6AA",
+                "#452C2C",
+                "#636375",
+                "#A3C8C9",
+                "#FF913F",
+                "#938A81",
+                "#575329",
+                "#00FECF",
+                "#B05B6F",
+                "#8CD0FF",
+                "#3B9700",
+                "#04F757",
+                "#C8A1A1",
+                "#1E6E00",
+                "#7900D7",
+                "#A77500",
+                "#6367A9",
+                "#A05837",
+                "#6B002C",
+                "#772600",
+                "#D790FF",
+                "#9B9700",
+                "#549E79",
+                "#FFF69F",
+                "#201625",
+                "#72418F",
+                "#BC23FF",
+                "#99ADC0",
+                "#3A2465",
+                "#922329",
+                "#5B4534",
+                "#FDE8DC",
+                "#404E55",
+                "#0089A3",
+                "#CB7E98",
+                "#A4E804",
+                "#324E72",
+                "#6A3A4C",
+                "#83AB58",
+                "#001C1E",
+                "#D1F7CE",
+                "#004B28",
+                "#C8D0F6",
+                "#A3A489",
+                "#806C66",
+                "#222800",
+                "#BF5650",
+                "#E83000",
+                "#66796D",
+                "#DA007C",
+                "#FF1A59",
+                "#8ADBB4",
+                "#1E0200",
+                "#5B4E51",
+                "#C895C5",
+                "#320033",
+                "#FF6832",
+                "#66E1D3",
+                "#CFCDAC",
+                "#D0AC94",
+                "#7ED379",
+                "#012C58",
+                "#7A7BFF",
+                "#D68E01",
+                "#353339",
+                "#78AFA1",
+                "#FEB2C6",
+                "#75797C",
+                "#837393",
+                "#943A4D",
+                "#B5F4FF",
+                "#D2DCD5",
+                "#9556BD",
+                "#6A714A",
+                "#001325",
+                "#02525F",
+                "#0AA3F7",
+                "#E98176",
+                "#DBD5DD",
+                "#5EBCD1",
+                "#3D4F44",
+                "#7E6405",
+                "#02684E",
+                "#962B75",
+                "#8D8546",
+                "#9695C5",
+                "#E773CE",
+                "#D86A78",
+                "#3E89BE",
+                "#CA834E",
+                "#518A87",
+                "#5B113C",
+                "#55813B",
+                "#E704C4",
+                "#00005F",
+                "#A97399",
+                "#4B8160",
+                "#59738A",
+                "#FF5DA7",
+                "#F7C9BF",
+                "#643127",
+                "#513A01",
+                "#6B94AA",
+                "#51A058",
+                "#A45B02",
+                "#1D1702",
+                "#E20027",
+                "#E7AB63",
+                "#4C6001",
+                "#9C6966",
+                "#64547B",
+                "#97979E",
+                "#006A66",
+                "#391406",
+                "#F4D749",
+                "#0045D2",
+                "#006C31",
+                "#DDB6D0",
+                "#7C6571",
+                "#9FB2A4",
+                "#00D891",
+                "#15A08A",
+                "#BC65E9",
+                "#FFFFFE",
+                "#C6DC99",
+                "#203B3C",
+                "#671190",
+                "#6B3A64",
+                "#F5E1FF",
+                "#FFA0F2",
+                "#CCAA35",
+                "#374527",
+                "#8BB400",
+                "#797868",
+                "#C6005A",
+                "#3B000A",
+                "#C86240",
+                "#29607C",
+                "#402334",
+                "#7D5A44",
+                "#CCB87C",
+                "#B88183",
+                "#AA5199",
+                "#B5D6C3",
+                "#A38469",
+                "#9F94F0",
+                "#A74571",
+                "#B894A6",
+                "#71BB8C",
+                "#00B433",
+                "#789EC9",
+                "#6D80BA",
+                "#953F00",
+                "#5EFF03",
+                "#E4FFFC",
+                "#1BE177",
+                "#BCB1E5",
+                "#76912F",
+                "#003109",
+                "#0060CD",
+                "#D20096",
+                "#895563",
+                "#29201D",
+                "#5B3213",
+                "#A76F42",
+                "#89412E",
+                "#1A3A2A",
+                "#494B5A",
+                "#A88C85",
+                "#F4ABAA",
+                "#A3F3AB",
+                "#00C6C8",
+                "#EA8B66",
+                "#958A9F",
+                "#BDC9D2",
+                "#9FA064",
+                "#BE4700",
+                "#658188",
+                "#83A485",
+                "#453C23",
+                "#47675D",
+                "#3A3F00",
+                "#061203",
+                "#DFFB71",
+                "#868E7E",
+                "#98D058",
+                "#6C8F7D",
+                "#D7BFC2",
+                "#3C3E6E",
+                "#D83D66",
+                "#2F5D9B",
+                "#6C5E46",
+                "#D25B88",
+                "#5B656C",
+                "#00B57F",
+                "#545C46",
+                "#866097",
+                "#365D25",
+                "#252F99",
+                "#00CCFF",
+                "#674E60",
+                "#FC009C",
+                "#92896B",
         ];
-
-
 
         return $colors[$index];
 
@@ -343,8 +336,8 @@ class Helper
     /**
      * Increases or decreases the brightness of a color by a percentage of the current brightness.
      *
-     * @param   string  $hexCode        Supported formats: `#FFF`, `#FFFFFF`, `FFF`, `FFFFFF`
-     * @param   float   $adjustPercent  A number between -1 and 1. E.g. 0.3 = 30% lighter; -0.4 = 40% darker.
+     * @param string $hexCode Supported formats: `#FFF`, `#FFFFFF`, `FFF`, `FFFFFF`
+     * @param float $adjustPercent A number between -1 and 1. E.g. 0.3 = 30% lighter; -0.4 = 40% darker.
      *
      * @return  string
      */
@@ -367,54 +360,50 @@ class Helper
         return '#' . implode($hexCode);
     }
 
-
     /**
      * Static background (highlight) colors for pie charts
      * This is inelegant, and could be refactored later.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v3.2]
      * @return Array
+     * @since [v3.2]
+     * @author [A. Gianotto] [<snipe@snipe.net>]
      */
-    public static function chartBackgroundColors()
-    {
+    public static function chartBackgroundColors() {
         $colors = [
-            '#f56954',
-            '#00a65a',
-            '#f39c12',
-            '#00c0ef',
-            '#3c8dbc',
-            '#d2d6de',
-            '#3c8dbc',
-            '#3c8dbc',
-            '#3c8dbc',
+                '#f56954',
+                '#00a65a',
+                '#f39c12',
+                '#00c0ef',
+                '#3c8dbc',
+                '#d2d6de',
+                '#3c8dbc',
+                '#3c8dbc',
+                '#3c8dbc',
 
         ];
         return $colors;
     }
 
-
     /**
      * Format currency using comma for thousands until local info is property used.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.7]
      * @return String
+     * @since [v2.7]
+     * @author [A. Gianotto] [<snipe@snipe.net>]
      */
-    public static function ParseFloat($floatString)
-    {
+    public static function ParseFloat($floatString) {
         /*******
-         * 
+         *
          * WARNING: This does conversions based on *locale* - a Unix-ey-like thing.
-         * 
+         *
          * Everything else in the system tends to convert based on the Snipe-IT settings
-         * 
+         *
          * So it's very likely this is *not* what you want - instead look for the new
-         * 
+         *
          * ParseCurrency($currencyString)
-         * 
+         *
          * Which should be directly below here
-         * 
+         *
          */
         $LocaleInfo = localeconv();
         $floatString = str_replace(",", "", $floatString);
@@ -429,17 +418,18 @@ class Helper
         $floatString = str_replace($currencySymbol, '', $floatString);
         return floatval($floatString);
     }
-    
+
     /**
      * Format currency using comma or period for thousands, and period or comma for decimal, based on settings.
-     * 
-     * @author [B. Wetherington] [<bwetherington@grokability.com>]
-     * @since [v5.2]
+     *
      * @return Float
+     * @since [v5.2]
+     * @author [B. Wetherington] [<bwetherington@grokability.com>]
      */
     public static function ParseCurrency($currencyString) {
-        $without_currency = str_replace(Setting::getSettings()->default_currency, '', $currencyString); //generally shouldn't come up, since we don't do this in fields, but just in case it does...
-        if(Setting::getSettings()->digit_separator=='1.234,56') {
+        $without_currency = str_replace(Setting::getSettings()->default_currency, '',
+                $currencyString); //generally shouldn't come up, since we don't do this in fields, but just in case it does...
+        if (Setting::getSettings()->digit_separator == '1.234,56') {
             //EU format
             $without_thousands = str_replace('.', '', $without_currency);
             $corrected_decimal = str_replace(',', '.', $without_thousands);
@@ -453,33 +443,32 @@ class Helper
     /**
      * Get the list of status labels in an array to make a dropdown menu
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.5]
      * @return Array
+     * @since [v2.5]
+     * @author [A. Gianotto] [<snipe@snipe.net>]
      */
-    public static function statusLabelList()
-    {
-        $statuslabel_list = array('' => trans('general.select_statuslabel')) + Statuslabel::orderBy('default_label', 'desc')->orderBy('name','asc')->orderBy('deployable','desc')
-                ->pluck('name', 'id')->toArray();
+    public static function statusLabelList() {
+        $statuslabel_list = array('' => trans('general.select_statuslabel')) +
+                Statuslabel::orderBy('default_label', 'desc')->orderBy('name', 'asc')->orderBy('deployable', 'desc')
+                        ->pluck('name', 'id')->toArray();
         return $statuslabel_list;
     }
 
     /**
      * Get the list of deployable status labels in an array to make a dropdown menu
      *
+     * @return Array
+     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @since [v5.1.0]
      * @todo This should probably be a selectlist, same as the other endpoints
      * and we should probably add to the API controllers to make sure that
      * the status_id submitted is actually really deployable.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v5.1.0]
-     * @return Array
      */
-    public static function deployableStatusLabelList()
-    {
-        $statuslabel_list =  Statuslabel::where('deployable', '=', '1')->orderBy('default_label', 'desc')
-                ->orderBy('name','asc')
-                ->orderBy('deployable','desc')
+    public static function deployableStatusLabelList() {
+        $statuslabel_list = Statuslabel::where('deployable', '=', '1')->orderBy('default_label', 'desc')
+                ->orderBy('name', 'asc')
+                ->orderBy('deployable', 'desc')
                 ->pluck('name', 'id')->toArray();
         return $statuslabel_list;
     }
@@ -487,51 +476,48 @@ class Helper
     /**
      * Get the list of status label types in an array to make a dropdown menu
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.5]
      * @return Array
+     * @since [v2.5]
+     * @author [A. Gianotto] [<snipe@snipe.net>]
      */
-    public static function statusTypeList()
-    {
+    public static function statusTypeList() {
         $statuslabel_types =
-              array('' => trans('admin/hardware/form.select_statustype'))
-            + array('deployable' => trans('admin/hardware/general.deployable'))
-            + array('pending' => trans('admin/hardware/general.pending'))
-            + array('undeployable' => trans('admin/hardware/general.undeployable'))
-            + array('archived' => trans('admin/hardware/general.archived'));
+                array('' => trans('admin/hardware/form.select_statustype'))
+                + array('deployable' => trans('admin/hardware/general.deployable'))
+                + array('pending' => trans('admin/hardware/general.pending'))
+                + array('undeployable' => trans('admin/hardware/general.undeployable'))
+                + array('archived' => trans('admin/hardware/general.archived'));
         return $statuslabel_types;
     }
 
     /**
      * Get the list of depreciations in an array to make a dropdown menu
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.5]
      * @return Array
+     * @since [v2.5]
+     * @author [A. Gianotto] [<snipe@snipe.net>]
      */
-    public static function depreciationList()
-    {
+    public static function depreciationList() {
         $depreciation_list = ['' => 'Do Not Depreciate'] + Depreciation::orderBy('name', 'asc')
-                ->pluck('name', 'id')->toArray();
+                        ->pluck('name', 'id')->toArray();
         return $depreciation_list;
     }
 
     /**
      * Get the list of category types in an array to make a dropdown menu
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.5]
      * @return Array
+     * @since [v2.5]
+     * @author [A. Gianotto] [<snipe@snipe.net>]
      */
-    public static function categoryTypeList()
-    {
+    public static function categoryTypeList() {
         $category_types = array(
-            '' => '',
-            'accessory' => 'Accessory',
-            'asset' => 'Asset',
-            'consumable' => 'Consumable',
-            'component' => 'Component',
-            'license' => 'License'
+                '' => '',
+                'accessory' => 'Accessory',
+                'asset' => 'Asset',
+                'consumable' => 'Consumable',
+                'component' => 'Component',
+                'license' => 'License'
         );
         return $category_types;
     }
@@ -539,25 +525,23 @@ class Helper
     /**
      * Get the list of custom fields in an array to make a dropdown menu
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.5]
      * @return Array
+     * @since [v2.5]
+     * @author [A. Gianotto] [<snipe@snipe.net>]
      */
-    public static function customFieldsetList()
-    {
+    public static function customFieldsetList() {
         $customfields = array('' => trans('admin/models/general.no_custom_field')) + CustomFieldset::pluck('name', 'id')->toArray();
-        return  $customfields;
+        return $customfields;
     }
 
     /**
      * Get the list of custom field formats in an array to make a dropdown menu
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v3.4]
      * @return Array
+     * @since [v3.4]
+     * @author [A. Gianotto] [<snipe@snipe.net>]
      */
-    public static function predefined_formats()
-    {
+    public static function predefined_formats() {
         $keys = array_keys(CustomField::PREDEFINED_FORMATS);
         $stuff = array_combine($keys, $keys);
 
@@ -567,16 +551,15 @@ class Helper
     /**
      * Get the list of barcode dimensions
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v3.3]
      * @return Array
+     * @since [v3.3]
+     * @author [A. Gianotto] [<snipe@snipe.net>]
      */
-    public static function barcodeDimensions($barcode_type = 'QRCODE')
-    {
+    public static function barcodeDimensions($barcode_type = 'QRCODE') {
         if ($barcode_type == 'C128') {
             $size['height'] = '-1';
             $size['width'] = '-10';
-        } elseif ($barcode_type == 'PDF417') {
+        } else if ($barcode_type == 'PDF417') {
             $size['height'] = '-3';
             $size['width'] = '-10';
         } else {
@@ -589,12 +572,11 @@ class Helper
     /**
      * Generates a random string
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v3.0]
      * @return Array
+     * @since [v3.0]
+     * @author [A. Gianotto] [<snipe@snipe.net>]
      */
-    public static function generateRandomString($length = 10)
-    {
+    public static function generateRandomString($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -604,18 +586,17 @@ class Helper
         return $randomString;
     }
 
-
     /**
      * This nasty little method gets the low inventory info for the
      * alert dropdown
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v3.0]
      * @return Array
+     * @since [v3.0]
+     * @author [A. Gianotto] [<snipe@snipe.net>]
      */
-    public static function checkLowInventory()
-    {
-        $consumables = Consumable::withCount('consumableAssignments as consumable_assignments_count')->whereNotNull('min_amt')->get();
+    public static function checkLowInventory() {
+        $consumables =
+                Consumable::withCount('consumableAssignments as consumable_assignments_count')->whereNotNull('min_amt')->get();
         $accessories = Accessory::withCount('users as users_count')->whereNotNull('min_amt')->get();
         $components = Component::withCount('assets as assets_count')->whereNotNull('min_amt')->get();
 
@@ -637,10 +618,9 @@ class Helper
                 $items_array[$all_count]['type'] = 'consumables';
                 $items_array[$all_count]['percent'] = $percent;
                 $items_array[$all_count]['remaining'] = $avail;
-                $items_array[$all_count]['min_amt']=$consumable->min_amt;
+                $items_array[$all_count]['min_amt'] = $consumable->min_amt;
                 $all_count++;
             }
-
 
         }
 
@@ -659,7 +639,7 @@ class Helper
                 $items_array[$all_count]['type'] = 'accessories';
                 $items_array[$all_count]['percent'] = $percent;
                 $items_array[$all_count]['remaining'] = $avail;
-                $items_array[$all_count]['min_amt']=$accessory->min_amt;
+                $items_array[$all_count]['min_amt'] = $accessory->min_amt;
                 $all_count++;
             }
 
@@ -679,35 +659,31 @@ class Helper
                 $items_array[$all_count]['type'] = 'components';
                 $items_array[$all_count]['percent'] = $percent;
                 $items_array[$all_count]['remaining'] = $avail;
-                $items_array[$all_count]['min_amt']=$component->min_amt;
+                $items_array[$all_count]['min_amt'] = $component->min_amt;
                 $all_count++;
             }
 
         }
 
-
-
         return $items_array;
 
-
     }
-
 
     /**
      * Check if the file is an image, so we can show a preview
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v3.0]
      * @param File $file
      * @return String | Boolean
+     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @since [v3.0]
      */
-    public static function checkUploadIsImage($file)
-    {
+    public static function checkUploadIsImage($file) {
         $finfo = @finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
         $filetype = @finfo_file($finfo, $file);
         finfo_close($finfo);
 
-        if (($filetype=="image/jpeg") || ($filetype=="image/jpg")   || ($filetype=="image/png") || ($filetype=="image/bmp") || ($filetype=="image/gif")) {
+        if (($filetype == "image/jpeg") || ($filetype == "image/jpg") || ($filetype == "image/png") || ($filetype == "image/bmp") ||
+                ($filetype == "image/gif")) {
             return $filetype;
         }
 
@@ -725,14 +701,13 @@ class Helper
      * corresponding permission name and a true or false boolean to determine
      * if that group/user has been granted that permission.
      *
-     * @author [A. Gianotto] [<snipe@snipe.net]
      * @param array $permissions
      * @param array $selected_arr
-     * @since [v1.0]
      * @return Array
+     * @since [v1.0]
+     * @author [A. Gianotto] [<snipe@snipe.net]
      */
-    public static function selectedPermissionsArray($permissions, $selected_arr = array())
-    {
+    public static function selectedPermissionsArray($permissions, $selected_arr = array()) {
 
 
         $permissions_arr = array();
@@ -755,9 +730,7 @@ class Helper
                     }
                 }
 
-
             }
-
 
         }
 
@@ -772,12 +745,11 @@ class Helper
      *
      * This does not currently handle form request validation requiredness :(
      *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v3.0]
      * @return boolean
+     * @since [v3.0]
+     * @author [A. Gianotto] [<snipe@snipe.net>]
      */
-    public static function checkIfRequired($class, $field)
-    {
+    public static function checkIfRequired($class, $field) {
         $rules = $class::rules();
         foreach ($rules as $rule_name => $rule) {
             if ($rule_name == $field) {
@@ -791,37 +763,33 @@ class Helper
         }
     }
 
-
     /**
      * Check to see if the given key exists in the array, and trim excess white space before returning it
      *
-     * @author Daniel Melzter
-     * @since 3.0
      * @param $array array
      * @param $key string
      * @param $default string
      * @return string
+     * @author Daniel Melzter
+     * @since 3.0
      */
-    public static function array_smart_fetch(array $array, $key, $default = '')
-    {
+    public static function array_smart_fetch(array $array, $key, $default = '') {
         array_change_key_case($array, CASE_LOWER);
-        return array_key_exists(strtolower($key), array_change_key_case($array)) ? e(trim($array[ $key ])) : $default;
+        return array_key_exists(strtolower($key), array_change_key_case($array)) ? e(trim($array[$key])) : $default;
     }
-
 
     /**
      * Gracefully handle decrypting encrypted fields (custom fields, etc).
      *
+     * @param CustomField $field
+     * @param String $string
+     * @return string
      * @todo allow this to handle more than just strings (arrays, etc)
      *
      * @author A. Gianotto
      * @since 3.6
-     * @param CustomField $field
-     * @param String $string
-     * @return string
      */
-    public static function gracefulDecrypt(CustomField $field, $string)
-    {
+    public static function gracefulDecrypt(CustomField $field, $string) {
 
         if ($field->isFieldDecryptable($string)) {
 
@@ -830,7 +798,7 @@ class Helper
                 return Crypt::decrypt($string);
 
             } catch (DecryptException $e) {
-                return 'Error Decrypting: '.$e->getMessage();
+                return 'Error Decrypting: ' . $e->getMessage();
             }
 
         }
@@ -838,19 +806,16 @@ class Helper
 
     }
 
-
-
     public static function formatStandardApiResponse($status, $payload = null, $messages = null) {
 
         $array['status'] = $status;
         $array['messages'] = $messages;
-        if (($messages) &&  (is_array($messages)) && (count($messages) > 0)) {
+        if (($messages) && (is_array($messages)) && (count($messages) > 0)) {
             $array['messages'] = $messages;
         }
         ($payload) ? $array['payload'] = $payload : $array['payload'] = null;
         return $array;
     }
-
 
     /*
     Possible solution for unicode fieldnames
@@ -859,23 +824,89 @@ class Helper
         return preg_replace('/\s+/u', '_', trim($string));
     }
 
-
     public static function getFormattedDateObject($date, $type = 'datetime', $array = true) {
 
-        if ($date=='') {
+        if ($date == '') {
             return null;
         }
 
         $settings = Setting::getSettings();
         $tmp_date = new \Carbon($date);
+        if ($settings->locale == "fa") {
+            switch ($settings->date_display_format) {
+                case "Y-m-d" :
+                    $date_format = "YYYY-MM-dd";
+                    break;
+                case "D M d, Y" :
+                    $date_format = "EE، dd MMMM YYYY";
+                    break;
+                case "M j, Y" :
+                    $date_format = "MMMM dd، YYYY";
+                    break;
+                case "d M, Y" :
+                    $date_format = "dd MMMM، YYYY";
+                    break;
+                case "m/d/Y" :
+                    $date_format = "YYYY/dd/MM";
+                    break;
+                case "n/d/y" :
+                    $date_format = "YY/dd/MM";
+                    break;
+                case "d/m/Y" :
+                    $date_format = "YYYY/MM/dd";
+                    break;
+                case "d.m.Y" :
+                    $date_format = "YYYY.MM.dd";
+                    break;
+                case "Y.m.d." :
+                    $date_format = "dd.MM.YYYY.";
+                    break;
+                default:
+                    $date_format = "YYYY-MM-dd";
+                    break;
+            }
 
-        if ($type == 'datetime') {
-            $dt['datetime'] = $tmp_date->format('Y-m-d H:i:s');
-            $dt['formatted'] = $tmp_date->format($settings->date_display_format .' '. $settings->time_display_format);
-        } else {
-            $dt['date'] = $tmp_date->format('Y-m-d');
-            $dt['formatted'] = $tmp_date->format($settings->date_display_format);
+            switch ($settings->time_display_format) {
+                case "g:iA" :
+                    $time_format = "h:mm a";
+                    break;
+                case "h:iA" :
+                    $time_format = "hh:mm a";
+                    break;
+                case "H:i" :
+                default:
+                $time_format = "HH:mm";
+                    break;
+            }
+            $format = $date_format;
+            if ($type == 'datetime') {
+                $format = $date_format . ' ' . $time_format;
+            }
+            $formatter = new IntlDateFormatter(
+                    "fa_IR@calendar=persian",
+                    IntlDateFormatter::NONE,
+                    IntlDateFormatter::FULL,
+                    'Asia/Tehran',
+                    IntlDateFormatter::TRADITIONAL,
+                    $format);
+            if ($type == 'datetime') {
+                $dt['datetime'] = $tmp_date->format('Y-m-d H:i:s');
+                $dt['formatted'] = $formatter->format($date);
+            } else {
+                $dt['date'] = $tmp_date->format('Y-m-d');
+                $dt['formatted'] =  $formatter->format($date);
+            }
+        }else{
+            if ($type == 'datetime') {
+                $dt['datetime'] = $tmp_date->format('Y-m-d H:i:s');
+                $dt['formatted'] = $tmp_date->format($settings->date_display_format .' '. $settings->time_display_format);
+            } else {
+                $dt['date'] = $tmp_date->format('Y-m-d');
+                $dt['formatted'] = $tmp_date->format($settings->date_display_format);
+            }
         }
+
+
 
         if ($array == 'true') {
             return $dt;
@@ -937,39 +968,37 @@ class Helper
         if ($unit) {
             // Find the position of the unit in the ordered string which is the power of magnitude to multiply a kilobyte by.
             return round($size * pow(1024, stripos('bkmgtpezy', $unit[0])));
-        }
-        else {
+        } else {
             return round($size);
         }
     }
 
-
     public static function filetype_icon($filename) {
 
-        $extension = substr(strrchr($filename,'.'),1);
+        $extension = substr(strrchr($filename, '.'), 1);
 
         $allowedExtensionMap = [
             // Images
-            'jpg'   => 'fa fa-file-image-o',
-            'jpeg'   => 'fa fa-file-image-o',
-            'gif'   => 'fa fa-file-image-o',
-            'png'   => 'fa fa-file-image-o',
+                'jpg' => 'fa fa-file-image-o',
+                'jpeg' => 'fa fa-file-image-o',
+                'gif' => 'fa fa-file-image-o',
+                'png' => 'fa fa-file-image-o',
             // word
-            'doc'   => 'fa fa-file-word-o',
-            'docx'   => 'fa fa-file-word-o',
+                'doc' => 'fa fa-file-word-o',
+                'docx' => 'fa fa-file-word-o',
             // Excel
-            'xls'   => 'fa fa-file-excel-o',
-            'xlsx'   => 'fa fa-file-excel-o',
+                'xls' => 'fa fa-file-excel-o',
+                'xlsx' => 'fa fa-file-excel-o',
             // archive
-            'zip'   => 'fa fa-file-archive-o',
-            'rar'   => 'fa fa-file-archive-o',
+                'zip' => 'fa fa-file-archive-o',
+                'rar' => 'fa fa-file-archive-o',
             //Text
-            'txt'   => 'fa fa-file-text-o',
-            'rtf'   => 'fa fa-file-text-o',
-            'xml'   => 'fa fa-file-text-o',
+                'txt' => 'fa fa-file-text-o',
+                'rtf' => 'fa fa-file-text-o',
+                'xml' => 'fa fa-file-text-o',
             // Misc
-            'pdf'   => 'fa fa-file-pdf-o',
-            'lic'   => 'fa fa-file-floppy-o',
+                'pdf' => 'fa fa-file-pdf-o',
+                'lic' => 'fa fa-file-floppy-o',
         ];
 
         if ($extension && array_key_exists($extension, $allowedExtensionMap)) {
@@ -980,7 +1009,7 @@ class Helper
 
     public static function show_file_inline($filename) {
 
-        $extension = substr(strrchr($filename,'.'),1);
+        $extension = substr(strrchr($filename, '.'), 1);
 
         if ($extension) {
             switch ($extension) {
@@ -1000,33 +1029,31 @@ class Helper
     /**
      * Generate a random encrypted password.
      *
-     * @author Wes Hulette <jwhulette@gmail.com>
-     *
+     * @return string
      * @since 5.0.0
      *
-     * @return string
+     * @author Wes Hulette <jwhulette@gmail.com>
+     *
      */
-    public static function generateEncyrptedPassword(): string
-    {
+    public static function generateEncyrptedPassword(): string {
         return bcrypt(Helper::generateUnencryptedPassword());
     }
 
     /**
      * Get a random unencrypted password.
      *
-     * @author Steffen Buehl <sb@sbuehl.com>
-     *
+     * @return string
      * @since 5.0.0
      *
-     * @return string
+     * @author Steffen Buehl <sb@sbuehl.com>
+     *
      */
-    public static function generateUnencryptedPassword(): string
-    {
+    public static function generateUnencryptedPassword(): string {
         $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
         $password = '';
-        for ( $i = 0; $i < 20; $i++ ) {
-            $password .= substr( $chars, random_int( 0, strlen( $chars ) - 1 ), 1 );
+        for ($i = 0; $i < 20; $i++) {
+            $password .= substr($chars, random_int(0, strlen($chars) - 1), 1);
         }
         return $password;
     }
@@ -1038,7 +1065,7 @@ class Helper
      * @param string $save_path path to a folder where the image should be saved
      * @return string path to uploaded image or false if something went wrong
      */
-    public static function processUploadedImage(String $image_data, String $save_path) {
+    public static function processUploadedImage(string $image_data, string $save_path) {
         if ($image_data == null || $save_path == null) {
             return false;
         }
@@ -1047,22 +1074,22 @@ class Helper
         // data:image/jpeg;base64,; This causes the image library to be unhappy, so we need to remove it.
         $header = explode(';', $image_data, 2)[0];
         // Grab the image type from the header while we're at it.
-        $extension = substr($header, strpos($header, '/')+1);
+        $extension = substr($header, strpos($header, '/') + 1);
         // Start reading the image after the first comma, postceding the base64.
-        $image = substr($image_data, strpos($image_data, ',')+1);
+        $image = substr($image_data, strpos($image_data, ',') + 1);
 
-        $file_name = str_random(25).".".$extension;
+        $file_name = str_random(25) . "." . $extension;
 
-        $directory= public_path($save_path);
+        $directory = public_path($save_path);
         // Check if the uploads directory exists.  If not, try to create it.
         if (!file_exists($directory)) {
             mkdir($directory, 0755, true);
         }
 
-        $path = public_path($save_path.$file_name);
+        $path = public_path($save_path . $file_name);
 
         try {
-            Image::make($image)->resize(500, 500, function ($constraint) {
+            Image::make($image)->resize(500, 500, function($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             })->save($path);

@@ -107,7 +107,8 @@
                             <td>
                                 @if ($request->itemType() == "asset")
                                     @if ($request->requestable->assigned_to=='')
-                                        <a href="{{ url('/') }}/hardware/{{ $request->requestable->id }}/checkout" class="btn btn-sm bg-maroon" data-tooltip="true" title="Check this item out to a user">{{ trans('general.checkout') }}</a>
+                                        <a href="{{ url('/') }}/hardware/{{ $request->requestable->id }}/checkout" class="btn mb-1 btn-sm bg-maroon" data-tooltip="true" title="Check this item out to a user">{{ trans('general.checkout') }}</a>
+                                        <a href="{{ url('/') }}/hardware/{{ $request->requestable->id }}/reject/{{$request->requestingUser()->id }}" class="btn btn-sm bg-red" style="margin-top: 5px;" data-tooltip="true" title="Reject request">{{ trans('general.cancel') }}</a>
                                         @else
                                         <a href="{{ url('/') }}/hardware/{{ $request->requestable->id }}/checkin" class="btn btn-sm bg-purple" data-tooltip="true" title="Check this itemi">{{ trans('general.checkin') }}</a>
                                     @endif

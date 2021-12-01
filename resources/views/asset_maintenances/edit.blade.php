@@ -23,10 +23,10 @@
 <div class="row">
   <div class="col-md-9">
     @if ($item->id)
-      <form class="form-horizontal" method="post" action="{{ route('maintenances.update', $item->id) }}" autocomplete="off">
+      <form class="form-horizontal" method="post" action="{{ route('maintenances.update', $item->id) }}" autocomplete="off" id="datepicker-app">
       {{ method_field('PUT') }}
     @else
-      <form class="form-horizontal" method="post" action="{{ route('maintenances.store') }}" autocomplete="off">
+      <form class="form-horizontal" method="post" action="{{ route('maintenances.store') }}" autocomplete="off" id="datepicker-app">
     @endif
     <!-- CSRF Token -->
     {{ csrf_field() }}
@@ -61,10 +61,14 @@
           <label for="start_date" class="col-md-3 control-label">{{ trans('admin/asset_maintenances/form.start_date') }}</label>
 
           <div class="input-group col-md-3{{  (\App\Helpers\Helper::checkIfRequired($item, 'start_date')) ? ' required' : '' }}">
-            <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd"  data-autoclose="true">
-              <input type="text" class="form-control" placeholder="{{ trans('general.select_date') }}" name="start_date" id="start_date" value="{{ old('start_date', $item->start_date) }}">
-              <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-            </div>
+            <x-date-picker name="start_date"
+                           id="start_date"
+                           initial-value="{{ old('start_date',$item->start_date) }}"
+                           placeholder="{{ trans('general.select_date') }}"></x-date-picker>
+{{--            <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd"  data-autoclose="true">--}}
+{{--              <input type="text" class="form-control" placeholder="{{ trans('general.select_date') }}" name="start_date" id="start_date" value="{{ old('start_date', $item->start_date) }}">--}}
+{{--              <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>--}}
+{{--            </div>--}}
             {!! $errors->first('start_date', '<span class="alert-msg" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i> :message</span>') !!}
           </div>
         </div>
@@ -76,10 +80,14 @@
           <label for="start_date" class="col-md-3 control-label">{{ trans('admin/asset_maintenances/form.completion_date') }}</label>
 
           <div class="input-group col-md-3{{  (\App\Helpers\Helper::checkIfRequired($item, 'completion_date')) ? ' required' : '' }}">
-            <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd"  data-autoclose="true">
-              <input type="text" class="form-control" placeholder="{{ trans('general.select_date') }}" name="completion_date" id="completion_date" value="{{ old('completion_date', $item->completion_date) }}">
-              <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-            </div>
+            <x-date-picker name="completion_date"
+                           id="completion_date"
+                           initial-value="{{ old('completion_date',$item->completion_date) }}"
+                           placeholder="{{ trans('general.select_date') }}"></x-date-picker>
+{{--            <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd"  data-autoclose="true">--}}
+{{--              <input type="text" class="form-control" placeholder="{{ trans('general.select_date') }}" name="completion_date" id="completion_date" value="{{ old('completion_date', $item->completion_date) }}">--}}
+{{--              <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>--}}
+{{--            </div>--}}
             {!! $errors->first('completion_date', '<span class="alert-msg" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i> :message</span>') !!}
           </div>
         </div>

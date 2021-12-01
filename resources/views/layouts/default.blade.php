@@ -966,7 +966,13 @@
 
 
         </script>
-
+        <script nonce="{{ csrf_token() }}">
+            if(document.getElementById("datepicker-app")) {
+                new Vue({
+                    el: '#datepicker-app'
+                });
+            }
+        </script>
         @if ((Session::get('topsearch')=='true') || (Request::is('/')))
             <script nonce="{{ csrf_token() }}">
                 $("#tagSearch").focus();

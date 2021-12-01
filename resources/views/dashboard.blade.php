@@ -126,7 +126,6 @@
 
                             <p><strong>
                                     {{trans('general.dashboard_empty')}}
-
                                 </strong></p>
 
                         </div>

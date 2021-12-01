@@ -276,7 +276,6 @@ class AssetPresenter extends Presenter
             ];
 
         }
-
         $layout[] = [
             "field" => "checkincheckout",
             "searchable" => false,

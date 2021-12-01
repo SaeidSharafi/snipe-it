@@ -196,7 +196,13 @@ class AssetsTransformer
             'model_number' => (($asset->model) && ($asset->model->model_number)) ? e($asset->model->model_number) : null,
             'expected_checkin' => Helper::getFormattedDateObject($asset->expected_checkin, 'date'),
             'location' => ($asset->location) ? e($asset->location->name) : null,
-            'status'=> ($asset->assetstatus) ? $asset->present()->statusMeta : null,
+            'status'=> ($asset->assetstatus) ? [
+                    'id' => (int) $asset->assetstatus->id,
+                    'name'=> e($asset->assetstatus->name),
+                    'no_link'=> true,
+                    'status_type'=> e($asset->assetstatus->getStatuslabelType()),
+                    'status_meta' => e($asset->present()->statusMeta),
+            ] : null,
         ];
 
         $permissions_array['available_actions'] = [

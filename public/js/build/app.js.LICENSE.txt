@@ -57,3 +57,7 @@
  * @license almond 0.3.3 Copyright jQuery Foundation and other contributors.
  * Released under MIT license, http://github.com/requirejs/almond/LICENSE
  */
+
+//! moment.js
+
+//! moment.js locale configuration

@@ -1,8 +1,7 @@
 @extends('layouts/default')
 
 @section('title0')
-  {{ trans('admin/hardware/general.requestable') }}
-  {{ trans('general.assets') }}
+  {{ trans('general.assets_list', array('status' => trans('admin/hardware/general.requestable'))) }}
 @stop
 
 {{-- Page title --}}
@@ -56,7 +55,7 @@
                                                 <th class="col-md-2" data-field="name" data-sortable="true">{{ trans('admin/hardware/form.name') }}</th>
                                                 <th class="col-md-3" data-field="serial" data-sortable="true">{{ trans('admin/hardware/table.serial') }}</th>
                                                 <th class="col-md-2" data-field="location" data-sortable="true">{{ trans('admin/hardware/table.location') }}</th>
-                                                <th class="col-md-2" data-field="status" data-sortable="true">{{ trans('admin/hardware/table.status') }}</th>
+                                                <th class="col-md-2" data-field="status" data-formatter="statuslabelsLinkObjFormatter" data-sortable="true">{{ trans('admin/hardware/table.status') }}</th>
                                                 <th class="col-md-2" data-field="expected_checkin" data-formatter="dateDisplayFormatter" data-sortable="true">{{ trans('admin/hardware/form.expected_checkin') }}</th>
                                                 <th class="col-md-1" data-formatter="assetRequestActionsFormatter" data-field="actions" data-sortable="false">{{ trans('table.actions') }}</th>
                                             </tr>

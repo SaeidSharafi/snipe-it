@@ -4,11 +4,10 @@
 @section('title')
 
     @if (request('status')=='deleted')
-        {{ trans('general.deleted') }}
+        {{ trans('general.users_list', array('status' => trans('general.deleted'))) }}
     @else
-        {{ trans('general.current') }}
+        {{ trans('general.users_list', array('status' => trans('general.current'))) }}
     @endif
-    {{ trans('general.users') }}
     @parent
 
 @stop
@@ -51,7 +50,7 @@
                     <label for="bulk_actions" class="sr-only">Bulk Actions</label>
                   <select name="bulk_actions" class="form-control select2" style="width: 200px;" aria-label="bulk_actions">
                     <option value="delete">Bulk Checkin &amp; Delete</option>
-                    <option value="edit">Bulk Edit</option>
+                    <option value="edit">{{ trans('button.bulk_edit') }}</option>
                     <option value="bulkpasswordreset">{{ trans('button.send_password_link') }}</option>
                   </select>
                   <button class="btn btn-default" id="bulkEdit" disabled>{{ trans('button.go') }}</button>

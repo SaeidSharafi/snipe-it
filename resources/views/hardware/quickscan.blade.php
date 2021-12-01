@@ -18,7 +18,7 @@
 
     
 
-    <div class="row">
+    <div class="row" id="datepicker-app">
     {{ Form::open(['method' => 'POST', 'class' => 'form-horizontal', 'role' => 'form', 'id' => 'audit-form' ]) }}
         <!-- left column -->
         <div class="col-md-6">
@@ -61,10 +61,14 @@
                         <div class="form-group {{ $errors->has('next_audit_date') ? 'error' : '' }}">
                             {{ Form::label('next_audit_date', trans('general.next_audit_date'), array('class' => 'col-md-3 control-label')) }}
                             <div class="col-md-9">
-                                <div class="input-group date col-md-5" data-provide="datepicker" data-date-format="yyyy-mm-dd">
-                                    <input type="text" class="form-control" placeholder="{{ trans('general.next_audit_date') }}" name="next_audit_date" id="next_audit_date" value="{{ old('next_audit_date', $next_audit_date) }}">
-                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                                </div>
+                                <x-date-picker name="next_audit_date"
+                                               id="next_audit_date"
+                                               initial-value="{{ old('next_audit_date', $next_audit_date) }}"
+                                               placeholder="{{ trans('general.next_audit_date') }}"></x-date-picker>
+{{--                                <div class="input-group date col-md-5" data-provide="datepicker" data-date-format="yyyy-mm-dd">--}}
+{{--                                    <input type="text" class="form-control" placeholder="{{ trans('general.next_audit_date') }}" name="next_audit_date" id="next_audit_date" value="{{ old('next_audit_date', $next_audit_date) }}">--}}
+{{--                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>--}}
+{{--                                </div>--}}
                                 {!! $errors->first('next_audit_date', '<span class="alert-msg" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i> :message</span>') !!}
                             </div>
                         </div>

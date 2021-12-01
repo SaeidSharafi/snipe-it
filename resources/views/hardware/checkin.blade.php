@@ -29,7 +29,7 @@
             @if ($backto=='user')
               <form class="form-horizontal" method="post"
                     action="{{ route('checkin/hardware', array('assetId'=> $asset->id, 'backto'=>'user')) }}"
-                    autocomplete="off">
+                    autocomplete="off" id="datepicker-app">
                 @else
                   <form class="form-horizontal" method="post"
                         action="{{ route('checkin/hardware', $asset->id) }}" autocomplete="off">
@@ -80,10 +80,14 @@
                       {{ Form::label('checkin_at', trans('admin/hardware/form.checkin_date'), array('class' => 'col-md-3 control-label')) }}
                       <div class="col-md-8">
                         <div class="input-group col-md-5 required">
-                          <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd"  data-autoclose="true">
-                            <input type="text" class="form-control" placeholder="{{ trans('general.select_date') }}" name="checkin_at" id="checkin_at" value="{{ old('checkin_at', date('Y-m-d')) }}">
-                            <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                          </div>
+                          <x-date-picker name="checkin_at"
+                                         id="checkin_at"
+                                         initial-value="{{ old('checkin_at', date('Y-m-d')) }}"
+                                         placeholder="{{ trans('general.select_date') }}"></x-date-picker>
+{{--                          <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd"  data-autoclose="true">--}}
+{{--                            <input type="text" class="form-control" placeholder="{{ trans('general.select_date') }}" name="checkin_at" id="checkin_at" value="{{ old('checkin_at', date('Y-m-d')) }}">--}}
+{{--                            <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>--}}
+{{--                          </div>--}}
                           {!! $errors->first('checkin_at', '<span class="alert-msg" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i> :message</span>') !!}
                         </div>
                       </div>

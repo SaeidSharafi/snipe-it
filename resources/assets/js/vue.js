@@ -36,6 +36,12 @@ Vue.component(
     require('./components/forms/asset-models/fieldset-default-values.vue').default
 );
 
+Vue.component(
+    'x-date-picker',
+    require('./components/datepicker.vue').default
+);
+//
+// console.log("moment().format()");
 // Commented out currently to avoid trying to load vue everywhere.
 // const app = new Vue({
 //     el: '#app'
