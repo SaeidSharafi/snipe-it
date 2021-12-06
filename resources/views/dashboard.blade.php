@@ -217,7 +217,7 @@
     <div class="col-md-6">
         <div class="box box-default">
             <div class="box-header with-border">
-                <h2 class="box-title">{{ trans('general.assets') }} by Status</h2>
+                <h2 class="box-title">{{ trans('general.by_status',array('type' => trans('general.assets'))) }}</h2>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" aria-hidden="true">
                         <i class="fa fa-minus" aria-hidden="true"></i>
@@ -242,7 +242,7 @@
         <!-- Categories -->
         <div class="box box-default">
             <div class="box-header with-border">
-                <h2 class="box-title">Asset {{ trans('general.categories') }}</h2>
+                <h2 class="box-title">{{ trans('general.by_categories',array('type'=>trans('general.asset'))) }}</h2>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse">
                         <i class="fa fa-minus" aria-hidden="true"></i>

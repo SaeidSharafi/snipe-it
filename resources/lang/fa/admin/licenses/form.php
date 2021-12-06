@@ -3,7 +3,7 @@
 return array(
 
     'asset'             => 'اموال',
-    'checkin'           => 'چک در',
+    'checkin'           => 'تحویل انبار در',
     'create'            => 'ایجاد لایسنس',
     'expiration'        => 'تاریخ انقضا',
     'license_key'       => 'کلید محصول',
@@ -13,7 +13,7 @@ return array(
     'purchase_order'    => 'شماره سفارش خرید',
     'reassignable'      => 'واگذاری مجدد',
     'remaining_seats'   => 'کرسی های باقی مانده',
-    'seats'             => 'صندلی',
+    'seats'             => 'تعداد قابل نصب',
     'termination_date'  => 'تاریخ پایان',
     'to_email'          => 'ایمیل لایسنس',
     'to_name'           => 'لایسنس به نام',

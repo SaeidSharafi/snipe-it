@@ -146,7 +146,8 @@
                             @can('index', \App\Models\Asset::class)
                                 <li aria-hidden="true"
                                     {!! (Request::is('hardware*') ? ' class="active"' : '') !!} tabindex="-1">
-                                    <a href="{{ url('hardware') }}" tabindex="-1">
+                                    <a href="{{ url('hardware') }}" tabindex="-1"
+                                       data-toggle="tooltip" title="{{trans('general.asset')}}">
                                         <i class="fa fa-barcode" aria-hidden="true"></i>
                                         <span class="sr-only">Assets</span>
                                     </a>
@@ -154,7 +155,8 @@
                             @endcan
                             @can('view', \App\Models\License::class)
                                 <li aria-hidden="true"
-                                    {!! (Request::is('licenses*') ? ' class="active"' : '') !!} tabindex="-1">
+                                    {!! (Request::is('licenses*') ? ' class="active"' : '') !!} tabindex="-1"
+                                    data-toggle="tooltip" title="{{trans('general.license')}}">
                                     <a href="{{ route('licenses.index') }}" tabindex="-1">
                                         <i class="fa fa-floppy-o"></i>
                                         <span class="sr-only">Licenses</span>
@@ -163,7 +165,8 @@
                             @endcan
                             @can('index', \App\Models\Accessory::class)
                                 <li aria-hidden="true"
-                                    {!! (Request::is('accessories*') ? ' class="active"' : '') !!} tabindex="-1">
+                                    {!! (Request::is('accessories*') ? ' class="active"' : '') !!} tabindex="-1"
+                                    data-toggle="tooltip" title="{{trans('general.accessories')}}">
                                     <a href="{{ route('accessories.index') }}" tabindex="-1">
                                         <i class="fa fa-keyboard-o"></i>
                                         <span class="sr-only">Accessories</span>
@@ -171,7 +174,8 @@
                                 </li>
                             @endcan
                             @can('index', \App\Models\Consumable::class)
-                                <li aria-hidden="true"{!! (Request::is('consumables*') ? ' class="active"' : '') !!}>
+                                <li aria-hidden="true"{!! (Request::is('consumables*') ? ' class="active"' : '') !!}
+                                data-toggle="tooltip" title="{{trans('general.consumable')}}">
                                     <a href="{{ url('consumables') }}" tabindex="-1">
                                         <i class="fa fa-tint"></i>
                                         <span class="sr-only">Consumables</span>
@@ -179,7 +183,8 @@
                                 </li>
                             @endcan
                             @can('view', \App\Models\Component::class)
-                                <li aria-hidden="true"{!! (Request::is('components*') ? ' class="active"' : '') !!}>
+                                <li aria-hidden="true"{!! (Request::is('components*') ? ' class="active"' : '') !!}
+                                data-toggle="tooltip" title="{{trans('general.component')}}">
                                     <a href="{{ route('components.index') }}" tabindex="-1">
                                         <i class="fa fa-hdd-o"></i>
                                         <span class="sr-only">Components</span>

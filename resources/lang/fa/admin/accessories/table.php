@@ -5,7 +5,7 @@ return array(
 	'eula_text'      			=> 'EULA',
     'id'      					=> 'شناسه',
     'require_acceptance'      	=> 'پذیرش',
-    'title'      				=> 'نام وسیله',
+    'title'      				=> 'نام تجهیزات جانبی',
 
 
 );

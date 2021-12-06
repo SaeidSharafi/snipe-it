@@ -6,7 +6,7 @@ return array(
     'asset_model'       => 'مدل',
     'book_value'  	=> 'عنوان آیتم',
     'change' 		=> '/ خارج',
-    'checkout_date' => 'چک کردن تاریخ',
+    'checkout_date' => 'تاریخ تحویل به همکار',
     'checkoutto' 	=> 'قفل شده',
     'diff' 			=> 'دیف',
     'dl_csv' 		=> 'دانلود CSV',
@@ -18,8 +18,7 @@ return array(
     'serial'   		=> 'سریال',
     'status'   		=> 'وضعیت',
     'title'      	=> 'اموال ',
-    'image'		=> 'دستگاه تصویر
-',
+    'image'		    => 'تصویر',
     'days_without_acceptance' => 'روز بدون پذیرش',
     'monthly_depreciation' => 'Monthly Depreciation'
 

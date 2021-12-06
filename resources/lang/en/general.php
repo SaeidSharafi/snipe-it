@@ -262,4 +262,6 @@
     'generate_labels'       => 'Generate Labels',
     'bulk_edit'       => 'Bulk Edit',
     'bulk_delete'       => 'Bulk Delete',
+    'by_status'             => ':type by status',
+    'by_categories'             => ':type categories'
     ];

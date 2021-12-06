@@ -105,6 +105,13 @@
             <div class="col-md-3">
                 <h2>{{ trans('general.importing') }}</h2>
                 <p>{!!   trans('general.importing_help') !!}</p>
+                <ul>
+                    <li><a target="_self" href="https://snipeitapp.com/assets/downloads/sample-assets.csv">Sample asset import CSV</a></li>
+                    <li><a target="_self" href="https://snipeitapp.com/assets/downloads/sample-accessories.csv">Sample accessories import CSV</a></li>
+                    <li><a target="_self" href="https://snipeitapp.com/assets/downloads/sample-consumables.csv">Sample consumables import CSV</a></li>
+                    <li><a target="_self" href="https://snipeitapp.com/assets/downloads/sample-users.csv">Sample users import CSV</a></li>
+                    <li><a target="_self" href="https://snipeitapp.com/assets/downloads/sample-licenses.csv">Sample licenses import CSV</a></li>
+                </ul>
             </div>
 
         </div>

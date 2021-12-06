@@ -10,7 +10,7 @@
     'address'				=> 'آدرس',
     'admin'					=> 'مدیر',
     'administrator'			=> 'مدیر',
-    'add_seats'             => 'اضافه شدن صندلی',
+    'add_seats'             => 'اضافه کردن نصب',
     'all_assets'			=> 'تمام اموال',
     'all'       			=> 'همه',
     'archived'              => 'بایگانی شده',
@@ -73,9 +73,8 @@
     'debug_warning_text'    => 'این برنامه در حالت تولید با استفاده از اشکال زدایی فعال است. این می تواند اطلاعات حساس را در صورت درخواست شما برای جهان خارج در دسترس قرار دهد. با تنظیم مقداری <code>APP_DEBUG</code> در <code>.env</code> فایل خود را به <code>false</code> غیرفعال کنید.',
     'delete'  				=> 'حذف',
     'delete_confirm'  		=> 'آیا اطمینان دارید که می خواهید این را حذف نمایید؟',
-    'deleted'  				=> 'حذف شد',
-    'delete_seats'  		=> 'صندلی ها حذف شده
-',
+    'deleted'  				=> 'حذف شده',
+    'delete_seats'  		=> 'تعداد نصب حذف شده',
     'departments'           => 'دپارتمان ها',
     'department'           => 'دپارتمان',
     'deployed'				=> 'تحویل داده شده',
@@ -143,7 +142,7 @@
     'locations'				=> 'مکانها',
     'logo_size'				=> 'Square logos look best with Logo + Text. Logo maximum display size is 50px high x 500px wide.  ',
     'logout'				=> 'خروج',
-    'lookup_by_tag'     => 'نگاهی به Asset Tag',
+    'lookup_by_tag'         => 'جستجوی بر اساس تگ اموال',
     'maintenances'          => 'Maintenances',
     'manufacturer'			=> 'تو لید کننده',
     'manufacturers'			=> 'تولیدکننده‌ها',
@@ -261,4 +260,6 @@
     'your_dashboard'        => '',
     'dashboard_empty'       => '',
     'view_assets_for'       => 'مشاهده اموال :name',
+    'by_status'             => ':type بر اساس وضعیت',
+    'by_categories'             => 'دسته بندی های :type'
     ];
