@@ -39,7 +39,7 @@
     'changeemail'  			=> 'تغییر آدرس ایمیل',
     'changepassword'  		=> 'تغییر کلمه عبور',
     'checkin'  				=> 'تحویل انبار',
-    'checkin_from'  		=> 'فرم تحویل انبار',
+    'checkin_from'  		=> 'تحویل انبار',
     'checkout'  			=> 'تحویل همکار',
     'checkouts_count'       => 'تحویل همکار',
     'checkins_count'        => 'تحویل انبار',

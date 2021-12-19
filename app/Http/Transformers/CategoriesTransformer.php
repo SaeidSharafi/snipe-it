@@ -5,6 +5,7 @@ use App\Helpers\Helper;
 use App\Models\Category;
 use Gate;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Storage;
 
 class CategoriesTransformer
@@ -22,12 +23,12 @@ class CategoriesTransformer
     public function transformCategory (Category $category = null)
     {
         if ($category) {
-
+            $category_type = 'general.' . strtolower(e($category->category_type));
             $array = [
                 'id' => (int) $category->id,
                 'name' => e($category->name),
                 'image' =>   ($category->image) ? Storage::disk('public')->url('categories/'.e($category->image)) : null,
-                'category_type' => ucwords(e($category->category_type)),
+                'category_type' => Lang::has($category_type) ? trans($category_type) : $category_type,
                 'has_eula' => ($category->getEula() ? true : false),
                 'use_default_eula' => ($category->use_default_eula=='1' ? true : false),
                 'eula' => ($category->getEula()),

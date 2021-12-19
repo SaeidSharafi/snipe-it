@@ -424,7 +424,7 @@
                                                         {{ $field->name }}
                                                     </strong>
                                                 </div>
-                                                @if($field->name === "MAC Address")
+                                                @if($field->field_format === "MAC")
                                                     <div class="col-md-6 " style="direction: ltr;text-align: right">
                                                 @else
                                                     <div class="col-md-6">
