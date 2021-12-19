@@ -447,6 +447,8 @@
                         return '<a href="' + row.custom_fields[field_column_plain].value + '" target="_blank" rel="noopener">' + row.custom_fields[field_column_plain].value + '</a>';
                     } else if (row.custom_fields[field_column_plain].field_format=='EMAIL') {
                         return '<a href="mailto:' + row.custom_fields[field_column_plain].value + '">' + row.custom_fields[field_column_plain].value + '</a>';
+                    }else if (row.custom_fields[field_column_plain].field_format=='MAC') {
+                        return '<span style="direction:ltr;">'+row.custom_fields[field_column_plain].value+'</span>';
                     }
                 }
                 return row.custom_fields[field_column_plain].value;

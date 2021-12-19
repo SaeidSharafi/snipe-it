@@ -9,7 +9,7 @@
 {{-- Right header --}}
 @section('header_right')
 
-    
+
     @can('manage', \App\Models\Asset::class)
         @if ($asset->deleted_at=='')
         <div class="dropdown pull-right">
@@ -17,7 +17,7 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu pull-right" role="menu">
-                
+
                 @if (($asset->assetstatus) && ($asset->assetstatus->deployable=='1'))
                     @if (($asset->assigned_to != '') && ($asset->deleted_at==''))
                         @can('checkin', \App\Models\Asset::class)
@@ -141,7 +141,7 @@
                         </a>
                     </li>
 
-                
+
                     <li>
                         <a href="#history" data-toggle="tab">
                           <span class="hidden-lg hidden-md">
@@ -172,7 +172,7 @@
                         </a>
                     </li>
 
-                   
+
                     @can('update', \App\Models\Asset::class)
                         <li class="pull-right">
                             <a href="#" data-toggle="modal" data-target="#uploadFileModal">
@@ -183,7 +183,7 @@
                     @endcan
 
                 </ul>
-                
+
                 <div class="tab-content">
                     <div class="tab-pane fade in active" id="details">
                         <div class="row">
@@ -424,7 +424,11 @@
                                                         {{ $field->name }}
                                                     </strong>
                                                 </div>
-                                                <div class="col-md-6">
+                                                @if($field->name === "MAC Address")
+                                                    <div class="col-md-6 " style="direction: ltr;text-align: right">
+                                                @else
+                                                    <div class="col-md-6">
+                                                @endif
                                                     @if ($field->field_encrypted=='1')
                                                         <i class="fa fa-lock" data-toggle="tooltip" data-placement="top" title="{{ trans('admin/custom_fields/general.value_encrypted') }}"></i>
                                                     @endif
@@ -805,7 +809,7 @@
                                 @if ($asset->deleted_at!='')
                                     <div class="text-center col-md-12" style="padding-bottom: 15px;">
                                         <form method="POST" action="{{ route('restore/hardware', ['assetId' => $asset->id]) }}">
-                                        @csrf 
+                                        @csrf
                                         <button class="btn btn-danger col-md-12">{{ trans('general.restore') }}</button>
                                         </form>
                                     </div>
