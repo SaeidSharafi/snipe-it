@@ -15,7 +15,14 @@ class AssetPolicy extends CheckoutablePermissionsPolicy
     {
         return $user->hasAccess('assets.view.requestable');
     }
-
+    public function viewOwn(User $user, Asset $asset = null)
+    {
+        return $user->hasAccess('assets.view.own');
+    }
+    public function checkinOwn(User $user, Asset $asset = null)
+    {
+        return $user->hasAccess('assets.checkin.own');
+    }
     public function audit(User $user, Asset $asset = null)
     {
         return $user->hasAccess('assets.audit');

@@ -70,12 +70,17 @@ class AssetsController extends Controller
          * It was either this mess, or repeating ALL of the searching and sorting and filtering code, 
          * which would have been far worse of a mess. *sad face*  - snipe (Sept 1, 2021)
          */
+        $can_view_all = auth()->user()->can('index', Asset::class);
+        $can_view_own = auth()->user()->can('viewOwn', Asset::class);
         if (Route::currentRouteName()=='api.depreciation-report.index') {
             $transformer = 'App\Http\Transformers\DepreciationReportTransformer';
             $this->authorize('reports.view');
         } else {
             $transformer = 'App\Http\Transformers\AssetsTransformer';
-            $this->authorize('index', Asset::class);          
+            if (!$can_view_all && !$can_view_own) {
+                abort(403);
+            }
+            //$this->authorize('index', Asset::class);
         }
         
        
@@ -155,6 +160,9 @@ class AssetsController extends Controller
         if (($request->filled('assigned_to')) && ($request->filled('assigned_type'))) {
             $assets->where('assets.assigned_to', '=', $request->input('assigned_to'))
                 ->where('assets.assigned_type', '=', $request->input('assigned_type'));
+        }elseif ($can_view_own && !$can_view_all){
+            $assets->where('assets.assigned_to', '=', auth()->user()->id)
+                    ->where('assets.assigned_type', '=', 'App\Models\User');
         }
 
         if ($request->filled('company_id')) {

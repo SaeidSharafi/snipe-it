@@ -112,10 +112,10 @@ class AssetsTransformer
         } else {
             $array['custom_fields'] = array();
         }
-
+        $can_checkin = Gate::allows('checkin', Asset::class) || Gate::allows('checkin', $asset);
         $permissions_array['available_actions'] = [
             'checkout'      => ($asset->deleted_at=='' && Gate::allows('checkout', Asset::class)) ? true : false,
-            'checkin'       => ($asset->deleted_at=='' && Gate::allows('checkin', Asset::class)) ? true : false,
+            'checkin'       => ($asset->deleted_at=='' && $can_checkin) ? true : false,
             'clone'         => Gate::allows('create', Asset::class) ? true : false,
             'restore'       => ($asset->deleted_at!='' && Gate::allows('create', Asset::class)) ? true : false,
             'update'        => ($asset->deleted_at=='' && Gate::allows('update', Asset::class)) ? true : false,

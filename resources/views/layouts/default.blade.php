@@ -428,7 +428,8 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('index', \App\Models\Asset::class)
+                        @canany(['viewOwn','index'], \App\Models\Asset::class)
+
                             <li class="treeview{{ (Request::is('hardware*') ? ' active' : '') }}">
                                 <a href="#"><i class="fa fa-barcode" aria-hidden="true"></i>
                                     <span>{{ trans('general.assets') }}</span>
@@ -441,7 +442,7 @@
                                             {{ trans('general.list_all') }}
                                         </a>
                                     </li>
-
+                                    @can('index',\App\Models\Asset::class)
                                     <?php $status_navs = \App\Models\Statuslabel::where('show_in_nav', '=', 1)->withCount('assets as asset_count')->get(); ?>
                                     @if (count($status_navs) > 0)
                                         @foreach ($status_navs as $status_nav)
@@ -501,7 +502,7 @@
                                             {{ trans('admin/hardware/general.requestable') }}
                                         </a>
                                     </li>
-
+                                    @endcan
                                     @can('audit', \App\Models\Asset::class)
                                         <li{!! (Request::is('hardware/audit/due') ? ' class="active"' : '') !!}>
                                             <a href="{{ route('assets.audit.due') }}">

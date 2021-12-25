@@ -6,7 +6,6 @@
  |--------------------------------------------------------------------------
 */
 
-
 return array(
 
     'Global' => array(
@@ -53,6 +52,12 @@ return array(
             'display'    => true,
         ),
         array(
+            'permission' => 'assets.view.own',
+            'label'      => 'View Own ',
+            'note'       => '',
+            'display'    => true,
+        ),
+        array(
             'permission' => 'assets.create',
             'label'      => 'Create ',
             'note'       => '',
@@ -85,6 +90,13 @@ return array(
         ),
 
         array(
+            'permission' => 'assets.checkin.own',
+            'label'      => 'Checkin Own ',
+            'note'       => '',
+            'display'    => true,
+        ),
+
+        array(
             'permission' => 'assets.checkout',
             'label'      => 'Checkout ',
             'note'       => '',
@@ -97,7 +109,6 @@ return array(
             'note'       => 'Allows the user to mark an asset as physically inventoried.',
             'display'    => true,
         ),
-
 
         array(
             'permission' => 'assets.view.requestable',
@@ -112,6 +123,12 @@ return array(
         array(
             'permission' => 'accessories.view',
             'label'      => 'View ',
+            'note'       => '',
+            'display'    => true,
+        ),
+        array(
+            'permission' => 'accessories.view.own',
+            'label'      => 'View Own',
             'note'       => '',
             'display'    => true,
         ),
@@ -142,6 +159,12 @@ return array(
         array(
             'permission' => 'accessories.checkin',
             'label'      => 'Checkin ',
+            'note'       => '',
+            'display'    => true,
+        ),
+        array(
+            'permission' => 'accessories.checkin.own',
+            'label'      => 'Checkin Own ',
             'note'       => '',
             'display'    => true,
         ),
@@ -179,7 +202,6 @@ return array(
             'display'    => true,
         ),
     ),
-
 
     'Licenses' => array(
         array(
@@ -226,11 +248,16 @@ return array(
         ),
     ),
 
-
     'Components' => array(
         array(
             'permission' => 'components.view',
             'label'      => 'View',
+            'note'       => '',
+            'display'    => true,
+        ),
+        array(
+            'permission' => 'components.view.own',
+            'label'      => 'View Own ',
             'note'       => '',
             'display'    => true,
         ),
@@ -261,6 +288,12 @@ return array(
         array(
             'permission' => 'components.checkin',
             'label'      => 'Checkin ',
+            'note'       => '',
+            'display'    => true,
+        ),
+        array(
+            'permission' => 'components.checkin.own',
+            'label'      => 'Checkin Own ',
             'note'       => '',
             'display'    => true,
         ),
@@ -301,7 +334,6 @@ return array(
         ),
     ),
 
-
     'Users' => array(
         array(
             'permission' => 'users.view',
@@ -329,7 +361,6 @@ return array(
         ),
 
     ),
-
 
     'Models' => array(
         array(
@@ -465,7 +496,7 @@ return array(
             'note'       => '',
             'display'    => true,
         ),
-    ), 
+    ),
 
     'Suppliers' => array(
         array(
@@ -493,7 +524,6 @@ return array(
             'display'    => true,
         ),
     ),
-
 
     'Manufacturers' => array(
         array(
@@ -603,9 +633,6 @@ return array(
         ),
     ),
 
-
-
-
     'Self' => array(
         array(
             'permission' => 'self.two_factor',
@@ -636,9 +663,5 @@ return array(
         ),
 
     ),
-
-
-
-
 
 );
