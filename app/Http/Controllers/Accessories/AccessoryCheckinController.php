@@ -25,6 +25,7 @@ class AccessoryCheckinController extends Controller
      */
     public function create($accessoryUserId = null, $backto = null)
     {
+
         // Check if the accessory exists
         if (is_null($accessory_user = DB::table('accessories_users')->find($accessoryUserId))) {
             // Redirect to the accessory management page with error
@@ -32,7 +33,7 @@ class AccessoryCheckinController extends Controller
         }
 
         $accessory = Accessory::find($accessory_user->accessory_id);
-        $this->authorize('checkin', $accessory);
+        $this->authorize('checkin', [$accessory,$accessory_user->assigned_to]);
         return view('accessories/checkin', compact('accessory'))->with('backto', $backto);
     }
 
@@ -57,7 +58,7 @@ class AccessoryCheckinController extends Controller
 
         $accessory = Accessory::find($accessory_user->accessory_id);
 
-        $this->authorize('checkin', $accessory);
+        $this->authorize('checkin', [$accessory,$accessory_user->assigned_to]);
 
         $checkin_at = date('Y-m-d');
         if($request->filled('checkin_at')){

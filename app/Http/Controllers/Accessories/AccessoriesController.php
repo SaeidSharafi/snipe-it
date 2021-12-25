@@ -29,7 +29,12 @@ class AccessoriesController extends Controller
      */
     public function index()
     {
-        $this->authorize('index', Accessory::class);
+        //$this->authorize('index', Accessory::class);
+        $can_view_all = auth()->user()->can('index', Accessory::class);
+        $can_view_own = auth()->user()->can('viewOwn', Accessory::class);
+        if (!$can_view_all && !$can_view_own){
+            abort(403);
+        }
         return view('accessories/index');
     }
 
@@ -198,7 +203,12 @@ class AccessoriesController extends Controller
     public function show($accessoryID = null)
     {
         $accessory = Accessory::find($accessoryID);
-        $this->authorize('view', $accessory);
+        //$this->authorize('view', $accessory);
+        $can_view_all = auth()->user()->can('view', Accessory::class);
+        $can_view_own = auth()->user()->can('viewOwn', Accessory::class);
+        if (!$can_view_all && !$can_view_own){
+            abort(403);
+        }
         if (isset($accessory->id)) {
             return view('accessories/view', compact('accessory'));
         }

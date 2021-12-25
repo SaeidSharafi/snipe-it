@@ -163,7 +163,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('index', \App\Models\Accessory::class)
+                            @canany('index', \App\Models\Accessory::class)
                                 <li aria-hidden="true"
                                     {!! (Request::is('accessories*') ? ' class="active"' : '') !!} tabindex="-1"
                                     data-toggle="tooltip" title="{{trans('general.accessories')}}">
@@ -566,7 +566,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('index', \App\Models\Accessory::class)
+                            @canany(['viewOwn','index'], \App\Models\Accessory::class)
                             <li{!! (Request::is('accessories*') ? ' class="active"' : '') !!}>
                                 <a href="{{ route('accessories.index') }}">
                                     <i class="fa fa-keyboard-o"></i>

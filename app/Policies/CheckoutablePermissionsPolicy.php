@@ -22,13 +22,19 @@ abstract class CheckoutablePermissionsPolicy extends SnipePermissionsPolicy {
      * @param \App\User $user
      * @return mixed
      */
-    public function checkin(User $user, $item = null) {
+    public function checkin(User $user, $item = null,$owner = null) {
+
         if ($user->hasAccess($this->columnName() . '.checkin')) {
             return true;
         } else if ($user->hasAccess($this->columnName() . '.checkin.own')) {
-            if ($item instanceof \App\Models\SnipeModel) {
+            if ($item instanceof \App\Models\Asset) {
+
                 if ($item->assigned_to == auth()->user()->id
                         && $item->assigned_type == 'App\Models\User') {
+                    return true;
+                }
+            }elseif ($item instanceof \App\Models\Accessory){
+                if ($owner == auth()->user()->id) {
                     return true;
                 }
             }

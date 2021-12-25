@@ -12,7 +12,7 @@ return array(
     'require_acceptance'				=> 'نیاز به کاربرانی جهت تایید پذیرش دارایی ها در این دسته بندی.',
     'no_default_eula'					=> 'هیچ EULA اولیه پیشفرضی یافت نشد.در تنظیمات اضافه کنید',
     'total'  							=> 'مجموع',
-    'remaining'  						=> 'سود',
+    'remaining'  						=> 'باقیمانده',
     'update'  							=> 'به روزرساتی تجهیزات جانبی',
     'use_default_eula'					=> 'از Use the <a href="#" data-toggle="modal" data-target="#eulaModal">EULA پیشفرض اولیه</a> instead.
  استفاده کنید',

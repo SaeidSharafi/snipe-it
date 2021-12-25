@@ -128,7 +128,7 @@ return array(
         ),
         array(
             'permission' => 'accessories.view.own',
-            'label'      => 'View Own',
+            'label'      => 'View Own ',
             'note'       => '',
             'display'    => true,
         ),
