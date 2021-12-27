@@ -44,7 +44,7 @@
 
                     <thead>
                         <tr>
-                            <th data-field="icon" style="width: 40px;" class="hidden-xs" data-formatter="iconFormatter">Icon</th>
+                            <th data-field="icon" style="width: 40px;" class="hidden-xs" data-formatter="iconFormatter">{{ trans('general.icon') }}</th>
                             <th class="col-sm-3" data-searchable="false" data-sortable="true" data-field="action_date" data-formatter="dateDisplayFormatter">{{ trans('general.date') }}</th>
                             <th class="col-sm-2" data-field="admin" data-formatter="usersLinkObjFormatter">{{ trans('general.admin') }}</th>
                             <th class="col-sm-2" data-field="action_type">{{ trans('general.action') }}</th>

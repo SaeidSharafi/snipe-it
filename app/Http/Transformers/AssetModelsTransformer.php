@@ -44,7 +44,9 @@ class AssetModelsTransformer
                 'id' => (int) $assetmodel->fieldset->id,
                 'name'=> e($assetmodel->fieldset->name)
             ]  : null,
-            'eol' => ($assetmodel->eol > 0) ? $assetmodel->eol .' months': 'None',
+            'eol' => ($assetmodel->eol > 0) ?
+                trans_choice('admin/models/general.eol',$assetmodel->eol
+                    ,['month'=>$assetmodel->eol]): trans('admin/models/table.none'),
             'requestable' => ($assetmodel->requestable =='1') ? true : false,
             'notes' => e($assetmodel->notes),
             'created_at' => Helper::getFormattedDateObject($assetmodel->created_at, 'datetime'),

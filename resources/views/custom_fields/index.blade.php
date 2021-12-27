@@ -6,7 +6,7 @@
 
 {{-- Page title --}}
 @section('title')
-  Manage {{ trans('admin/custom_fields/general.custom_fields') }}
+  {{ trans('admin/custom_fields/general.custom_fields_title') }}
 @parent
 @stop
 
@@ -48,7 +48,7 @@
               <th>{{ trans('general.name') }}</th>
               <th>{{ trans('admin/custom_fields/general.qty_fields') }}</th>
               <th>{{ trans('admin/custom_fields/general.used_by_models') }}</th>
-              <th>Actions</th>
+              <th>{{ trans('button.actions') }}</th>
             </tr>
           </thead>
 
@@ -127,13 +127,13 @@
           <thead>
             <tr>
               <th data-searchable="true">{{ trans('general.name') }}</th>
-              <th data-searchable="true">Help Text</th>
-              <th data-searchable="true">Email</th>
-              <th data-visible="false">DB Field</th>
+              <th data-searchable="true">{{ trans('admin/custom_fields/general.help_text') }}</th>
+              <th data-searchable="true">{{trans('admin/custom_fields/general.email')}}</th>
+              <th data-visible="false">{{trans('admin/custom_fields/general.db_field')}}</th>
               <th data-searchable="true">{{ trans('admin/custom_fields/general.field_format') }}</th>
               <th data-searchable="true">{{ trans('admin/custom_fields/general.field_element_short') }}</th>
               <th data-searchable="true">{{ trans('admin/custom_fields/general.fieldsets') }}</th>
-              <th>Actions</th>
+              <th>{{ trans('button.actions') }}</th>
             </tr>
           </thead>
           <tbody>

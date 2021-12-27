@@ -3,7 +3,7 @@
 return array(
 	'eula_text'      			=> 'EULA',
     'id'      					=> 'شناسه',
-    'parent'   					=> 'مجموعه پدر',
+    'parent'   					=> 'مجموعه والد',
     'require_acceptance'      	=> 'پذیرش',
     'title'      				=> 'نام دسته دارایی',
 

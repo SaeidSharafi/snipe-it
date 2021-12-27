@@ -66,7 +66,7 @@
                 return newParams;
             },
             formatLoadingMessage: function () {
-                return '<h2><i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Loading... please wait.... </h4>';
+                return '<h2><i class="fa fa-spinner fa-spin" aria-hidden="true"></i> {{trans('general.loading_wait')}} </h4>';
             },
             icons: {
                 advancedSearchIcon: 'fa fa-search-plus',

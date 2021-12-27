@@ -17,7 +17,7 @@ return array(
     'address'                   => 'آدرس',
     'zip'                       => 'کد پستی',
     'locations'                 => 'مکانها',
-    'parent'                    => 'مجموعه پدر',
-    'currency'                  => 'مکان ارز',
+    'parent'                    => 'مجموعه والد',
+    'currency'                  => 'ارز',
     'ldap_ou'                   => 'LDAP Search OU',
     );
