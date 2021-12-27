@@ -81,7 +81,7 @@ class AccessoriesController extends Controller
         if (!$can_view_all && $can_view_own) {
             $accessories->whereHas(
                 'users', function ($query) use ($accessories) {
-                $query->where('assigned_to', '=', '2');
+                $query->where('assigned_to', '=', auth()->user()->id);
             }
             );
         }
@@ -212,8 +212,8 @@ class AccessoriesController extends Controller
             ->where('id', '=', $id);
 
         if ($user_id) {
-            $accessory->withCount(['users' => function ($query) {
-                    $query->where('assigned_to', '=', '2');
+            $accessory->withCount(['users' => function ($query)  use ($user_id){
+                    $query->where('assigned_to', '=', $user_id);
             }])->whereHas(
                 'users', function ($query) use ($user_id) {
                 $query->where('assigned_to', '=', $user_id);

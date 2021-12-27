@@ -31,7 +31,13 @@ class ComponentsController extends Controller
      */
     public function index()
     {
-        $this->authorize('view', Component::class);
+        //$this->authorize('view', Component::class);
+        $can_view_all = auth()->user()->can('view', Component::class);
+        $can_view_own = auth()->user()->can('viewOwn', Component::class);
+
+        if (!$can_view_all && !$can_view_own) {
+            abort(403);
+        }
         return view('components/index');
     }
 
@@ -201,7 +207,13 @@ class ComponentsController extends Controller
         $component = Component::find($componentId);
 
         if (isset($component->id)) {
-            $this->authorize('view', $component);
+            //$this->authorize('view', $component);
+            $can_view_all = auth()->user()->can('view', Component::class);
+            $can_view_own = auth()->user()->can('viewOwn', Component::class);
+
+            if (!$can_view_all && !$can_view_own) {
+                abort(403);
+            }
             return view('components/view', compact('component'));
         }
         // Redirect to the user management page

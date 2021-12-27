@@ -38,7 +38,8 @@ class ComponentCheckinController extends Controller
                 return redirect()->route('components.index')->with('error',
                     trans('admin/components/message.not_found'));
             }
-            $this->authorize('checkin', $component);
+
+            $this->authorize('checkin', [$component,$asset->assigned_to]);
             return view('components/checkin', compact('component_assets','component','asset'));
         }
 
@@ -65,9 +66,12 @@ class ComponentCheckinController extends Controller
                 return redirect()->route('components.index')->with('error',
                     trans('admin/components/message.not_found'));
             }
+            if (is_null($asset = Asset::find($component_assets->asset_id))) {
+                return redirect()->route('components.index')->with('error',
+                    trans('admin/components/message.not_found'));
+            }
 
-
-            $this->authorize('checkin', $component);
+            $this->authorize('checkin', [$component,$asset->assigned_to]);
 
             $max_to_checkin = $component_assets->assigned_qty;
             $validator = Validator::make($request->all(), [

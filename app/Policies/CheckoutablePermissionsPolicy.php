@@ -37,6 +37,10 @@ abstract class CheckoutablePermissionsPolicy extends SnipePermissionsPolicy {
                 if ($owner == auth()->user()->id) {
                     return true;
                 }
+            }elseif ($item instanceof \App\Models\Component){
+                if ($owner == auth()->user()->id) {
+                    return true;
+                }
             }
         }
         return false;

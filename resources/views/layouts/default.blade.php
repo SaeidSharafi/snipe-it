@@ -582,7 +582,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('view', \App\Models\Component::class)
+                        @canany(['viewOwn','view'], \App\Models\Component::class)
                             <li{!! (Request::is('components*') ? ' class="active"' : '') !!}>
                                 <a href="{{ route('components.index') }}">
                                     <i class="fa fa-hdd-o"></i>

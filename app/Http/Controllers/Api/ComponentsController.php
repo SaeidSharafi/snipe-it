@@ -25,8 +25,12 @@ class ComponentsController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('view', Component::class);
-
+        //$this->authorize('view', Component::class);
+        $can_view_all = auth()->user()->can('view', Component::class);
+        $can_view_own = auth()->user()->can('viewOwn', Component::class);
+        if (!$can_view_all && !$can_view_own) {
+            abort(403);
+        }
         // This array is what determines which fields should be allowed to be sorted on ON the table itself, no relations
         // Relations will be handled in query scopes a little further down.
         $allowed_columns = 
@@ -61,7 +65,14 @@ class ComponentsController extends Controller
         if ($request->filled('location_id')) {
             $components->where('location_id','=',$request->input('location_id'));
         }
+        if (!$can_view_all && $can_view_own) {
 
+            $components->whereHas(
+                'assets', function ($query) {
+                $query->where('assigned_to', '=', auth()->user()->id);
+            }
+            );
+        }
         // Set the offset to the API call's offset, unless the offset is higher than the actual count of items in which
         // case we override with the actual count, so we should return 0 items.
         $offset = (($components) && ($request->get('offset') > $components->count())) ? $components->count() : $request->get('offset', 0);
@@ -186,10 +197,34 @@ class ComponentsController extends Controller
     */
     public function getAssets(Request $request, $id)
     {
-        $this->authorize('view', \App\Models\Asset::class);
-        
-        $component = Component::findOrFail($id);
-        $assets = $component->assets();
+        //$this->authorize('view', \App\Models\Asset::class);
+        $can_view_all = auth()->user()->can('view', Asset::class);
+        $can_view_own = auth()->user()->can('viewOwn', Asset::class);
+
+        if (!$can_view_all && !$can_view_own) {
+            abort(403);
+        }
+        $user_id = null;
+        if (!$can_view_all && $can_view_own) {
+            $user_id = auth()->user()->id;
+        }
+
+        if ($user_id) {
+            $component = Component::with(['assets' => function ($query)  use ($user_id){
+                $query->where('assigned_to', '=', $user_id);
+            }])->whereHas(
+                'assets', function ($query) use ($user_id) {
+                $query->where('assigned_to', '=', $user_id);
+            })->firstOrFail();
+
+        }else{
+            $component = Component::findOrFail($id);
+        }
+        $assets = $component->assets()->where(function ($query) use ($user_id) {
+            if ($user_id) {
+                $query->where('assigned_to', '=', $user_id);
+            }
+        });
 
         $offset = request('offset', 0);
         $limit = $request->input('limit', 50);
